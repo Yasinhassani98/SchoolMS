@@ -13,16 +13,15 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('classroom_id')->constrained()->onDelete('cascade');
+            $table->foreignId('classroom_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('password');
             $table->string('phone')->nullable();
             $table->date('enrollment_date')->nullable();
             $table->text('address')->nullable();
             $table->date('date_of_birth')->nullable();
-            $table->string('guardian_contact')->nullable();
-            $table->enum('status', ['active', 'unactive'])->default('active');
+            $table->string('parent_phone')->nullable();
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });
     }
