@@ -9,12 +9,12 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
     <!-- Pignose Calender -->
-    <link href="./plugins/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
+    <link href="{{ asset('plugins/pg-calendar/css/pignose.calendar.min.css') }}" rel="stylesheet">
     <!-- Chartist -->
-    <link rel="stylesheet" href="./plugins/chartist/css/chartist.min.css">
-    <link rel="stylesheet" href="./plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
+    <link rel="stylesheet" href="{{ asset('plugins/chartist/css/chartist.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css') }}">
     <!-- Custom Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     {{-- Font Awesome --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -252,7 +252,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="text-center">
-                                    <img src="./images/users/8.jpg" class="rounded-circle" alt="">
+                                    <img src="{{ asset('images/users/8.jpg" class="rounded-circle" alt="">
                                     <h5 class="mt-3 mb-1">Ana Liem</h5>
                                     <p class="m-0">Senior Manager</p>
                                     <!-- <a href="javascript:void()" class="btn btn-sm btn-warning">Send Message</a> -->
@@ -264,7 +264,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="text-center">
-                                    <img src="./images/users/5.jpg" class="rounded-circle" alt="">
+                                    <img src="{{ asset('images/users/5.jpg" class="rounded-circle" alt="">
                                     <h5 class="mt-3 mb-1">John Abraham</h5>
                                     <p class="m-0">Store Manager</p>
                                     <!-- <a href="javascript:void()" class="btn btn-sm btn-warning">Send Message</a> -->
@@ -276,7 +276,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="text-center">
-                                    <img src="./images/users/7.jpg" class="rounded-circle" alt="">
+                                    <img src="{{ asset('images/users/7.jpg" class="rounded-circle" alt="">
                                     <h5 class="mt-3 mb-1">John Doe</h5>
                                     <p class="m-0">Sales Man</p>
                                     <!-- <a href="javascript:void()" class="btn btn-sm btn-warning">Send Message</a> -->
@@ -288,7 +288,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="text-center">
-                                    <img src="./images/users/1.jpg" class="rounded-circle" alt="">
+                                    <img src="{{ asset('images/users/1.jpg" class="rounded-circle" alt="">
                                     <h5 class="mt-3 mb-1">Mehedi Titas</h5>
                                     <p class="m-0">Online Marketer</p>
                                     <!-- <a href="javascript:void()" class="btn btn-sm btn-warning">Send Message</a> -->
@@ -318,7 +318,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td><img src="./images/avatar/1.jpg" class=" rounded-circle mr-3"
+                                                    <td><img src="{{ asset('images/avatar/1.jpg" class=" rounded-circle mr-3"
                                                             alt="">Sarah Smith</td>
                                                     <td>iPhone X</td>
                                                     <td>
@@ -339,7 +339,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td><img src="./images/avatar/2.jpg" class=" rounded-circle mr-3"
+                                                    <td><img src="{{ asset('images/avatar/2.jpg" class=" rounded-circle mr-3"
                                                             alt="">Walter R.</td>
                                                     <td>Pixel 2</td>
                                                     <td><span>Canada</span></td>
@@ -358,7 +358,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td><img src="./images/avatar/3.jpg" class=" rounded-circle mr-3"
+                                                    <td><img src="{{ asset('images/avatar/3.jpg" class=" rounded-circle mr-3"
                                                             alt="">Andrew D.</td>
                                                     <td>OnePlus</td>
                                                     <td><span>Germany</span></td>
@@ -377,7 +377,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td><img src="./images/avatar/6.jpg" class=" rounded-circle mr-3"
+                                                    <td><img src="{{ asset('images/avatar/6.jpg" class=" rounded-circle mr-3"
                                                             alt=""> Megan S.</td>
                                                     <td>Galaxy</td>
                                                     <td><span>Japan</span></td>
@@ -396,7 +396,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td><img src="./images/avatar/4.jpg" class=" rounded-circle mr-3"
+                                                    <td><img src="{{ asset('images/avatar/4.jpg" class=" rounded-circle mr-3"
                                                             alt=""> Doris R.</td>
                                                     <td>Moto Z2</td>
                                                     <td><span>England</span></td>
@@ -415,7 +415,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td><img src="./images/avatar/5.jpg" class=" rounded-circle mr-3"
+                                                    <td><img src="{{ asset('images/avatar/5.jpg" class=" rounded-circle mr-3"
                                                             alt="">Elizabeth W.</td>
                                                     <td>Notebook Asus</td>
                                                     <td><span>China</span></td>
@@ -487,49 +487,49 @@
                                 <h4 class="card-title">Activity</h4>
                                 <div id="activity">
                                     <div class="media border-bottom-1 pt-3 pb-3">
-                                        <img width="35" src="./images/avatar/1.jpg" class="mr-3 rounded-circle">
+                                        <img width="35" src="{{ asset('images/avatar/1.jpg" class="mr-3 rounded-circle">
                                         <div class="media-body">
                                             <h5>Received New Order</h5>
                                             <p class="mb-0">I shared this on my fb wall a few months back,</p>
                                         </div><span class="text-muted ">April 24, 2018</span>
                                     </div>
                                     <div class="media border-bottom-1 pt-3 pb-3">
-                                        <img width="35" src="./images/avatar/2.jpg" class="mr-3 rounded-circle">
+                                        <img width="35" src="{{ asset('images/avatar/2.jpg" class="mr-3 rounded-circle">
                                         <div class="media-body">
                                             <h5>iPhone develered</h5>
                                             <p class="mb-0">I shared this on my fb wall a few months back,</p>
                                         </div><span class="text-muted ">April 24, 2018</span>
                                     </div>
                                     <div class="media border-bottom-1 pt-3 pb-3">
-                                        <img width="35" src="./images/avatar/2.jpg" class="mr-3 rounded-circle">
+                                        <img width="35" src="{{ asset('images/avatar/2.jpg" class="mr-3 rounded-circle">
                                         <div class="media-body">
                                             <h5>3 Order Pending</h5>
                                             <p class="mb-0">I shared this on my fb wall a few months back,</p>
                                         </div><span class="text-muted ">April 24, 2018</span>
                                     </div>
                                     <div class="media border-bottom-1 pt-3 pb-3">
-                                        <img width="35" src="./images/avatar/2.jpg" class="mr-3 rounded-circle">
+                                        <img width="35" src="{{ asset('images/avatar/2.jpg" class="mr-3 rounded-circle">
                                         <div class="media-body">
                                             <h5>Join new Manager</h5>
                                             <p class="mb-0">I shared this on my fb wall a few months back,</p>
                                         </div><span class="text-muted ">April 24, 2018</span>
                                     </div>
                                     <div class="media border-bottom-1 pt-3 pb-3">
-                                        <img width="35" src="./images/avatar/2.jpg" class="mr-3 rounded-circle">
+                                        <img width="35" src="{{ asset('images/avatar/2.jpg" class="mr-3 rounded-circle">
                                         <div class="media-body">
                                             <h5>Branch open 5 min Late</h5>
                                             <p class="mb-0">I shared this on my fb wall a few months back,</p>
                                         </div><span class="text-muted ">April 24, 2018</span>
                                     </div>
                                     <div class="media border-bottom-1 pt-3 pb-3">
-                                        <img width="35" src="./images/avatar/2.jpg" class="mr-3 rounded-circle">
+                                        <img width="35" src="{{ asset('images/avatar/2.jpg" class="mr-3 rounded-circle">
                                         <div class="media-body">
                                             <h5>New support ticket received</h5>
                                             <p class="mb-0">I shared this on my fb wall a few months back,</p>
                                         </div><span class="text-muted ">April 24, 2018</span>
                                     </div>
                                     <div class="media pt-3 pb-3">
-                                        <img width="35" src="./images/avatar/3.jpg" class="mr-3 rounded-circle">
+                                        <img width="35" src="{{ asset('images/avatar/3.jpg" class="mr-3 rounded-circle">
                                         <div class="media-body">
                                             <h5>Facebook Post 30 Comments</h5>
                                             <p class="mb-0">I shared this on my fb wall a few months back,</p>
@@ -661,33 +661,33 @@
     <!--**********************************
         Scripts
     ***********************************-->
-    <script src="plugins/common/common.min.js"></script>
-    <script src="js/custom.min.js"></script>
-    <script src="js/settings.js"></script>
-    <script src="js/gleek.js"></script>
-    <script src="js/styleSwitcher.js"></script>
+    <script src="{{ asset('plugins/common/common.min.js') }}"></script>
+    <script src="{{ asset('js/custom.min.js') }}"></script>
+    <script src="{{ asset('js/settings.js') }}"></script>
+    <script src="{{ asset('js/gleek.js') }}"></script>
+    <script src="{{ asset('js/styleSwitcher.js') }}"></script>
 
     <!-- Chartjs -->
-    <script src="./plugins/chart.js/Chart.bundle.min.js"></script>
+    <script src="{{ asset('plugins/chart.js/Chart.bundle.min.js') }}"></script>
     <!-- Circle progress -->
-    <script src="./plugins/circle-progress/circle-progress.min.js"></script>
+    <script src="{{ asset('plugins/circle-progress/circle-progress.min.js') }}"></script>
     <!-- Datamap -->
-    <script src="./plugins/d3v3/index.js"></script>
-    <script src="./plugins/topojson/topojson.min.js"></script>
-    <script src="./plugins/datamaps/datamaps.world.min.js"></script>
+    <script src="{{ asset('plugins/d3v3/index.js') }}"></script>
+    <script src="{{ asset('plugins/topojson/topojson.min.js') }}"></script>
+    <script src="{{ asset('plugins/datamaps/datamaps.world.min.js') }}"></script>
     <!-- Morrisjs -->
-    <script src="./plugins/raphael/raphael.min.js"></script>
-    <script src="./plugins/morris/morris.min.js"></script>
+    <script src="{{ asset('plugins/raphael/raphael.min.js') }}"></script>
+    <script src="{{ asset('plugins/morris/morris.min.js') }}"></script>
     <!-- Pignose Calender -->
-    <script src="./plugins/moment/moment.min.js"></script>
-    <script src="./plugins/pg-calendar/js/pignose.calendar.min.js"></script>
+    <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('plugins/pg-calendar/js/pignose.calendar.min.js') }}"></script>
     <!-- ChartistJS -->
-    <script src="./plugins/chartist/js/chartist.min.js"></script>
-    <script src="./plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
+    <script src="{{ asset('plugins/chartist/js/chartist.min.js') }}"></script>
+    <script src="{{ asset('plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js') }}"></script>
 
 
 
-    <script src="./js/dashboard/dashboard-1.js"></script>
+    <script src="{{ asset('js/dashboard/dashboard-1.js') }}"></script>
 
 </body>
 
