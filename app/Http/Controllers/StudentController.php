@@ -9,8 +9,55 @@ class StudentController extends Controller
 {
     public function index()
     {
-        $students = Student::paginate(10);
-        return view('students.index', ['students' => $students]);
+        $students = Student::orderBy('created_at', 'desc')->paginate(10);
+        return view('students.index', ['students' => $students])->with('success', 'Student created successfully');
+    }
+    public function create()
+    {
+        return view('students.create');
+    }
+    public function show(Student $student)
+    {
+        return view('students.show', ['student' => $student]);
+    }
+    public function store(Request $request)
+    {
+        // dd($request);
+        $request->validate([
+            'name' => 'required',
+            'classroom_id' => 'required|exists:classrooms,id',
+            'Email' => 'required|email|unique:students',
+            'Phone' => 'nullable',
+            'enrollment_date' => 'nullable|date',
+            'address' => 'nullable',
+            'date_of_birth' => 'nullable|date',
+            'parent_phone' => 'nullable',
+            'status' => 'required|in:active,inactive',
+        ]);
+        // dd($request);
+        Student::create($request->all());
+        return redirect()->route('students.index')->with('success', 'Student created successfully');
+    }
+    public function edit(Student $student)
+    {
+        return view('students.edit', ['student' => $student]);
+    }
+    public function update(Request $request, Student $student)
+    {
+        // dd($request);
+        $request->validate([
+            'name' => 'required',
+            'classroom_id' => 'required|exists:classrooms,id',
+            'Email' => 'required|email|unique:students,email,' . $student->id,
+            'Phone' => 'nullable',
+            'enrollment_date' => 'nullable|date',
+            'address' => 'nullable',
+            'date_of_birth' => 'nullable|date',
+            'parent_phone' => 'nullable',
+            'status' => 'required|in:active,inactive',
+        ]);
+        $student->update($request->all());
+        return redirect()->route('students.index')->with('success', 'Student updated successfully');
     }
     public function destroy(Student $student)
     {

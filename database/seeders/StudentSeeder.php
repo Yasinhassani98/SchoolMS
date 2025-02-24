@@ -11,7 +11,7 @@ class StudentSeeder extends Seeder
     {
         // إنشاء 20 طالب لكل فصل دراسي
         for ($classroom_id = 1; $classroom_id <= 36; $classroom_id++) {
-            for ($i = 1; $i <= 20; $i++) {
+            for ($i = 1; $i <= 7; $i++) {
                 Student::create([
                     'name' => fake()->name(),
                     'email' => "student{$i}_class{$classroom_id}@school.com",

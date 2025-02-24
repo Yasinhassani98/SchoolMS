@@ -1,9 +1,10 @@
 @extends('layout.base')
 
 @section('content')
+
     <div class="d-flex justify-content-center mt-3 mb-3">
-        <form action="{{ route('students.create') }}" method="GET">
-            <button type="submit" class="btn btn-primary">Add Student</button>
+        <form action="{{ route('teachers.create') }}" method="GET">
+            <button type="submit" class="btn btn-primary">Add teacher</button>
         </form>
     </div>
     <div class="container">
@@ -37,24 +38,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($students as $student)
+                    @foreach ($teachers as $teacher)
                         <tr>
-                            <td>{{ $student->id }}</td>
-                            <td>{{ $student->name }}</td>
-                            <td>{{ $student->classroom_id }}</td>
-                            <td>{{ $student->phone }}</td>
-                            <td>{{ $student->enrollment_date }}</td>
-                            <td>{{ $student->address }}</td>
-                            <td>{{ $student->date_of_birth }}</td>
-                            <td>{{ $student->parent_phone }}</td>
-                            <td>{{ $student->status }}</td>
+                            <td>{{ $teacher->id ?? 'null'}}</td>
+                            <td>{{ $teacher->name ?? 'null'}}</td>
+                            <td>{{ $teacher->classroom_id ?? 'null'}}</td>
+                            <td>{{ $teacher->phone ?? 'null'}}</td>
+                            <td>{{ $teacher->enrollment_date ?? 'null'}}</td>
+                            <td>{{ $teacher->address ?? 'null'}}</td>
+                            <td>{{ $teacher->date_of_birth ?? 'null'}}</td>
+                            <td>{{ $teacher->parent_phone ?? 'null'}}</td>
+                            <td>{{ $teacher->status  ?? 'null'}}</td>
                             <td>
-                                <a href="{{ route('students.edit', $student->id) }}" class="btn btn-primary"><i
+                                <a href="{{ route('teachers.edit', $teacher->id) }}" class="btn btn-primary"><i
                                         class="fa-solid fa-pen-to-square"></i>Edit</a>
 
                             </td>
                             <td>
-                                <form action="{{ route('students.destroy', $student->id) }}" method="POST"
+                                <form action="{{ route('teachers.destroy', $teacher->id) }}" method="POST"
                                     class="d-inline">
                                     @csrf
                                     @method('DELETE')
@@ -62,7 +63,7 @@
                                 </form>
                             </td>
                             <td>
-                                <a href="{{ route('students.show', $student->id) }}" class="btn btn-primary"><i
+                                <a href="{{ route('teachers.show', $teacher->id) }}" class="btn btn-primary"><i
                                         class="fa-solid fa-eye"></i>View</a>
                             </td>
                         </tr>
@@ -70,5 +71,7 @@
                 </tbody>
             </table>
         </div>
-        {{ $students->links('pagination::bootstrap-4') }}
-    @endsection
+        {{ $teachers->links('pagination::bootstrap-4') }}
+    
+
+@endsection
