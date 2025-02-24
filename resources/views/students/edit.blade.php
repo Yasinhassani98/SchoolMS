@@ -1,7 +1,4 @@
 @extends('layout.base')
-
-@section('content')
-    @extends('layout.base')
 @section('content')
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -12,7 +9,7 @@
     <div class="card mb-4 mt-2 container">
         <div class="card-body p-4">
             <h5 class="card-title">Update Student</h5>
-            <form class="row" action="{{ route('students.update',$student) }}" method="POST">
+            <form class="row" action="{{ route('students.update', $student) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="mb-3 col-md-6">
@@ -105,6 +102,4 @@
             </form>
         </div>
     </div>
-@endsection
-
 @endsection
