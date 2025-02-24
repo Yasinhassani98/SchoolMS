@@ -80,7 +80,7 @@
 
                 <div class="mb-3 col-md-6">
                     <label for="parent_phone" class="form-label">Parent phone</label>
-                    <input type="date" class="form-control @error('parent_phone') is-invalid @enderror" id="parent_phone"
+                    <input type="number" class="form-control @error('parent_phone') is-invalid @enderror" id="parent_phone"
                         name="parent_phone" value="{{ $student->parent_phone }}" required>
                     @error('parent_phone')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -91,7 +91,7 @@
 
                 <div class="mb-3 col-md-6">
                     <label for="status" class="form-label">Status</label>
-                    <select class="form-select @error('status') is-invalid @enderror" id="status" name="status">
+                    <select class="form-control @error('status') is-invalid @enderror" id="status" name="status">
                         <option value="active" @selected(old('status') == 'active')>Active</option>
                         <option value="inactive" @selected(old('status') == 'inactive')>Inactive</option>
                     </select>
