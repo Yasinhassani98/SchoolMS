@@ -46,7 +46,7 @@
         <!--**********************************
             Nav header start
         ***********************************-->
-@include('layout.nav-header')
+        @include('layout.nav-header')
         <!--**********************************
             Header end ti-comment-alt
         ***********************************-->
@@ -54,7 +54,7 @@
         <!--**********************************
             Sidebar start
         ***********************************-->
-@include('layout.sidebar')
+        @include('layout.sidebar')
         <!--**********************************
             Sidebar end
         ***********************************-->
@@ -640,7 +640,11 @@
             </div>
             <!-- #/ container -->
         </div> --}}
-        @yield('content')
+        <div class="content-body">
+            <div class="container-fluid mt-3">
+                @yield('content')
+            </div>
+        </div>
         <!--**********************************
             Content body end
         ***********************************-->
@@ -649,7 +653,7 @@
         <!--**********************************
             Footer start
         ***********************************-->
-@include('layout.footer')
+        @include('layout.footer')
         <!--**********************************
             Footer end
         ***********************************-->

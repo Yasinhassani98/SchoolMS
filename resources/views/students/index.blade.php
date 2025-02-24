@@ -1,11 +1,6 @@
 @extends('layout.base')
 
 @section('content')
-    <div class="d-flex justify-content-center mt-3 mb-3">
-        <form action="{{ route('students.create') }}" method="GET">
-            <button type="submit" class="btn btn-primary">Add Student</button>
-        </form>
-    </div>
     <div class="container">
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -33,7 +28,7 @@
                         <td>date of birth</td>
                         <td>parent phone</td>
                         <td>status</td>
-                        <td colspan="3"></td>
+                        <td colspan="2"></td>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,10 +55,6 @@
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
-                            </td>
-                            <td>
-                                <a href="{{ route('students.show', $student->id) }}" class="btn btn-primary"><i
-                                        class="fa-solid fa-eye"></i>View</a>
                             </td>
                         </tr>
                     @endforeach
