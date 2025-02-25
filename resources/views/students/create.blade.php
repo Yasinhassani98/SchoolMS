@@ -1,7 +1,7 @@
 @extends('layout.base')
 @section('title', 'Add New Student')
 @section('content')
-    
+
     <div class="card mb-4 mt-2 container">
         <div class="card-body p-4">
             <h5 class="card-title">Add New Student</h5>
@@ -17,19 +17,24 @@
                 </div>
 
                 <div class="mb-3 col-md-6">
-                    <label for="grade_level" class="form-label">Classroom</label>
-                    <input type="number" class="form-control @error('classroom') is-invalid @enderror" id="classroom"
-                        name="classroom_id" value="{{ old('classroom_id') }}" required>
-                    @error('classroom')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <label for="classroom" class="form-label">Classroom</label>
+                    <select class="form-control @error('classroom_id') is-invalid @enderror" id="classroom_id"
+                        name="classroom_id">
+                        @foreach ($classrooms as $classroom)
+                            <option value="{{ $classroom->id }}" @selected(old('classroom_id') == $classroom->id)>{{ $classroom->name }}
+                            </option>
+                        @endforeach
+                        @error('classroom_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </select>
                 </div>
 
                 <div class="mb-3 col-md-6">
                     <label for="Email" class="form-label">Email</label>
-                    <input type="email" class="form-control @error('Email') is-invalid @enderror" id="Email"
+                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="Email"
                         name="email" value="{{ old('email') }}" required>
-                    @error('Email')
+                    @error('email')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
@@ -55,7 +60,7 @@
                 <div class="mb-3 col-md-6">
                     <label for="address" class="form-label">Address</label>
                     <input type="text" class="form-control @error('address') is-invalid @enderror" id="address"
-                        name="address" value="{{ old('address') }}" >
+                        name="address" value="{{ old('address') }}">
                     @error('address')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -73,7 +78,7 @@
                 <div class="mb-3 col-md-6">
                     <label for="parent_phone" class="form-label">Parent phone</label>
                     <input type="text" class="form-control @error('parent_phone') is-invalid @enderror" id="parent_phone"
-                        name="parent_phone" value="{{ old('parent_phone') }}" >
+                        name="parent_phone" value="{{ old('parent_phone') }}">
                     @error('parent_phone')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -91,7 +96,7 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="d-flex justify-content-end">
+                <div class="col-md-12 d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary">Add Student</button>
                 </div>
             </form>

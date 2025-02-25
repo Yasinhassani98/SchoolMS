@@ -18,28 +18,31 @@
                 </div>
 
                 <div class="mb-3 col-md-6">
-                    <label for="grade_level" class="form-label">Classroom</label>
-                    <input type="number" class="form-control @error('classroom') is-invalid @enderror" id="classroom"
-                        name="classroom_id" value="{{ old('classroom_id',$student->classroom_id) }}" required>
-                    @error('classroom')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <label for="classroom" class="form-label">Classroom</label>
+                    <select class="form-control @error('classroom_id') is-invalid @enderror" id="classroom_id" name="classroom_id">
+                        @foreach ($classrooms as $classroom)
+                            <option value="{{ $classroom->id }}" @selected(old('classroom_id',$student->classroom_id) == $classroom->id)>{{ $classroom->name }}</option>
+                        @endforeach
+                        @error('classroom_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </select>
                 </div>
 
                 <div class="mb-3 col-md-6">
-                    <label for="Email" class="form-label">Email</label>
-                    <input type="email" class="form-control @error('Email') is-invalid @enderror" id="Email"
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="Email"
                         name="email" value="{{ old('email',$student->email) }}" required>
-                    @error('Email')
+                    @error('email')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="mb-3 col-md-6">
                     <label for="Phone" class="form-label">Phone</label>
-                    <input type="text" class="form-control @error('Phone') is-invalid @enderror" id="Phone"
-                        name="Phone" value="{{ old('Phone',$student->Phone) }}" >
-                    @error('Phone')
+                    <input type="text" class="form-control @error('phone') is-invalid @enderror" id="Phone"
+                        name="phone" value="{{ old('phone',$student->phone) }}" >
+                    @error('phone')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
@@ -92,7 +95,7 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="d-flex justify-content-end">
+                <div class="col-md-12 d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary">Update Student</button>
                 </div>
             </form>

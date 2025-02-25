@@ -10,8 +10,7 @@ class TeacherController extends Controller
     public function index()
     {
         $teachers = Teacher::orderby('created_at', 'desc')->paginate(10);
-        // dd($teachers);
-        return view('teachers.index', ['teachers' => $teachers])->with('success', 'Teacher created successfully');
+        return view('teachers.index', ['teachers' => $teachers]);
     }
     public function create()
     {

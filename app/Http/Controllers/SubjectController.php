@@ -2,22 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Level;
 use App\Models\Subject;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Schema;
 
 class SubjectController extends Controller
 {
     public function index()
     {
-        $subjects = Subject::all();
-        $counter = 1;
-        return view('subjects.index', compact('subjects', 'counter'));
+        $subjects = Subject::with('level')->paginate(10);
+        return view('subjects.index', compact('subjects'));
     }
     public function create()
     {
-        $levels = \App\Models\Level::all();
+        $levels = Level::all();
         return view('subjects.create', compact('levels'));
     }
     public function store(Request $request)
@@ -42,8 +40,7 @@ class SubjectController extends Controller
     }
     public function edit(Subject $subject)
     {
-        // dd($subject);
-        $levels = \App\Models\Level::all();
+        $levels = Level::all();
         return view('subjects.edit', ['subject' => $subject, 'levels' => $levels]);
     }
     public function update(Request $request, Subject $subject)

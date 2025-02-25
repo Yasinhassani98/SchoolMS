@@ -1,36 +1,31 @@
 @extends('layout.base')
-
+@section('title', 'Subject Details')
 @section('content')
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title
-                        ">Subject Details</h3>
-                        <a href="{{ route('subjects.index') }}" class="btn btn-primary float-left">Back</a>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Subject Name</th>
-                                    <th>Level name</th>
-                                    <th>Description</th>
-                                    <th>Type</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>{{ $subject->name ?? '' }}</td>
-                                    <td>{{ $subject->level->name ?? '' }}</td>
-                                    <td>{{ $subject->description ?? '' }}</td>
-                                    <td>{{ $subject->type ?? '' }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+    
+    <div class="card mb-4 mt-2 container">
+        <div class="card-body p-4">
+            <h5 class="card-title">Subject Details</h5>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <strong>Subject Name:</strong>
+                    <p>{{ $subject->name ?? '' }}</p>
                 </div>
+                <div class="col-md-6 mb-3">
+                    <strong>Level Name:</strong>
+                    <p>{{ $subject->level->name ?? '' }}</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <strong>Description:</strong>
+                    <p>{{ $subject->description ?? '' }}</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <strong>Type:</strong>
+                    <p>{{ ucfirst($subject->type ?? '') }}</p>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button href="{{ route('subjects.index') }}" class="btn btn-gray mx-2">Back</button>
+                <button href="{{ route('subjects.edit', $subject->id) }}" class="btn btn-primary">Edit</button>
             </div>
         </div>
     </div>

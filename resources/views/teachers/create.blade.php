@@ -1,5 +1,5 @@
 @extends('layout.base')
-
+@section('title', 'Add New teacher')
 @section('content')
 @if (session('success'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">

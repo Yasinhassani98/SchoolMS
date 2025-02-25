@@ -1,77 +1,73 @@
 @extends('layout.base')
-
+@section('title', 'teachers List')
 @section('content')
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center m-3">
+                        <h4 class="card-title">Students List</h4>
+                        <form action="{{ route('teachers.create') }}" method="GET">
+                            @csrf
+                            <button type="submit" class="btn btn-primary">Add teacher</button>
+                        </form>
+                    </div>
+                    <div class="active-member">
+                        <div class="table-responsive">
+                            <table class="table table-xs mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>id</th>
+                                        <th>name</th>
+                                        <th>claasroom id</th>
+                                        <th>phone</th>
+                                        <th>enrollment date</th>
+                                        <th>address</th>
+                                        <th>DOB</th>
+                                        <th>parent contact</th>
+                                        <th>status</th>
+                                        <th colspan="3">action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($students as $student)
+                                        <tr>
+                                            <td>{{ $student->id }}</td>
+                                            <td>{{ $student->name }}</td>
+                                            <td>{{ $student->classroom_id }}</td>
+                                            <td>{{ $student->phone }}</td>
+                                            <td>{{ $student->enrollment_date }}</td>
+                                            <td>{{ $student->address }}</td>
+                                            <td>{{ $student->date_of_birth }}</td>
+                                            <td>{{ $student->parent_phone }}</td>
+                                            <td>{{ $student->status }}</td>
+                                            <td>
+                                                <a href="{{ route('students.edit', $student->id) }}"
+                                                    class="btn btn-primary"><i
+                                                        class="fa-solid fa-pen-to-square"></i>Edit</a>
 
-    <div class="d-flex justify-content-center mt-3 mb-3">
-        <form action="{{ route('teachers.create') }}" method="GET">
-            <button type="submit" class="btn btn-primary">Add teacher</button>
-        </form>
-    </div>
-    <div class="container">
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </td>
+                                            <td>
+                                                <form action="{{ route('students.destroy', $student->id) }}" method="POST"
+                                                    class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('students.show', $student->id) }}"
+                                                    class="btn btn-primary"><i class="fa-solid fa-eye"></i>View</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        {{ $students->links('pagination::bootstrap-4') }}
+                    </div>
+                </div>
             </div>
-        @endif
-
-        @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-        <div class="d-flex justify-content-between align-items-center">
-            <table class="table table-bordered table-striped">
-                <thead class="table ">
-                    <tr class="text-center fs-5 ">
-                        <td>id</td>
-                        <td>name</td>
-                        <td>claasroom id</td>
-                        <td>phone</td>
-                        <td>enrollment date</td>
-                        <td>address</td>
-                        <td>date of birth</td>
-                        <td>parent phone</td>
-                        <td>status</td>
-                        <td colspan="3"></td>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($teachers as $teacher)
-                        <tr>
-                            <td>{{ $teacher->id ?? 'null'}}</td>
-                            <td>{{ $teacher->name ?? 'null'}}</td>
-                            <td>{{ $teacher->classroom_id ?? 'null'}}</td>
-                            <td>{{ $teacher->phone ?? 'null'}}</td>
-                            <td>{{ $teacher->enrollment_date ?? 'null'}}</td>
-                            <td>{{ $teacher->address ?? 'null'}}</td>
-                            <td>{{ $teacher->date_of_birth ?? 'null'}}</td>
-                            <td>{{ $teacher->parent_phone ?? 'null'}}</td>
-                            <td>{{ $teacher->status  ?? 'null'}}</td>
-                            <td>
-                                <a href="{{ route('teachers.edit', $teacher->id) }}" class="btn btn-primary"><i
-                                        class="fa-solid fa-pen-to-square"></i>Edit</a>
-
-                            </td>
-                            <td>
-                                <form action="{{ route('teachers.destroy', $teacher->id) }}" method="POST"
-                                    class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
-                            </td>
-                            <td>
-                                <a href="{{ route('teachers.show', $teacher->id) }}" class="btn btn-primary"><i
-                                        class="fa-solid fa-eye"></i>View</a>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
         </div>
-        {{ $teachers->links('pagination::bootstrap-4') }}
-    
-
+    </div>
 @endsection

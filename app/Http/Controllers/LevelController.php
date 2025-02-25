@@ -21,7 +21,7 @@ class LevelController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'level' => 'required|numeric|min:0|max:12',
+            'level' => 'required|numeric|min:0|max:12|unique:levels,level',
             
         ]);
 
