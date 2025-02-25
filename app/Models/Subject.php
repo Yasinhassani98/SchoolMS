@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Subject extends Model
 {
+    protected $fillable = [
+        'name',
+        'level_id',
+        'description',
+        'type'
+    ];
+
     public function level()
     {
         return $this->belongsTo(Level::class);

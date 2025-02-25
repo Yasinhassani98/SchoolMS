@@ -10,7 +10,7 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::orderBy('created_at', 'desc')->paginate(10);
-        return view('students.index', ['students' => $students])->with('success', 'Student created successfully');
+        return view('students.index', ['students' => $students]);
     }
     public function create()
     {
@@ -25,8 +25,8 @@ class StudentController extends Controller
         // dd($request);
         $request->validate([
             'name' => 'required',
-            'classroom_id' => 'required|exists:classrooms,id',
-            'Email' => 'required|email|unique:students',
+            'classroom_id' => 'sometimes|required|exists:classrooms,id',
+            'email' => 'required|email|unique:students,email',
             'Phone' => 'nullable',
             'enrollment_date' => 'nullable|date',
             'address' => 'nullable',
@@ -48,7 +48,7 @@ class StudentController extends Controller
         $request->validate([
             'name' => 'required',
             'classroom_id' => 'required|exists:classrooms,id',
-            'Email' => 'required|email|unique:students,email,' . $student->id,
+            'email' => 'required|email|unique:students,email,' . $student->id,
             'Phone' => 'nullable',
             'enrollment_date' => 'nullable|date',
             'address' => 'nullable',

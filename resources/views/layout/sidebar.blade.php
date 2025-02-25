@@ -16,6 +16,16 @@
                     <i class="fa-solid fa-users"></i><span class="nav-text">Classrooms</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('subjects.index') }}" aria-expanded="false">
+                    <i class="fa-solid fa-clipboard-list"></i><span class="nav-text">Subjects</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('levels.index') }}" aria-expanded="false">
+                    <i class="fa-solid fa-school"></i><span class="nav-text">Grade School</span>
+                </a>
+            </li>
         </ul>
     </div>
 </div>

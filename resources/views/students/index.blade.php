@@ -14,25 +14,34 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
+
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
+                
                 <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center m-3">
+                        <h4 class="card-title">Students List</h4>
+                        <form action="{{ route('students.create') }}" method="GET">
+                            @csrf
+                            <button type="submit" class="btn btn-primary">Add Student</button>
+                        </form>
+                    </div>
                     <div class="active-member">
                         <div class="table-responsive">
                             <table class="table table-xs mb-0">
                                 <thead>
                                     <tr>
-                                        <td>id</td>
-                                        <td>name</td>
-                                        <td>claasroom id</td>
-                                        <td>phone</td>
-                                        <td>enrollment date</td>
-                                        <td>address</td>
-                                        <td>DOB</td>
-                                        <td>parent contact</td>
-                                        <td>status</td>
-                                        <td colspan="2">action</td>
+                                        <th>id</th>
+                                        <th>name</th>
+                                        <th>claasroom id</th>
+                                        <th>phone</th>
+                                        <th>enrollment date</th>
+                                        <th>address</th>
+                                        <th>DOB</th>
+                                        <th>parent contact</th>
+                                        <th>status</th>
+                                        <th colspan="3">action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -61,6 +70,10 @@
                                                     <button type="submit" class="btn btn-danger">Delete</button>
                                                 </form>
                                             </td>
+                                            <td>
+                                                <a href="{{ route('students.show', $student->id) }}"
+                                                    class="btn btn-primary"><i class="fa-solid fa-eye"></i>View</a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -72,6 +85,4 @@
             </div>
         </div>
     </div>
-
-
 @endsection
