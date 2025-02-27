@@ -7,19 +7,19 @@
             <h5 class="card-title">Subject Details</h5>
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <strong>Subject Name:</strong>
+                    <strong class="text-secondary">Subject Name:</strong>
                     <p>{{ $subject->name ?? '' }}</p>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <strong>Level Name:</strong>
+                    <strong class="text-secondary">Level Name:</strong>
                     <p>{{ $subject->level->name ?? '' }}</p>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <strong>Description:</strong>
+                    <strong class="text-secondary">Description:</strong>
                     <p>{{ $subject->description ?? '' }}</p>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <strong>Type:</strong>
+                    <strong class="text-secondary">Type:</strong>
                     <p>{{ ucfirst($subject->type ?? '') }}</p>
                 </div>
             </div>

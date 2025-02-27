@@ -6,44 +6,44 @@
         <div class="card-body p-4">
             <h5 class="card-title">Student Details</h5>
             <div class="row">
-                <div class="col-md-6 mb-3">
+                <div class="col-md-12 mt-3 mb-3">
                     <img src="{{ asset('storage/' . $student->image) ?? 'null' }}" alt="Profile Picture"
-                        class="img-fluid rounded-circle" style="width: 200px; height: 200px;">
+                        class="img-fluid rounded-circle object-fit-contain" style="width: 200px; height: 200px;">
                 </div>
                 <div class="col-md-6 mb-3">
-                    <strong>Student Name:</strong>
+                    <strong class="text-secondary">Student Name:</strong>
                     <p>{{ $student->name }}</p>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <strong>Classroom Name:</strong>
+                    <strong class="text-secondary">Classroom Name:</strong>
                     <p>{{ $student->classroom->name }}</p>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <strong>Email:</strong>
+                    <strong class="text-secondary">Email:</strong>
                     <p>{{ $student->email }}</p>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <strong>Phone:</strong>
+                    <strong class="text-secondary">Phone:</strong>
                     <p>{{ $student->phone }}</p>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <strong>Enrollment Date:</strong>
+                    <strong class="text-secondary">Enrollment Date:</strong>
                     <p>{{ $student->enrollment_date }}</p>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <strong>Address:</strong>
+                    <strong class="text-secondary">Address:</strong>
                     <p>{{ $student->address }}</p>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <strong>Date of Birth:</strong>
+                    <strong class="text-secondary">Date of Birth:</strong>
                     <p>{{ $student->date_of_birth }}</p>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <strong>Parent Phone:</strong>
+                    <strong class="text-secondary">Parent Phone:</strong>
                     <p>{{ $student->parent_phone }}</p>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <strong>Status:</strong>
+                    <strong class="text-secondary">Status:</strong>
                     <p>{{ ucfirst($student->status) }}</p>
                 </div>
 

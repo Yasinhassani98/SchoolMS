@@ -35,8 +35,8 @@ class LevelController extends Controller
     public function update(Request $request, Level $level)
     {
         $request->validate([
-            'name' => 'sometimes|required',
-            'level' => 'sometimes|required|numeric|min:0|max:12|unique:levels,level,' . $level->id,
+            'name' => 'required',
+            'level' => 'required|numeric|min:0|max:12|unique:levels,level,' . $level->id,
         ]);
         $level->update($request->all());
         return redirect()->route('levels.index')->with('success', 'Level updated successfully');

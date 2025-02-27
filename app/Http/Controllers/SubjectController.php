@@ -46,9 +46,9 @@ class SubjectController extends Controller
     public function update(Request $request, Subject $subject)
     {
         $request->validate([
-            'name' => 'sometimes|required|string|max:255',
-            'level_id' => 'sometimes|required|exists:levels,id',
-            'description' => 'sometimes|required|string|min:3|max:255',
+            'name' => 'required|string|max:255',
+            'level_id' => 'required|exists:levels,id',
+            'description' => 'required|string|min:3|max:255',
             'type' => 'required|in:required,optional',
         ]);
         $subject->update($request->all());

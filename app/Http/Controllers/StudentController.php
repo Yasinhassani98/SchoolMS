@@ -28,14 +28,14 @@ class StudentController extends Controller
     {
         // dd($request);
         $valedated=$request->validate([
-            'name' => 'required',
+            'name' => 'required|min:3|mac_address',
             'classroom_id' => 'sometimes|required|exists:classrooms,id',
             'email' => 'required|email|unique:students,email',
-            'Phone' => 'nullable',
+            'Phone' => 'nullable|string|max:20',
             'enrollment_date' => 'nullable|date',
-            'address' => 'nullable',
+            'address' => 'nullable|max:255',
             'date_of_birth' => 'nullable|date',
-            'parent_phone' => 'nullable',
+            'parent_phone' => 'nullable|string|max:20',
             'image' => 'nullable|image',
             'status' => 'required|in:active,inactive',
         ]);
@@ -62,14 +62,14 @@ class StudentController extends Controller
         // dd($request);
         $request->validate([
             'name' => 'required',
-            'classroom_id' => 'required|exists:classrooms,id',
+            'classroom_id' => 'sometimes|required|exists:classrooms,id',
             'email' => 'required|email|unique:students,email,' . $student->id,
-            'Phone' => 'nullable',
+            'Phone' => 'nullable|string|max:20',
             'enrollment_date' => 'nullable|date',
-            'address' => 'nullable',
+            'address' => 'nullable|max:255',
             'image' => 'nullable|image',
             'date_of_birth' => 'nullable|date',
-            'parent_phone' => 'nullable',
+            'parent_phone' => 'nullable|string|max:20',
             'status' => 'required|in:active,inactive',
         ]);
 

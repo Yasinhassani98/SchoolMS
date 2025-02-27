@@ -23,12 +23,12 @@ class TeacherController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|min:3|max:255',
             'classroom_id' => 'required|exists:classrooms,id',
             'email' => 'required|email|unique:teachers',
-            'phone' => 'nullable',
+            'phone' => 'nullable|string|max:20',
             'date_of_birth' => 'nullable|date',
-            'specialization' => 'nullable',
+            'specialization' => 'nullable|max:255',
             'status' => 'required|in:active,inactive',
         ]);
         Teacher::create($request->all());
