@@ -17,7 +17,7 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     {{-- Font Awesome --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+    @stack('styles')
 </head>
 
 <body>
@@ -696,10 +696,8 @@
     <!-- ChartistJS -->
     <script src="{{ asset('plugins/chartist/js/chartist.min.js') }}"></script>
     <script src="{{ asset('plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js') }}"></script>
-
-
-
     <script src="{{ asset('js/dashboard/dashboard-1.js') }}"></script>
+    @stack('scripts')
 
 </body>
 

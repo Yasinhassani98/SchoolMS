@@ -1,11 +1,12 @@
 @extends('layout.base')
-@section('title', 'Add New Teacher')
+@section('title', 'Edit Teacher {{ $teacher->name }}')
 @section('content')
 
     <div class="card mb-4 mt-2 container">
         <div class="card-body p-4">
-            <h5 class="card-title">Add New Teacher</h5>
-            <form enctype="multipart/form-data" class="row" action="{{ route('teachers.store') }}" method="POST">
+            <h5 class="card-title">Edit Teacher {{ $teacher->name }}</h5>
+            <form enctype="multipart/form-data" class="row" action="{{ route('teachers.update',$teacher->id) }}" method="POST">
+                @method('PUT')
                 @csrf
                 <div class="mb-3 col-md-6">
                     <label for="image" class="form-label">Image</label>
@@ -18,7 +19,7 @@
                 <div class="mb-3 col-md-6">
                     <label for="name" class="form-label">Teacher Name</label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                        name="name" value="{{ old('name') }}" required>
+                        name="name" value="{{ old('name',$teacher->name) }}" required>
                     @error('name')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -28,7 +29,12 @@
                     <label for="classroom_ids" class="form-label">Classrooms</label>
                     <input name="classroom_ids" id="classroom_ids"
                         class="form-control @error('classroom_ids') is-invalid @enderror"
-                        value="{{ old('classroom_ids') }}">
+                        value="{{ old('classroom_ids', $teacher->classrooms->map(function($classroom) {
+                            return [
+                                'value' => $classroom->id,
+                                'label' => 'Grade ' . $classroom->level->level . ' - ' . $classroom->name
+                            ]; 
+                        })->toJson()) }}">
                     @error('classroom_ids')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -37,7 +43,12 @@
                     <label for="subject_ids" class="form-label">Subjects</label>
                     <input name="subject_ids" id="subject_ids"
                         class="form-control @error('subject_ids') is-invalid @enderror"
-                        value="{{ old('subject_ids') }}">
+                        value="{{ old('subject_ids', $teacher->subjects->map(function($subject) {
+                            return [
+                                'value' => $subject->id,
+                                'label' => $subject->level->level . ' - ' . $subject->name
+                            ]; 
+                        })->toJson()) }}">
                     @error('subject_ids')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -46,7 +57,7 @@
                 <div class="mb-3 col-md-6">
                     <label for="Email" class="form-label">Email</label>
                     <input type="email" class="form-control @error('email') is-invalid @enderror" id="Email"
-                        name="email" value="{{ old('email') }}" required>
+                        name="email" value="{{ old('email',$teacher->email) }}" required>
                     @error('email')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -55,7 +66,7 @@
                 <div class="mb-3 col-md-6">
                     <label for="phone" class="form-label">Phone</label>
                     <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone"
-                        name="phone" value="{{ old('phone') }}">
+                        name="phone" value="{{ old('phone',$teacher->phone) }}">
                     @error('phone')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -64,7 +75,7 @@
                 <div class="mb-3 col-md-6">
                     <label for="date_of_birth" class="form-label">Date of birth</label>
                     <input type="date" class="form-control @error('date_of_birth') is-invalid @enderror"
-                        id="date_of_birth" name="date_of_birth" value="{{ old('date_of_birth') }}" required>
+                        id="date_of_birth" name="date_of_birth" value="{{ old('date_of_birth',$teacher->date_of_birth) }}" required>
                     @error('date_of_birth')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -73,7 +84,7 @@
                 <div class="mb-3 col-md-6">
                     <label for="specialization" class="form-label">Specialization</label>
                     <input type="text" class="form-control @error('specialization') is-invalid @enderror" id="phone"
-                        name="specialization" value="{{ old('specialization') }}">
+                        name="specialization" value="{{ old('specialization',$teacher->specialization) }}">
                     @error('specialization')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

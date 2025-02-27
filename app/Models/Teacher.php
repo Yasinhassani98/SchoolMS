@@ -14,4 +14,14 @@ class Teacher extends Model
     public function subjects(){
         return $this->belongsToMany(Subject::class,'subject_teacher');
     }
+
+    public function getEmailAttribute($value)
+    {
+        return strtolower($value);
+    }
+
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = strtolower($value);
+    }
 }

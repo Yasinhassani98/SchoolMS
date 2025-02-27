@@ -17,7 +17,6 @@
                         <table class="table table-xs mb-0">
                             <thead>
                                 <tr>
-                                    <th>id</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>phone</th>
@@ -28,9 +27,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($teachers as $teacher)
+                                @forelse($teachers as $teacher)
                                 <tr>
-                                    <td>{{ $teacher->id }}</td>
                                     <td>{{ $teacher->name }}</td>
                                     <td>{{ $teacher->email }}</td>
                                     <td>{{ $teacher->phone }}</td>
@@ -39,24 +37,26 @@
                                     <td>{{ $teacher->status }}</td>
                                     <td>
                                         <a href="{{ route('teachers.edit', $teacher->id) }}"
-                                            class="btn btn-primary"><i
-                                                class="fa-solid fa-pen-to-square"></i>Edit</a>
-
+                                            ><i class="fa-solid fa-pen-to-square text-warning"></i></a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('teachers.show', $teacher->id) }}"
+                                            ><i class="fa-solid fa-eye text-success"></i></a>
                                     </td>
                                     <td>
                                         <form action="{{ route('teachers.destroy', $teacher->id) }}" method="POST"
                                             class="d-inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                            <button class="btn p-0 border-0 shadow-none bg-white" type="submit"><i class="fa-solid fa-trash text-danger"></i></button>
                                         </form>
                                     </td>
-                                    <td>
-                                        <a href="{{ route('teachers.show', $teacher->id) }}"
-                                            class="btn btn-primary"><i class="fa-solid fa-eye"></i>View</a>
-                                    </td>
                                 </tr>
-                                @endforeach
+                                @empty
+                                <tr>
+                                    <td colspan="7">No data found.</td>
+                                </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

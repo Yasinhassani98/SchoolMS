@@ -9,6 +9,14 @@
                 @method('PUT')
                 @csrf
                 <div class="mb-3 col-md-6">
+                    <label for="image" class="form-label">Image</label>
+                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="image"
+                        name="image" value="{{ old('image',$student->image) }}">
+                    @error('image')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="mb-3 col-md-6">
                     <label for="name" class="form-label">Student Name</label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
                         name="name" value="{{ old('name',$student->name) }}" required>
@@ -81,12 +89,6 @@
                     @error('parent_phone')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                </div>
-
-                <div>
-                    <label for="image" class="form-label">Image</label>
-                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="image"
-                        name="image" value="{{ old('image') }}">
                 </div>
 
                 <div class="mb-3 col-md-6">
