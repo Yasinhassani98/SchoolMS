@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StudentRequest;
 use App\Models\Classroom;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -24,22 +25,10 @@ class StudentController extends Controller
     {
         return view('students.show', ['student' => $student]);
     }
-    public function store(Request $request)
+    public function store(StudentRequest $request)
     {
-        // dd($request);
-        $valedated=$request->validate([
-            'name' => 'required|min:3|mac_address',
-            'classroom_id' => 'sometimes|required|exists:classrooms,id',
-            'email' => 'required|email|unique:students,email',
-            'Phone' => 'nullable|string|max:20',
-            'enrollment_date' => 'nullable|date',
-            'address' => 'nullable|max:255',
-            'date_of_birth' => 'nullable|date',
-            'parent_phone' => 'nullable|string|max:20',
-            'image' => 'nullable|image',
-            'status' => 'required|in:active,inactive',
-        ]);
-        // dd($request);
+        $valedated=$request->validated();
+        
         $post = new Student($valedated);
         if(request()->hasFile('image')) {
             $image = request()->file('image');

@@ -45,5 +45,20 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    /**
+     * Get the user's email address.
+     */
+    public function getEmailAttribute($value)
+    {
+        return strtolower($value);
+    }
+
+    /**
+     * Set the user's email address.
+     */
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = strtolower($value);
+    }
     
 }
