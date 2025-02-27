@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone')->nullable();
             $table->date('enrollment_date')->nullable();
+            $table->string('image')->nullable();
             $table->text('address')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->string('parent_phone')->nullable();

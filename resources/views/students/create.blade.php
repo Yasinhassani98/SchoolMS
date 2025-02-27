@@ -5,7 +5,7 @@
     <div class="card mb-4 mt-2 container">
         <div class="card-body p-4">
             <h5 class="card-title">Add New Student</h5>
-            <form class="row" action="{{ route('students.store') }}" method="POST">
+            <form enctype="multipart/form-data" class="row" action="{{ route('students.store') }}" method="POST">
                 @csrf
                 <div class="mb-3 col-md-6">
                     <label for="name" class="form-label">Student Name</label>
@@ -83,7 +83,11 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-
+                <div>
+                    <label for="image" class="form-label">Image</label>
+                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="image"
+                        name="image" value="{{ old('image') }}">
+                </div>
 
 
                 <div class="mb-3 col-md-6">
