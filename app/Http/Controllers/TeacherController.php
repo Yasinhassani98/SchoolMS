@@ -71,7 +71,7 @@ class TeacherController extends Controller
             'name' => 'required|min:3|max:255',
             'classroom_ids' => 'nullable|string',
             'subject_ids' => 'nullable|string',
-            'email' => 'required|email|unique:teachers,email' . $teacher->id,
+            'email' => 'required|email|unique:teachers,email,' . $teacher->id,
             'phone' => 'nullable|string|max:20',
             'date_of_birth' => 'nullable|date',
             'specialization' => 'nullable|max:255',
@@ -80,6 +80,7 @@ class TeacherController extends Controller
         $teacher->update([
             ...$request->except('image', 'classroom_ids', 'subject_ids'),
         ]);
+
         if($request->hasFile('image')) {
             // Delete old image if exists
             if($teacher->image) {
@@ -91,15 +92,14 @@ class TeacherController extends Controller
         }
 
         if ($request->filled('classroom_ids')) {
-            $classroom_ids = json_decode($request->classroom_ids);
-            $classroom_ids = collect($classroom_ids)->pluck('value')->toArray();
+            $classroom_ids = array_filter(explode(',', $request->classroom_ids));
             $teacher->classrooms()->sync($classroom_ids);
         }
         if ($request->filled('subject_ids')) {
-            $subject_ids = json_decode($request->subject_ids);
-            $classroom_ids = collect($subject_ids)->pluck('value')->toArray();
+            $subject_ids = array_filter(explode(',', $request->subject_ids));
             $teacher->subjects()->sync($subject_ids);
         }
+        return redirect()->route('teachers.index')->with('success', 'Teacher updated successfully');
     }
     public function destroy(Teacher $teacher)
     {

@@ -11,8 +11,13 @@ class MarkController extends Controller
 {
     public function index()
     {
-        $marks = Mark::with('student', 'subject')->orderBy(Student::select('name')->whereColumn('students.id', 'marks.student_id'))->get();
-        // dd($marks);
+        $marks = Mark::query()
+            ->with(['student', 'subject'])
+            ->join('students', 'marks.student_id', '=', 'students.id')
+            ->select('marks.*')
+            ->orderBy('students.name')
+            ->paginate(10);
+
         return view('marks.index', compact('marks'));
     }
     public function create()
@@ -48,10 +53,10 @@ class MarkController extends Controller
             'mark' => 'required|numeric|min:0|max:100',
         ]);
         $mark->update($validatedData);
-        return redirect()->route('marks.index')->with('success','The mark updated');
+        return redirect()->route('marks.index')->with('success','Mark updated successfully');
     }
     public function destroy(Mark $mark){
         $mark->delete();
-        return redirect()->route('marks.index')->with('success','the mark is deleted');
+        return redirect()->route('marks.index')->with('success','Mark deleted successfully');
     }
 }

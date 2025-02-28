@@ -10,7 +10,7 @@ class ClassroomController extends Controller
 {
     public function index()
     {
-        $classrooms = Classroom::all();
+        $classrooms = Classroom::paginate(10);
         return view('classrooms.index', compact('classrooms'));
     }
     public function create()
@@ -22,10 +22,10 @@ class ClassroomController extends Controller
     {
         $valedated = $request->validate([
             'level_id' => 'required|exists:Levels,id',
-            'name' => 'required'
+            'name' => 'required|min:3|max:255'
         ]);
         Classroom::create($valedated);
-        return redirect()->route('classrooms.index')->with('success', 'The Classroom is created');
+        return redirect()->route('classrooms.index')->with('success', 'Classroom created successfully');
     }
     public function edit(Classroom $classroom)
     {
@@ -36,16 +36,16 @@ class ClassroomController extends Controller
     public function update(Request $request, Classroom $classroom)
     {
         $validated = $request->validate([
-            'level_id' => 'required|exists:Levels,id',
-            'name' => 'required'
+            'level_id' => 'required|exists:Levels,id,'. $classroom->id,
+            'name' => 'required|min:3|max:255'
         ]);
         $classroom->update($validated);
-        return redirect()->route('classrooms.index')->with('success', 'The Classroom is updated');
+        return redirect()->route('classrooms.index')->with('success', 'Classroom updated successfully');
     }
 
     public function destroy(Classroom $classroom)
     {
         $classroom->delete();
-        return redirect()->route('classrooms.index')->with('success', 'The Classroom is deleted');
+        return redirect()->route('classrooms.index')->with('success', 'Classroom deleted successfully');
     }
 }

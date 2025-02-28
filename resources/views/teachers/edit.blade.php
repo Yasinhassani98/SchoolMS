@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="mb-3 col-md-6">
-                    <label for="Email" class="form-label">Email</label>
+                    <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control @error('email') is-invalid @enderror" id="Email"
                         name="email" value="{{ old('email',$teacher->email) }}" required>
                     @error('email')
@@ -102,7 +102,7 @@
                     @enderror
                 </div>
                 <div class="col-md-12 d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary">Add teacher</button>
+                    <button type="submit" class="btn btn-primary">Update teacher</button>
                 </div>
             </form>
         </div>

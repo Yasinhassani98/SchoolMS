@@ -54,7 +54,7 @@
                     </div>
                 </div>
             </div>
-            {{-- {{ $marks->links() }} --}}
+            {{ $marks->links() }}
         </div>
     </div>
 @endsection

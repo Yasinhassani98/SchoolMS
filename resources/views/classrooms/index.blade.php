@@ -54,7 +54,7 @@
                     </div>
                 </div>
             </div>
-            {{-- {{ $classrooms->links() }} --}}
+            {{ $classrooms->links() }}
         </div>
     </div>
 @endsection

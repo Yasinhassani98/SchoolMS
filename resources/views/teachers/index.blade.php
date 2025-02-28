@@ -60,7 +60,7 @@
                             </tbody>
                         </table>
                     </div>
-                    {{ $teachers->links('pagination::bootstrap-4') }}
+                    {{ $teachers->links() }}
                 </div>
             </div>
         </div>

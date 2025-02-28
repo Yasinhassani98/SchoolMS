@@ -60,7 +60,7 @@
                     </div>
                 </div>
             </div>
-            {{ $subjects->links('pagination::bootstrap-4') }}
+            {{ $subjects->links() }}
         </div>
     </div>
 @endsection
