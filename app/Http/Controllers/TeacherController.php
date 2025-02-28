@@ -22,9 +22,9 @@ class TeacherController extends Controller
             'subjects' => Subject::with('level')->get()
         ]);
     }
-    public function show()
+    public function show(Teacher $teacher)
     {
-        return view('teachers.show');
+        return view('teachers.show', ['teacher' => $teacher]);
     }
     public function store(Request $request)
     {

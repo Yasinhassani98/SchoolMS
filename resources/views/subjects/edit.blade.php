@@ -4,7 +4,7 @@
 
     <div class="card mb-4 mt-2 container">
         <div class="card-body p-4">
-            <h5 class="card-title">Add New Subject</h5>
+            <h5 class="card-title">Edit Subject</h5>
             <form class="row" method="POST" action="{{ route('subjects.store') }}">
                 @csrf
                 @method('PUT')
@@ -46,7 +46,7 @@
                     @enderror
                 </div>
                 <div class="col-md-12 d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary">Create Subject</button>
+                    <button type="submit" class="btn btn-primary">Update Subject</button>
                 </div>
             </form>
         </div>

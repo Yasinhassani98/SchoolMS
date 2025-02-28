@@ -23,7 +23,12 @@
             </li>
             <li>
                 <a href="{{ route('levels.index') }}" aria-expanded="false">
-                    <i class="fa-solid fa-school"></i><span class="nav-text">Grade School</span>
+                    <i class="fa-solid fa-school"></i><span class="nav-text">Levels</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('marks.index') }}" aria-expanded="false">
+                    <i class="fa-solid fa-marker"></i><span class="nav-text">Marks</span>
                 </a>
             </li>
         </ul>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\LevelController;
+use App\Http\Controllers\MarkController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
@@ -37,4 +38,7 @@ Route::resource('subjects',SubjectController::class);
 
 // Levels Routes
 Route::resource('levels',LevelController::class);
+
+// Marks Routes
+Route::resource('marks',MarkController::class);
 require __DIR__.'/auth.php';

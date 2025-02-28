@@ -10,7 +10,8 @@ class Subject extends Model
         'name',
         'level_id',
         'description',
-        'type'
+        'type',
+        'marks', // تأكد من إضافة هذا الحقل
     ];
 
     public function level()
