@@ -26,6 +26,17 @@
                 </div>
 
                 <div class="mb-3 col-md-6">
+                    <label for="gender" class="form-label">Gender</label>
+                    <select class="form-control @error('gender') is-invalid @enderror" id="gender" name="gender">
+                        <option value="male" @selected(old('gender',$student->gender) == 'male')>Male</option>
+                        <option value="female" @selected(old('gender',$student->gender) == 'female')>Female</option>
+                    </select>
+                    @error('gender')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3 col-md-6">
                     <label for="classroom" class="form-label">Classroom</label>
                     <select class="form-control @error('classroom_id') is-invalid @enderror" id="classroom_id" name="classroom_id">
                         @foreach ($classrooms as $classroom)

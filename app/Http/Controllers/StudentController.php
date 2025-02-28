@@ -51,6 +51,7 @@ class StudentController extends Controller
         // dd($request);
         $request->validate([
             'name' => 'required',
+            'gender' => 'required|in:male,female',
             'classroom_id' => 'sometimes|required|exists:classrooms,id',
             'email' => 'required|email|unique:students,email,' . $student->id,
             'Phone' => 'nullable|string|max:20',

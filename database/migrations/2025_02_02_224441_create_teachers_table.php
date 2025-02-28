@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('date_of_birth')->nullable();
             $table->string('specialization')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->enum('gender', ['male', 'female'])->default('male');
             $table->timestamps();
         });
     }

@@ -25,6 +25,17 @@
                     @enderror
                 </div>
 
+                <div class="mb-3 col-md-6">
+                    <label for="gender" class="form-label">Gender</label>
+                    <select class="form-control @error('gender') is-invalid @enderror" id="gender" name="gender">
+                        <option value="male" @selected(old('gender',$teacher->gender) == 'male')>Male</option>
+                        <option value="female" @selected(old('gender',$teacher->gender) == 'female')>Female</option>
+                    </select>
+                    @error('gender')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
                 <div class="mb-3 col-md-12">
                     <label for="classroom_ids" class="form-label">Classrooms</label>
                     <input name="classroom_ids" id="classroom_ids"

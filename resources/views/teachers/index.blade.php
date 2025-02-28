@@ -18,6 +18,7 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Gender</th>
                                     <th>Email</th>
                                     <th>phone</th>
                                     <th>Date of Birth</th>
@@ -30,6 +31,7 @@
                                 @forelse($teachers as $teacher)
                                 <tr>
                                     <td>{{ $teacher->name }}</td>
+                                    <td>{{ $teacher->gender }}</td>
                                     <td>{{ $teacher->email }}</td>
                                     <td>{{ $teacher->phone }}</td>
                                     <td>{{ $teacher->date_of_birth }}</td>

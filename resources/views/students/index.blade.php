@@ -18,6 +18,7 @@
                                 <thead>
                                     <tr>
                                         <th>Name</th>
+                                        <th>Gender</th>
                                         <th>Claasroom Name</th>
                                         <th>Phone</th>
                                         <th>Enrollment Date</th>
@@ -32,6 +33,7 @@
                                     @forelse($students as $student)
                                         <tr>
                                             <td>{{ $student->name }}</td>
+                                            <td>{{ $student->gender }}</td>
                                             <td>{{ $student->classroom->name }}</td>
                                             <td>{{ $student->phone }}</td>
                                             <td>{{ $student->enrollment_date }}</td>

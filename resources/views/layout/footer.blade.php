@@ -1,7 +1,8 @@
-
 <div class="footer">
     <div class="copyright">
-        <p>Copyright &copy; Designed & Developed by <span class="text-primary">Yasin & Omar</span>
-            2025</p>
+        <p class="mb-0">
+            Copyright &copy; 2025 - Designed & Developed by
+            <span class="text-primary fw-bold">Yasin & Omar</span>
+        </p>
     </div>
 </div>

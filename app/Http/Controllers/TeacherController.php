@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TeacherRequest;
 use App\Models\Classroom;
 use App\Models\Subject;
 use App\Models\Teacher;
@@ -26,19 +27,9 @@ class TeacherController extends Controller
     {
         return view('teachers.show', ['teacher' => $teacher]);
     }
-    public function store(Request $request)
+    public function store(TeacherRequest $request)
     {
-        $request->validate([
-            'image' => 'nullable|image',
-            'name' => 'required|min:3|max:255',
-            'classroom_ids' => 'nullable|string',
-            'subject_ids' => 'nullable|string',
-            'email' => 'required|email|unique:teachers,email',
-            'phone' => 'nullable|string|max:20',
-            'date_of_birth' => 'nullable|date',
-            'specialization' => 'nullable|max:255',
-            'status' => 'required|in:active,inactive',
-        ]);
+        
         $teacher = Teacher::create([
             ...$request->except('image', 'classroom_ids', 'subject_ids'),
             'image' => $request->hasFile('image')
@@ -69,6 +60,7 @@ class TeacherController extends Controller
         $request->validate([
             'image' => 'nullable|image',
             'name' => 'required|min:3|max:255',
+            'gender' => 'required|in:male,female',
             'classroom_ids' => 'nullable|string',
             'subject_ids' => 'nullable|string',
             'email' => 'required|email|unique:teachers,email,' . $teacher->id,

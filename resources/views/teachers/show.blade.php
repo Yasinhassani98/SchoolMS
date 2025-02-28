@@ -8,13 +8,23 @@
     <div class="card-body p-4">
         <div class="row">
             <div class="col-md-12 text-center mb-4">
-                <img src="{{ asset('storage/' . $teacher->image) ?? 'null' }}" alt="Profile Picture"
-                    class="img-fluid rounded-circle object-fit-contain shadow-sm" style="width: 200px; height: 200px;">
+                <img src="{{ $teacher->image ? asset('storage/' . $teacher->image) : asset('images/default-avatar.png') }}" 
+                    alt="{{ $teacher->name }}'s Profile Picture"
+                    class="img-fluid rounded-circle shadow-sm"
+                    style="width: 200px; height: 200px; object-fit: cover;"
+                    loading="lazy"
+                >
             </div>
             <div class="col-md-6 mb-3">
                 <div class="card bg-light p-3">
                     <strong class="text-secondary">teacher Name:</strong>
                     <p class="mb-0">{{ $teacher->name ?? 'null' }}</p>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="card bg-light p-3">
+                    <strong class="text-secondary">teacher Gender:</strong>
+                    <p class="mb-0">{{ $teacher->gender ?? 'null' }}</p>
                 </div>
             </div>
             {{-- <div class="col-md-6 mb-3">

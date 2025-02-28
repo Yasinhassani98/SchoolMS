@@ -9,13 +9,23 @@
         <div class="card-body p-4">
             <div class="row">
                 <div class="col-md-12 text-center mb-4">
-                    <img src="{{ asset('storage/' . $student->image) ?? 'null' }}" alt="Profile Picture"
-                        class="img-fluid rounded-circle object-fit-contain shadow-sm" style="width: 200px; height: 200px;">
+                    <img src="{{ $student->image ? asset('storage/' . $student->image) : asset('images/default-avatar.png') }}" 
+                        alt="{{ $student->name }}'s Profile Picture"
+                        class="img-fluid rounded-circle shadow-sm"
+                        style="width: 200px; height: 200px; object-fit: cover;"
+                        loading="lazy"
+                    >
                 </div>
                 <div class="col-md-6 mb-3">
                     <div class="card bg-light p-3">
                         <strong class="text-secondary">Student Name:</strong>
                         <p class="mb-0">{{ $student->name }}</p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="card bg-light p-3">
+                        <strong class="text-secondary">Student Gender:</strong>
+                        <p class="mb-0">{{ $student->gender }}</p>
                     </div>
                 </div>
                 <div class="col-md-6 mb-3">
