@@ -28,4 +28,17 @@ class Teacher extends Model
     {
         $this->attributes['email'] = strtolower($value);
     }
+    public function  getImageURL()
+    {
+        if ($this->image) {
+
+            return url("/storage/" . $this->image);
+        } else {
+            if ($this->gender == 'male') {
+                return url("/male/user.png");
+            } else {
+                return url("/female/female.png");
+            }
+        }
+    }
 }
