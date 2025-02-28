@@ -1,5 +1,5 @@
 @extends('layout.base')
-@section('title', 'Edit Teacher {{ $teacher->name }}')
+@section('title', 'Edit Teacher')
 @section('content')
 
     <div class="card mb-4 mt-2 container">

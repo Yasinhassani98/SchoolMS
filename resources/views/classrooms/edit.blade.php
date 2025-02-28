@@ -1,10 +1,10 @@
 @extends('layout.base')
-@section('title', 'Edit New Classroom')
+@section('title', 'Edit Classroom')
 @section('content')
 
     <div class="card mb-4 mt-2 container">
         <div class="card-body p-4">
-            <h5 class="card-title">Edit name</h5>
+            <h5 class="card-title">Edit Classroom {{ $classroom->name }}</h5>
             <form class="row" method="POST" action="{{ route('classrooms.store') }}">
                 @csrf
                 @method('PUT')

@@ -1,10 +1,9 @@
 @extends('layout.base')
-{{-- @extends('title','Teacher Details') --}}
-
+@section('title','Teacher Details')
 @section('content')
 <div class="card mb-4 mt-4 shadow">
     <div class="card-header bg-primary text-white justify-content-center d-flex">
-        <h5 class="card-title mb-0">teacher Details</h5>
+        <h5 class="card-title mb-0">Teacher Details</h5>
     </div>
     <div class="card-body p-4">
         <div class="row">
