@@ -22,7 +22,7 @@ class ClassroomController extends Controller
     {
         $valedated = $request->validate([
             'level_id' => 'required|exists:Levels,id',
-            'name' => 'required|min:3|max:255'
+            'name' => 'required|max:255'
         ]);
         Classroom::create($valedated);
         return redirect()->route('classrooms.index')->with('success', 'Classroom created successfully');
@@ -37,7 +37,7 @@ class ClassroomController extends Controller
     {
         $validated = $request->validate([
             'level_id' => 'required|exists:Levels,id,'. $classroom->id,
-            'name' => 'required|min:3|max:255'
+            'name' => 'required|max:255'
         ]);
         $classroom->update($validated);
         return redirect()->route('classrooms.index')->with('success', 'Classroom updated successfully');
