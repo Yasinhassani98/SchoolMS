@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TeacherRequest;
 use App\Models\Classroom;
 use App\Models\Subject;
 use App\Models\Teacher;
@@ -26,19 +27,8 @@ class TeacherController extends Controller
     {
         return view('teachers.show', ['teacher' => $teacher]);
     }
-    public function store(Request $request)
+    public function store(TeacherRequest $request)
     {
-        $request->validate([
-            'image' => 'nullable|image',
-            'name' => 'required|min:3|max:255',
-            'classroom_ids' => 'nullable|string',
-            'subject_ids' => 'nullable|string',
-            'email' => 'required|email|unique:teachers,email',
-            'phone' => 'nullable|string|max:20',
-            'date_of_birth' => 'nullable|date',
-            'specialization' => 'nullable|max:255',
-            'status' => 'required|in:active,inactive',
-        ]);
         $teacher = Teacher::create([
             ...$request->except('image', 'classroom_ids', 'subject_ids'),
             'image' => $request->hasFile('image')
@@ -69,9 +59,10 @@ class TeacherController extends Controller
         $request->validate([
             'image' => 'nullable|image',
             'name' => 'required|min:3|max:255',
+            'gender' => 'required|in:male,female',
             'classroom_ids' => 'nullable|string',
             'subject_ids' => 'nullable|string',
-            'email' => 'required|email|unique:teachers,email' . $teacher->id,
+            'email' => 'required|email|unique:teachers,email,' . $teacher->id,
             'phone' => 'nullable|string|max:20',
             'date_of_birth' => 'nullable|date',
             'specialization' => 'nullable|max:255',
@@ -91,15 +82,19 @@ class TeacherController extends Controller
         }
 
         if ($request->filled('classroom_ids')) {
-            $classroom_ids = json_decode($request->classroom_ids);
-            $classroom_ids = collect($classroom_ids)->pluck('value')->toArray();
+            $classroom_ids = array_filter(explode(',', $request->classroom_ids));
             $teacher->classrooms()->sync($classroom_ids);
+        } else {
+            $teacher->classrooms()->detach();
         }
         if ($request->filled('subject_ids')) {
-            $subject_ids = json_decode($request->subject_ids);
-            $classroom_ids = collect($subject_ids)->pluck('value')->toArray();
+            $subject_ids = array_filter(explode(',', $request->subject_ids));
             $teacher->subjects()->sync($subject_ids);
+        } else {
+            $teacher->subjects()->detach();
         }
+
+        return redirect()->route('teachers.index')->with('success', 'Teacher updated successfully');
     }
     public function destroy(Teacher $teacher)
     {

@@ -9,12 +9,19 @@
             <div class="row">
                 <div class="col-md-12 text-center mb-4">
                     <img src="{{ $teacher->getImageURL() }}" alt="Profile Picture"
-                        class="img-fluid rounded-circle object-fit-contain shadow-sm" style="width: 200px; height: 200px;">
+                        class="img-fluid rounded-circle object-fit-contain shadow-sm" style="width: 200px; height: 200px;"
+                        lodaing="lazy">
                 </div>
                 <div class="col-md-6 mb-3">
                     <div class="card bg-light p-3">
                         <strong class="text-secondary">teacher Name:</strong>
                         <p class="mb-0">{{ $teacher->name ?? 'null' }}</p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="card bg-light p-3">
+                        <strong class="text-secondary">teacher Gender:</strong>
+                        <p class="mb-0">{{ $teacher->gender ?? 'null' }}</p>
                     </div>
                 </div>
                 <div class="col-md-6 mb-3">
