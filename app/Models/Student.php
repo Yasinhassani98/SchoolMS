@@ -34,9 +34,9 @@ class Student extends Model
         } else {
             if ($this->gender == 'male') {
 
-                return url("/male/user.png");
+                return url("/images/user.png");
             } else {
-                return url("/female/female.png");
+                return url("/images/female.png");
             }
         }
     }
