@@ -50,7 +50,7 @@ class StudentController extends Controller
     {
         // dd($request);
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|min:3|max:255',
             'gender' => 'required|in:male,female',
             'classroom_id' => 'sometimes|required|exists:classrooms,id',
             'email' => 'required|email|unique:students,email,' . $student->id,

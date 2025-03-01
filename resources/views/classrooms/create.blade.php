@@ -8,7 +8,7 @@
             <form class="row" method="POST" action="{{ route('classrooms.store') }}">
                 @csrf
                 <div class="mb-3 col-md-6">
-                    <label for="level_id" class="form-label">Level</label>
+                    <label for="level_id" class="form-label">Level<span class="text-danger">*</span></label>
                     <select class="form-control @error('level_id') is-invalid @enderror" id="level_id" name="level_id">
                         @foreach ($levels as $level)
                             <option value="{{ $level->id }}" @selected(old('level_id') == $level->id)>{{ $level->name }}</option>
@@ -20,7 +20,7 @@
                 </div>
 
                 <div class="mb-3 col-md-6">
-                    <label for="name" class="form-label">Name</label>
+                    <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
                         name="name" value="{{ old('name') }}" required>
                     @error('name')

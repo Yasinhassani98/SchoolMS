@@ -22,8 +22,8 @@ class MarkController extends Controller
     }
     public function create()
     {
-        $students = Student::all();
-        $subjects = Subject::all();
+        $students = Student::with('classroom.level')->get();
+        $subjects = Subject::with('level')->get();
         return view('marks.create', compact('students', 'subjects'));
     }
     public function store(Request $request)
@@ -41,8 +41,8 @@ class MarkController extends Controller
     }
     public function edit(Mark $mark)
     {
-        $students = Student::all();
-        $subjects = Subject::all();
+        $students = Student::with('classroom.level')->get();
+        $subjects = Subject::with('level')->get();
         return view('marks.edit', compact('mark', 'students', 'subjects'));
     }
     public function update(Request $request,Mark $mark)

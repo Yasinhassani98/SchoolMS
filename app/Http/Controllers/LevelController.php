@@ -20,7 +20,7 @@ class LevelController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|min:3|max:255',
             'level' => 'required|numeric|min:0|max:12|unique:levels,level',
             
         ]);
@@ -35,7 +35,7 @@ class LevelController extends Controller
     public function update(Request $request, Level $level)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|min:3|max:255',
             'level' => 'required|numeric|min:0|max:12|unique:levels,level,' . $level->id,
         ]);
         $level->update($request->all());

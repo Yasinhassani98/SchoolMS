@@ -17,7 +17,7 @@
                     @enderror
                 </div>
                 <div class="mb-3 col-md-6">
-                    <label for="name" class="form-label">Teacher Name</label>
+                    <label for="name" class="form-label">Teacher Name<span class="text-danger">*</span></label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
                         name="name" value="{{ old('name',$teacher->name) }}" required>
                     @error('name')
@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="mb-3 col-md-6">
-                    <label for="gender" class="form-label">Gender</label>
+                    <label for="gender" class="form-label">Gender<span class="text-danger">*</span></label>
                     <select class="form-control @error('gender') is-invalid @enderror" id="gender" name="gender">
                         <option value="male" @selected(old('gender',$teacher->gender) == 'male')>Male</option>
                         <option value="female" @selected(old('gender',$teacher->gender) == 'female')>Female</option>
@@ -66,7 +66,7 @@
                 </div>
 
                 <div class="mb-3 col-md-6">
-                    <label for="email" class="form-label">Email</label>
+                    <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
                     <input type="email" class="form-control @error('email') is-invalid @enderror" id="Email"
                         name="email" value="{{ old('email',$teacher->email) }}" required>
                     @error('email')
@@ -103,7 +103,7 @@
 
 
                 <div class="mb-3 col-md-6">
-                    <label for="status" class="form-label">Status</label>
+                    <label for="status" class="form-label">Status<span class="text-danger">*</span></label>
                     <select class="form-control @error('status') is-invalid @enderror" id="status" name="status">
                         <option value="active" @selected(old('status') == 'active')>Active</option>
                         <option value="inactive" @selected(old('status') == 'inactive')>Inactive</option>
