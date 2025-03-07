@@ -4,7 +4,7 @@
             <b class="logo-abbr"><img src="images/logo.png" alt=""> </b>
             <span class="logo-compact"><img src="{{ asset('images/logo-compact.png') }}" alt=""></span>
             <span class="brand-title">
-                <img src="{{asset('images/logo-text.png') }}" alt="">
+                <img src="{{ asset('images/logo-text.png') }}" alt="">
             </span>
         </a>
     </div>
@@ -30,8 +30,7 @@
                     <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i
                             class="mdi mdi-magnify"></i></span>
                 </div>
-                <input type="search" class="form-control" placeholder="Search Dashboard"
-                    aria-label="Search Dashboard">
+                <input type="search" class="form-control" placeholder="Search Dashboard" aria-label="Search Dashboard">
                 <div class="drop-down animated flipInX d-md-none">
                     <form action="#">
                         <input type="text" class="form-control" placeholder="Search">
@@ -56,7 +55,7 @@
                             <ul>
                                 <li class="notification-unread">
                                     <a href="javascript:void()">
-                                        <img class="float-left mr-3 avatar-img" src="{{asset('images/avatar/1.jpg') }}"
+                                        <img class="float-left mr-3 avatar-img" src="{{ asset('images/avatar/1.jpg') }}"
                                             alt="">
                                         <div class="notification-content">
                                             <div class="notification-heading">Saiful Islam</div>
@@ -68,7 +67,7 @@
                                 </li>
                                 <li class="notification-unread">
                                     <a href="javascript:void()">
-                                        <img class="float-left mr-3 avatar-img" src="{{asset('images/avatar/2.jpg') }}"
+                                        <img class="float-left mr-3 avatar-img" src="{{ asset('images/avatar/2.jpg') }}"
                                             alt="">
                                         <div class="notification-content">
                                             <div class="notification-heading">Adam Smith</div>
@@ -79,7 +78,7 @@
                                 </li>
                                 <li>
                                     <a href="javascript:void()">
-                                        <img class="float-left mr-3 avatar-img" src="{{asset('images/avatar/3.jpg') }}"
+                                        <img class="float-left mr-3 avatar-img" src="{{ asset('images/avatar/3.jpg') }}"
                                             alt="">
                                         <div class="notification-content">
                                             <div class="notification-heading">Barak Obama</div>
@@ -91,7 +90,7 @@
                                 </li>
                                 <li>
                                     <a href="javascript:void()">
-                                        <img class="float-left mr-3 avatar-img" src="{{asset('images/avatar/4.jpg') }}"
+                                        <img class="float-left mr-3 avatar-img" src="{{ asset('images/avatar/4.jpg') }}"
                                             alt="">
                                         <div class="notification-content">
                                             <div class="notification-heading">Hilari Clinton</div>
@@ -179,7 +178,21 @@
                 <li class="icons dropdown">
                     <div class="user-img c-pointer position-relative" data-toggle="dropdown">
                         <span class="activity active"></span>
-                        <img src="images/user/1.png') }}" height="40" width="40" alt="">
+                        @if (Auth::user()->hasRole('admin'))
+                            <img src="{{ asset('images/user.png') }}" height="40" width="40" alt="">
+                        @elseif (Auth::user()->hasRole('teacher'))
+                            {{ $teacher = \App\Models\Teacher::where('user_id', Auth::id())->first() }}
+                            <img src="{{ asset($teacher && $teacher->image ? 'storage/' . $teacher->image : 'images/user.png') }}"
+                                height="40" width="40" alt="">
+                        @elseif (Auth::user()->hasRole('student'))
+                            {{ $student = \App\Models\Student::where('user_id', Auth::id())->first() }}
+                            <img src="{{ asset($student && $student->image ? 'storage/' . $student->image : 'images/user.png') }}"
+                                height="40" width="40" alt="">
+                        @elseif (Auth::user()->hasRole('parent'))
+                            {{ $parent = \App\Models\Parint::where('user_id', Auth::id())->first() }}
+                            <img src="{{ asset($parent && $parent->image ? 'storage/' . $parent->image : 'images/user.png') }}"
+                                height="40" width="40" alt="">
+                        @endif
                     </div>
                     <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
                         <div class="dropdown-content-body">
@@ -194,13 +207,17 @@
                                         <div class="badge gradient-3 badge-pill gradient-1">3</div>
                                     </a>
                                 </li>
-
                                 <hr class="my-2">
                                 <li>
-                                    <a href="page-lock.html"><i class="icon-lock"></i> <span>Lock
-                                            Screen</span></a>
+                                    <a href="page-lock.html"><i class="icon-lock"></i> <span>Lock Screen</span></a>
                                 </li>
-                                <li><a href="page-login.html"><i class="icon-key"></i> <span>Logout</span></a>
+                                <li>
+                                    <form action="{{ route('logout') }}" method="post" class="d-inline">
+                                        @csrf
+                                        <button type="submit" class="btn p-0 border-0 shadow-none bg-transparent">
+                                            <i class="icon-logout"></i> <span class="text-danger mx-1">Logout</span>
+                                        </button>
+                                    </form>
                                 </li>
                             </ul>
                         </div>

@@ -17,4 +17,12 @@ class Classroom extends Model
     public function teachers(){
         return $this->belongsToMany(Teacher::class,'classroom_teacher');
     }
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+    public function marks()
+    {
+        return $this->hasMany(Mark::class);
+    }
 }

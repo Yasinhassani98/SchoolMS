@@ -13,17 +13,17 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::with('classroom')->orderBy('created_at', 'desc')->paginate(10);
-        return view('students.index', ['students' => $students]);
+        return view('admin.students.index', ['students' => $students]);
     }
     public function create()
     {
-        return view('students.create',[
+        return view('admin.students.create',[
             'classrooms' => Classroom::all()
         ]);
     }
     public function show(Student $student)
     {
-        return view('students.show', ['student' => $student]);
+        return view('admin.students.show', ['student' => $student]);
     }
     public function store(StudentRequest $request)
     {
@@ -37,11 +37,11 @@ class StudentController extends Controller
         }
         $post->save();
         // Student::create();
-        return redirect()->route('students.index')->with('success', 'Student created successfully');
+        return redirect()->route('admin.students.index')->with('success', 'Student created successfully');
     }
     public function edit(Student $student)
     {
-        return view('students.edit',[
+        return view('admin.students.edit',[
             'classrooms' => Classroom::all(),
             'student' => $student
         ]);
@@ -76,11 +76,11 @@ class StudentController extends Controller
         $student->update($request->except('image'));
         $student->save();
 
-        return redirect()->route('students.index')->with('success', 'Student updated successfully');
+        return redirect()->route('admin.students.index')->with('success', 'Student updated successfully');
     }
     public function destroy(Student $student)
     {
         $student->delete();
-        return redirect()->route('students.index')->with('success', 'Student deleted successfully');
+        return redirect()->route('admin.students.index')->with('success', 'Student deleted successfully');
     }
 }

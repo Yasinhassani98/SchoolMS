@@ -11,20 +11,23 @@ class Student extends Model
     protected $guarded = [];
     public function marks()
     {
-        return $this->belongsToMany(Subject::class, 'marks');
+        return $this->belongsToMany(Mark::class, 'marks');
     }
     public function classroom()
     {
         return $this->belongsTo(Classroom::class);
     }
-    public function getEmailAttribute($value)
+    public function user()
     {
-        return strtolower($value);
+        return $this->belongsTo(User::class);
     }
-
-    public function setEmailAttribute($value)
+    public function parent()
     {
-        $this->attributes['email'] = strtolower($value);
+        return $this->belongsTo(Parint::class);
+    }
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
     }
     public function getImageURL()
     {

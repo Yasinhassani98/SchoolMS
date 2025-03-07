@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('level_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->string('type');
             $table->timestamps();
         });
     }

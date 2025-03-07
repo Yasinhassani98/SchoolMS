@@ -10,17 +10,11 @@ class Subject extends Model
         'name',
         'level_id',
         'description',
-        'type',
-        'marks', // تأكد من إضافة هذا الحقل
     ];
 
     public function level()
     {
         return $this->belongsTo(Level::class);
-    }
-    public function classroom()
-    {
-        return $this->belongsTo(Classroom::class);
     }
     public function teachers()
     {
@@ -29,5 +23,9 @@ class Subject extends Model
     public function marks()
     {
         return $this->belongsToMany(Student::class, 'marks');
+    }
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
     }
 }

@@ -18,15 +18,13 @@ class Teacher extends Model
     {
         return $this->belongsToMany(Subject::class, 'subject_teacher');
     }
-
-    public function getEmailAttribute($value)
+    public function user()
     {
-        return strtolower($value);
+        return $this->belongsTo(User::class);
     }
-
-    public function setEmailAttribute($value)
+    public function attendances()
     {
-        $this->attributes['email'] = strtolower($value);
+        return $this->hasMany(Attendance::class);
     }
     public function  getImageURL()
     {

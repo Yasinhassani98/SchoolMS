@@ -14,11 +14,20 @@ class Mark extends Model
 
     public function student()
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsToMany(Student::class);
     }
 
     public function subject()
     {
-        return $this->belongsTo(Subject::class);
+        return $this->belongsToMany(Subject::class);
     }   
+    public function academicYear()
+    {
+        return $this->belongsTo(AcademicYear::class);
+    }   
+    public function classroom()
+    {
+        return $this->belongsTo(Classroom::class);
+    }   
+
 }

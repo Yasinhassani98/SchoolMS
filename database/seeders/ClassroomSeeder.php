@@ -15,19 +15,23 @@ class ClassroomSeeder extends Seeder
         for ($level_id = 1; $level_id <= 9; $level_id++) {
             $classrooms[] = [
                 'name' => "صف {$level_id} - أ",
-                'level_id' => $level_id
+                'level_id' => $level_id,
+                'capacity' => fake()->numberBetween(20, 30)
             ];
             $classrooms[] = [
                 'name' => "صف {$level_id} - ب",
-                'level_id' => $level_id
+                'level_id' => $level_id,
+                'capacity' => fake()->numberBetween(20, 30)
             ];
             $classrooms[] = [
                 'name' => "صف {$level_id} - ج",
-                'level_id' => $level_id
+                'level_id' => $level_id,
+                'capacity' => fake()->numberBetween(20, 30)
             ];
             $classrooms[] = [
                 'name' => "صف {$level_id} - د",
-                'level_id' => $level_id
+                'level_id' => $level_id,
+                'capacity' => fake()->numberBetween(20, 30)
             ];
         }
 

@@ -75,8 +75,8 @@
                 </div>
             </div>
             <div class="d-flex justify-content-end mt-4">
-                <a href="{{ route('students.index') }}" class="btn btn-outline-secondary mx-2">Back</a>
-                <a href="{{ route('students.edit', $student->id) }}" class="btn btn-primary">Edit</a>
+                <a href="{{ route('admin.students.index') }}" class="btn btn-outline-secondary mx-2">Back</a>
+                <a href="{{ route('admin.students.edit', $student->id) }}" class="btn btn-primary">Edit</a>
             </div>
         </div>
     </div>

@@ -22,23 +22,25 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-Route::view('base','content');
 
-// Student Routes
-Route::resource('students', StudentController::class);
+Route::middleware(['auth', 'role:admin'])->prefix('admin/')->as('admin.')->group(function () {
 
-// Teacher Routes
-Route::resource('teachers', TeacherController::class);
+    // Student Routes
+    Route::resource('students', StudentController::class);
 
-// Classroom Routes
-Route::resource('classrooms', ClassroomController::class);
+    // Teacher Routes
+    Route::resource('teachers', TeacherController::class);
 
-// Subject Routes
-Route::resource('subjects',SubjectController::class);
+    // Classroom Routes
+    Route::resource('classrooms', ClassroomController::class);
 
-// Levels Routes
-Route::resource('levels',LevelController::class);
+    // Subject Routes
+    Route::resource('subjects', SubjectController::class);
 
-// Marks Routes
-Route::resource('marks',MarkController::class);
-require __DIR__.'/auth.php';
+    // Levels Routes
+    Route::resource('levels', LevelController::class);
+
+    // Marks Routes
+    Route::resource('marks', MarkController::class);
+});
+require __DIR__ . '/auth.php';
