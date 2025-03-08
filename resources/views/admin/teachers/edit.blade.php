@@ -5,7 +5,7 @@
     <div class="card mb-4 mt-2 container">
         <div class="card-body p-4">
             <h5 class="card-title">Edit Teacher {{ $teacher->name }}</h5>
-            <form enctype="multipart/form-data" class="row" action="{{ route('teachers.update',$teacher->id) }}" method="POST">
+            <form enctype="multipart/form-data" class="row" action="{{ route('admin.teachers.update',$teacher->id) }}" method="POST">
                 @method('PUT')
                 @csrf
                 <div class="mb-3 col-md-6">

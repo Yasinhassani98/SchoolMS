@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center m-3">
                         <h4 class="card-title">Subjects List</h4>
-                        <form action="{{ route('subjects.create') }}" method="GET">
+                        <form action="{{ route('admin.subjects.create') }}" method="GET">
                             @csrf
                             <button type="submit" class="btn btn-primary">Add Subject</button>
                         </form>
@@ -32,15 +32,15 @@
                                             <td>{{ $subject->description }}</td>
                                             <td>{{ $subject->type }}</td>
                                             <td>
-                                                <a href="{{ route('subjects.edit', $subject->id) }}"><i
+                                                <a href="{{ route('admin.subjects.edit', $subject->id) }}"><i
                                                         class="fa-solid fa-pen-to-square text-warning"></i></a>
                                             </td>
                                             <td>
-                                                <a href="{{ route('subjects.show', $subject->id) }}"><i
+                                                <a href="{{ route('admin.subjects.show', $subject->id) }}"><i
                                                         class="fa-solid fa-eye text-success"></i></a>
                                             </td>
                                             <td>
-                                                <form action="{{ route('subjects.destroy', $subject->id) }}" method="POST"
+                                                <form action="{{ route('admin.subjects.destroy', $subject->id) }}" method="POST"
                                                     class="d-inline">
                                                     @csrf
                                                     @method('DELETE')

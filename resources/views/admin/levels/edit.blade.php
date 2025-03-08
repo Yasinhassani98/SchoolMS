@@ -5,7 +5,7 @@
     <div class="card mb-4 mt-2 container">
         <div class="card-body p-4">
             <h5 class="card-title">Edit Level {{ $level->level }}</h5>
-            <form class="row" method="POST" action="{{ route('levels.update',$level->id) }}">
+            <form class="row" method="POST" action="{{ route('admin.levels.update',$level->id) }}">
                 @csrf
                 @method('PUT')
                 <div class="mb-3 col-md-6">

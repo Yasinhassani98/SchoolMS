@@ -5,7 +5,7 @@
     <div class="card mb-4 mt-2 container">
         <div class="card-body p-4">
             <h5 class="card-title">Add New name</h5>
-            <form class="row" method="POST" action="{{ route('classrooms.store') }}">
+            <form class="row" method="POST" action="{{ route('admin.classrooms.store') }}">
                 @csrf
                 <div class="mb-3 col-md-6">
                     <label for="level_id" class="form-label">Level<span class="text-danger">*</span></label>

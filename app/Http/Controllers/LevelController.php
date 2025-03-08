@@ -10,11 +10,11 @@ class LevelController extends Controller
     public function index()
     {
         $levels = Level::paginate();
-        return view('levels.index', ['levels' => $levels]);
+        return view('admin.levels.index', ['levels' => $levels]);
     }
     public function create()
     {
-        return view('levels.create');
+        return view('admin.levels.create');
     }
 
     public function store(Request $request)
@@ -26,11 +26,11 @@ class LevelController extends Controller
         ]);
 
         Level::create($request->all());
-        return redirect()->route('levels.index')->with('success', 'Level created successfully');
+        return redirect()->route('admin.levels.index')->with('success', 'Level created successfully');
     }
     public function edit(Level $level)
     {
-        return view('levels.edit', ['level' => $level]);
+        return view('admin.levels.edit', ['level' => $level]);
     }
     public function update(Request $request, Level $level)
     {
@@ -39,11 +39,11 @@ class LevelController extends Controller
             'level' => 'required|numeric|min:0|max:12|unique:levels,level,' . $level->id,
         ]);
         $level->update($request->all());
-        return redirect()->route('levels.index')->with('success', 'Level updated successfully');
+        return redirect()->route('admin.levels.index')->with('success', 'Level updated successfully');
     }
     public function destroy(Level $level)
     {
         $level->delete();
-        return redirect()->route('levels.index')->with('success', 'Level deleted successfully');
+        return redirect()->route('admin.levels.index')->with('success', 'Level deleted successfully');
     }
 }

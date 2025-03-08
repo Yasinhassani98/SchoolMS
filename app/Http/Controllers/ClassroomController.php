@@ -11,12 +11,12 @@ class ClassroomController extends Controller
     public function index()
     {
         $classrooms = Classroom::paginate(10);
-        return view('classrooms.index', compact('classrooms'));
+        return view('admin.classrooms.index', compact('classrooms'));
     }
     public function create()
     {
         $levels = Level::all();
-        return view('classrooms.create', compact('levels'));
+        return view('admin.classrooms.create', compact('levels'));
     }
     public function store(Request $request)
     {
@@ -25,12 +25,12 @@ class ClassroomController extends Controller
             'name' => 'required|max:255'
         ]);
         Classroom::create($valedated);
-        return redirect()->route('classrooms.index')->with('success', 'Classroom created successfully');
+        return redirect()->route('admin.classrooms.index')->with('success', 'Classroom created successfully');
     }
     public function edit(Classroom $classroom)
     {
         $levels = Level::all();
-        return view('classrooms.edit', compact('classroom', 'levels'));
+        return view('admin.classrooms.edit', compact('classroom', 'levels'));
     }
 
     public function update(Request $request, Classroom $classroom)
@@ -40,12 +40,12 @@ class ClassroomController extends Controller
             'name' => 'required|max:255'
         ]);
         $classroom->update($validated);
-        return redirect()->route('classrooms.index')->with('success', 'Classroom updated successfully');
+        return redirect()->route('admin.classrooms.index')->with('success', 'Classroom updated successfully');
     }
 
     public function destroy(Classroom $classroom)
     {
         $classroom->delete();
-        return redirect()->route('classrooms.index')->with('success', 'Classroom deleted successfully');
+        return redirect()->route('admin.classrooms.index')->with('success', 'Classroom deleted successfully');
     }
 }

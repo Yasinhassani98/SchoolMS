@@ -5,7 +5,7 @@
     <div class="card mb-4 mt-2 container">
         <div class="card-body p-4">
             <h5 class="card-title">Add New Mark</h5>
-            <form class="row" method="POST" action="{{ route('marks.store') }}">
+            <form class="row" method="POST" action="{{ route('admin.marks.store') }}">
                 @csrf
                 <div class="mb-3 col-md-6">
                     <label for="student_id" class="form-label">Student<span class="text-danger">*</span></label>

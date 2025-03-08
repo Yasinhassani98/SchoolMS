@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center m-3">
                         <h4 class="card-title">Level List</h4>
-                        <form action="{{ route('levels.create') }}" method="GET">
+                        <form action="{{ route('admin.levels.create') }}" method="GET">
                             @csrf
                             <button type="submit" class="btn btn-primary">Add Level</button>
                         </form>
@@ -28,9 +28,9 @@
                                             <td>{{ $level->name }}</td>
                                             <td>{{ $level->level }}</td>
                                             <td>
-                                                <a href="{{ route('levels.edit', $level->id) }}"
+                                                <a href="{{ route('admin.levels.edit', $level->id) }}"
                                                     ><i class="fa-solid fa-pen-to-square text-warning"></i></a>
-                                                <form action="{{ route('levels.destroy', $level->id) }}" method="POST"
+                                                <form action="{{ route('admin.levels.destroy', $level->id) }}" method="POST"
                                                     class="d-inline">
                                                     @csrf
                                                     @method('DELETE')

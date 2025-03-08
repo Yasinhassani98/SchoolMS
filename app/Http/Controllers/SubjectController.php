@@ -11,12 +11,12 @@ class SubjectController extends Controller
     public function index()
     {
         $subjects = Subject::with('level')->paginate(10);
-        return view('subjects.index', compact('subjects'));
+        return view('admin.subjects.index', compact('subjects'));
     }
     public function create()
     {
         $levels = Level::all();
-        return view('subjects.create', compact('levels'));
+        return view('admin.subjects.create', compact('levels'));
     }
     public function store(Request $request)
     {
@@ -31,17 +31,17 @@ class SubjectController extends Controller
 
 
         return redirect()
-            ->route('subjects.index')
+            ->route('admin.subjects.index')
             ->with('success', 'Subject created successfully');
     }
     public function show(Subject $subject)
     {
-        return view('subjects.show', ['subject' => $subject]);
+        return view('admin.subjects.show', ['subject' => $subject]);
     }
     public function edit(Subject $subject)
     {
         $levels = Level::all();
-        return view('subjects.edit', ['subject' => $subject, 'levels' => $levels]);
+        return view('admin.subjects.edit', ['subject' => $subject, 'levels' => $levels]);
     }
     public function update(Request $request, Subject $subject)
     {
@@ -56,13 +56,13 @@ class SubjectController extends Controller
 
 
         return redirect()
-            ->route('subjects.index')
+            ->route('admin.subjects.index')
             ->with('success', 'Subject updated successfully');
     }
     public function destroy(Subject $subject)
     {
         if ($subject->delete()) {
-            return view('subjects.index')
+            return view('admin.subjects.index')
                 ->with('success', 'Subject deleted successfully');
         } else {
             return redirect()

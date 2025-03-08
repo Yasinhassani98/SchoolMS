@@ -5,7 +5,7 @@
     <div class="card mb-4 mt-2 container">
         <div class="card-body p-4">
             <h5 class="card-title">Edit Subject {{ $subject->name }}</h5>
-            <form class="row" method="POST" action="{{ route('subjects.store') }}">
+            <form class="row" method="POST" action="{{ route('admin.subjects.store') }}">
                 @csrf
                 @method('PUT')
                 <div class="mb-3 col-md-6">

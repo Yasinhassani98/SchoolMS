@@ -5,7 +5,7 @@
     <div class="card mb-4 mt-2 container">
         <div class="card-body p-4">
             <h5 class="card-title">Edit Mark</h5>
-            <form class="row" method="POST" action="{{ route('marks.update',$mark->id) }}">
+            <form class="row" method="POST" action="{{ route('admin.marks.update',$mark->id) }}">
                 @csrf
                 @method('PUT')
                 <div class="mb-3 col-md-6">

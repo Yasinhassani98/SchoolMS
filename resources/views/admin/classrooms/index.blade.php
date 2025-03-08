@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center m-3">
                         <h4 class="card-title">classrooms List</h4>
-                        <form action="{{ route('classrooms.create') }}" method="GET">
+                        <form action="{{ route('admin.classrooms.create') }}" method="GET">
                             @csrf
                             <button type="submit" class="btn btn-primary">Add classroom</button>
                         </form>
@@ -30,11 +30,11 @@
                                             <td>{{ $classroom->level->name }}</td>
                                             {{-- <td>{{ $classroom->classroom }}</td> --}}
                                             <td>
-                                                <a href="{{ route('classrooms.edit', $classroom->id) }}"><i
+                                                <a href="{{ route('admin.classrooms.edit', $classroom->id) }}"><i
                                                         class="fa-solid fa-pen-to-square text-warning"></i></a>
                                             </td>
                                             <td>
-                                                <form action="{{ route('classrooms.destroy', $classroom->id) }}" method="POST"
+                                                <form action="{{ route('admin.classrooms.destroy', $classroom->id) }}" method="POST"
                                                     class="d-inline">
                                                     @csrf
                                                     @method('DELETE')

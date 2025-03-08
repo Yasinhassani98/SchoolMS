@@ -14,18 +14,18 @@ class TeacherController extends Controller
     public function index()
     {
         $teachers = Teacher::orderby('created_at', 'desc')->paginate(10);
-        return view('teachers.index', ['teachers' => $teachers]);
+        return view('admin.teachers.index', ['teachers' => $teachers]);
     }
     public function create()
     {
-        return view('teachers.create', [
+        return view('admin.teachers.create', [
             'classrooms' => Classroom::with('level')->get(),
             'subjects' => Subject::with('level')->get()
         ]);
     }
     public function show(Teacher $teacher)
     {
-        return view('teachers.show', ['teacher' => $teacher]);
+        return view('admin.teachers.show', ['teacher' => $teacher]);
     }
     public function store(TeacherRequest $request)
     {
@@ -44,11 +44,11 @@ class TeacherController extends Controller
             $subject_ids = array_filter(explode(',', $request->subject_ids));
             $teacher->subjects()->attach($subject_ids);
         }
-        return redirect()->route('teachers.index')->with('success', 'Teacher created successfully');
+        return redirect()->route('admin.teachers.index')->with('success', 'Teacher created successfully');
     }
     public function edit(Teacher $teacher)
     {
-        return view('teachers.edit', [
+        return view('admin.teachers.edit', [
             'teacher' => $teacher,
             'classrooms' => Classroom::with('level')->get(),
             'subjects' => Subject::with('level')->get()
@@ -94,11 +94,11 @@ class TeacherController extends Controller
             $teacher->subjects()->detach();
         }
 
-        return redirect()->route('teachers.index')->with('success', 'Teacher updated successfully');
+        return redirect()->route('admin.teachers.index')->with('success', 'Teacher updated successfully');
     }
     public function destroy(Teacher $teacher)
     {
         $teacher->delete();
-        return redirect()->route('teachers.index')->with('success', 'Teacher deleted successfully');
+        return redirect()->route('admin.teachers.index')->with('success', 'Teacher deleted successfully');
     }
 }

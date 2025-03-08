@@ -18,13 +18,13 @@ class MarkController extends Controller
             ->orderBy('students.name')
             ->paginate(10);
 
-        return view('marks.index', compact('marks'));
+        return view('admin.marks.index', compact('marks'));
     }
     public function create()
     {
         $students = Student::with('classroom.level')->get();
         $subjects = Subject::with('level')->get();
-        return view('marks.create', compact('students', 'subjects'));
+        return view('admin.marks.create', compact('students', 'subjects'));
     }
     public function store(Request $request)
     {
@@ -37,13 +37,13 @@ class MarkController extends Controller
 
         Mark::create($validatedData);
 
-        return redirect()->route('marks.index')->with('success', 'Mark added successfully.');
+        return redirect()->route('admin.marks.index')->with('success', 'Mark added successfully.');
     }
     public function edit(Mark $mark)
     {
         $students = Student::with('classroom.level')->get();
         $subjects = Subject::with('level')->get();
-        return view('marks.edit', compact('mark', 'students', 'subjects'));
+        return view('admin.marks.edit', compact('mark', 'students', 'subjects'));
     }
     public function update(Request $request,Mark $mark)
     {
@@ -53,10 +53,10 @@ class MarkController extends Controller
             'mark' => 'required|numeric|min:0|max:100',
         ]);
         $mark->update($validatedData);
-        return redirect()->route('marks.index')->with('success','Mark updated successfully');
+        return redirect()->route('admin.marks.index')->with('success','Mark updated successfully');
     }
     public function destroy(Mark $mark){
         $mark->delete();
-        return redirect()->route('marks.index')->with('success','Mark deleted successfully');
+        return redirect()->route('admin.marks.index')->with('success','Mark deleted successfully');
     }
 }

@@ -5,7 +5,7 @@
     <div class="card mb-4 mt-2 container">
         <div class="card-body p-4">
             <h5 class="card-title">Add New Subject</h5>
-            <form class="row" method="POST" action="{{ route('subjects.store') }}">
+            <form class="row" method="POST" action="{{ route('admin.subjects.store') }}">
                 @csrf
                 <div class="mb-3 col-md-6">
                     <label for="name" class="form-label">Subject Name<span class="text-danger">*</span></label>

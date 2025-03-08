@@ -24,8 +24,8 @@
                 </div>
             </div>
             <div class="d-flex justify-content-end">
-                <button href="{{ route('subjects.index') }}" class="btn btn-gray mx-2">Back</button>
-                <button href="{{ route('subjects.edit', $subject->id) }}" class="btn btn-primary">Edit</button>
+                <button href="{{ route('admin.subjects.index') }}" class="btn btn-gray mx-2">Back</button>
+                <button href="{{ route('admin.subjects.edit', $subject->id) }}" class="btn btn-primary">Edit</button>
             </div>
         </div>
     </div>

@@ -7,7 +7,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center m-3">
                     <h4 class="card-title">teachers List</h4>
-                    <form action="{{ route('teachers.create') }}" method="GET">
+                    <form action="{{ route('admin.teachers.create') }}" method="GET">
                         @csrf
                         <button type="submit" class="btn btn-primary">Add teacher</button>
                     </form>
@@ -38,15 +38,15 @@
                                     <td>{{ $teacher->specialization }}</td>
                                     <td>{{ $teacher->status }}</td>
                                     <td>
-                                        <a href="{{ route('teachers.edit', $teacher->id) }}"
+                                        <a href="{{ route('admin.teachers.edit', $teacher->id) }}"
                                             ><i class="fa-solid fa-pen-to-square text-warning"></i></a>
                                     </td>
                                     <td>
-                                        <a href="{{ route('teachers.show', $teacher->id) }}"
+                                        <a href="{{ route('admin.teachers.show', $teacher->id) }}"
                                             ><i class="fa-solid fa-eye text-success"></i></a>
                                     </td>
                                     <td>
-                                        <form action="{{ route('teachers.destroy', $teacher->id) }}" method="POST"
+                                        <form action="{{ route('admin.teachers.destroy', $teacher->id) }}" method="POST"
                                             class="d-inline">
                                             @csrf
                                             @method('DELETE')

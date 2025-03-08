@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center m-3">
                         <h4 class="card-title">Marks List</h4>
-                        <form action="{{ route('marks.create') }}" method="GET">
+                        <form action="{{ route('admin.marks.create') }}" method="GET">
                             @csrf
                             <button type="submit" class="btn btn-primary">Add Mark</button>
                         </form>
@@ -30,11 +30,11 @@
                                             <td>{{ $mark->subject->name }}</td>
                                             <td>{{ $mark->mark }}</td>
                                             <td>
-                                                <a href="{{ route('marks.edit', $mark->id) }}"><i
+                                                <a href="{{ route('admin.marks.edit', $mark->id) }}"><i
                                                         class="fa-solid fa-pen-to-square text-warning"></i></a>
                                             </td>
                                             <td>
-                                                <form action="{{ route('marks.destroy', $mark->id) }}" method="POST"
+                                                <form action="{{ route('admin.marks.destroy', $mark->id) }}" method="POST"
                                                     class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
