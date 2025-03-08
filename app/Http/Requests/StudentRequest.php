@@ -25,12 +25,11 @@ class StudentRequest extends FormRequest
             'name' => 'required|min:3|max:255',
             'gender' => 'required|in:male,female',
             'classroom_id' => 'sometimes|required|exists:classrooms,id',
-            'email' => 'required|email|unique:students,email',
+            'parint_id' => 'sometimes|required|exists:parints,id',
             'Phone' => 'nullable|string|max:20',
             'enrollment_date' => 'nullable|date',
             'address' => 'nullable|max:255',
             'date_of_birth' => 'nullable|date',
-            'parent_phone' => 'nullable|string|max:20',
             'image' => 'nullable|image',
             'status' => 'required|in:active,inactive'
         ];

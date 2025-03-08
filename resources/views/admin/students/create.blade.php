@@ -50,6 +50,20 @@
                 </div>
 
                 <div class="mb-3 col-md-6">
+                    <label for="parint" class="form-label">Parent</label>
+                    <select class="form-control @error('parint_id') is-invalid @enderror" id="parint_id"
+                        name="parint_id">
+                        @foreach ($parints as $parint)
+                            <option value="{{ $parint->id }}" @selected(old('parint_id') == $parint->id)>{{ $parint->name }}
+                            </option>
+                        @endforeach
+                        @error('parint_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </select>
+                </div>
+
+                <div class="mb-3 col-md-6">
                     <label for="Email" class="form-label">Email<span class="text-danger">*</span></label>
                     <input type="email" class="form-control @error('email') is-invalid @enderror" id="Email"
                         name="email" value="{{ old('email') }}" required>
@@ -94,14 +108,7 @@
                     @enderror
                 </div>
 
-                <div class="mb-3 col-md-6">
-                    <label for="parent_phone" class="form-label">Parent phone</label>
-                    <input type="text" class="form-control @error('parent_phone') is-invalid @enderror" id="parent_phone"
-                        name="parent_phone" value="{{ old('parent_phone') }}">
-                    @error('parent_phone')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
+
 
 
                 <div class="mb-3 col-md-6">

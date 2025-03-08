@@ -21,7 +21,7 @@ class Student extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function parent()
+    public function parint()
     {
         return $this->belongsTo(Parint::class);
     }

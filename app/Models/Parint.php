@@ -6,13 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Parint extends Model
 {
-    protected $fillable = [
-        'user_id',
-        'image',
-        'name',
-        'phone',
-        'date_of_birth',
-    ];
+    protected $guarded = [];
 
     public function user()
     {

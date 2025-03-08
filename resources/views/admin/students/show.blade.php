@@ -27,6 +27,12 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <div class="card bg-light p-3">
+                        <strong class="text-secondary">Parint Name:</strong>
+                        <p class="mb-0">{{ $student->parint->name }}</p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="card bg-light p-3">
                         <strong class="text-secondary">Classroom Name:</strong>
                         <p class="mb-0">{{ $student->classroom->name }}</p>
                     </div>
@@ -34,7 +40,7 @@
                 <div class="col-md-6 mb-3">
                     <div class="card bg-light p-3">
                         <strong class="text-secondary">Email:</strong>
-                        <p class="mb-0">{{ $student->email }}</p>
+                        <p class="mb-0">{{ $student->user->email }}</p>
                     </div>
                 </div>
                 <div class="col-md-6 mb-3">
@@ -59,12 +65,6 @@
                     <div class="card bg-light p-3">
                         <strong class="text-secondary">Date of Birth:</strong>
                         <p class="mb-0">{{ $student->date_of_birth }}</p>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <div class="card bg-light p-3">
-                        <strong class="text-secondary">Parent Phone:</strong>
-                        <p class="mb-0">{{ $student->parent_phone }}</p>
                     </div>
                 </div>
                 <div class="col-md-6 mb-3">
