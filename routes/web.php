@@ -14,8 +14,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard',[WlcomeController::class,'welcome']
-)->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -24,7 +22,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin/')->as('admin.')->group(function () {
-
+    
+    Route::get('dashboard',[WlcomeController::class,'welcome'])->name('dashboard');
     // Student Routes
     Route::resource('students', StudentController::class);
 

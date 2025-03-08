@@ -11,11 +11,11 @@ use Illuminate\Http\Request;
 class WlcomeController extends Controller
 {
     public function welcome(){
-        $students = Student::all();
-        $teachers = Teacher::all();
-        $levels = Level::all();
-        $classrooms = Classroom::all();
+        $studentsNumber = Student::all()->count();
+        $teachersNumber = Teacher::all()->count();
+        $levels = Level::withCount('classrooms')->get();
+        $classroomsNumber = Classroom::all()->count();
+        return view('admin.dashboard',compact(['levels','studentsNumber','teachersNumber','classroomsNumber']));
 
-        return view('content',compact(['students','teachers','levels','classrooms']));
     }
 }

@@ -3,6 +3,11 @@
         <ul class="metismenu" id="menu">
             @role('admin')
             <li>
+                <a href="{{ route('admin.dashboard') }}" class="{{ Route::is('admin.dashboard.*')? 'active' : '' }}" aria-expanded="false">
+                    <i class="fa-solid fa-chart-line"></i><span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('admin.students.index') }}" class="{{ Route::is('admin.students.*')? 'active' : '' }}" aria-expanded="false">
                     <i class="fa-sharp-duotone fa-solid fa-graduation-cap"></i><span class="nav-text">Students</span>
                 </a>
