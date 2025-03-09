@@ -8,16 +8,16 @@
             <form enctype="multipart/form-data" class="row" action="{{ route('admin.students.update',$student->id) }}" method="POST">
                 @method('PUT')
                 @csrf
-                <div class="mb-3 col-md-6">
-                    <label for="image" class="form-label">Image</label>
+                <div class="mb-3 col-md-3">
+                    <img src="{{ $student->image ? asset('storage/' . $student->image) : asset('images/default.png') }}" alt="Student Image" class="img-fluid rounded-circle shadow-sm" width="150">
+                </div>
+                <div class="mb-3 col-md-9">
                     <input type="file" class="form-control @error('image') is-invalid @enderror" id="image"
                         name="image" value="{{ old('image',$student->image) }}">
                     @error('image')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                </div>
-                <div class="mb-3 col-md-6">
-                    <label for="name" class="form-label">Student Name<span class="text-danger">*</span></label>
+                    <label for="name" class="form-label mt-3">Student Name<span class="text-danger">*</span></label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
                         name="name" value="{{ old('name',$student->name) }}" required>
                     @error('name')
@@ -37,7 +37,47 @@
                 </div>
 
                 <div class="mb-3 col-md-6">
-                    <label for="classroom_id" class="form-label">Classroom</label>
+                    <label for="parint" class="form-label">Parent<span class="text-danger">*</span></label>
+                    <select class="form-control @error('parint_id') is-invalid @enderror" id="parint_id" name="parint_id">
+                        @foreach ($parints as $parint)
+                            <option value="{{ $parint->id }}" @selected(old('parint_id',$student->parint_id) == $parint->id)>{{ $parint->name }}
+                            </option>
+                        @endforeach
+                        @error('parint_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </select>
+                </div>
+
+                <div class="mb-3 col-md-6">
+                    <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
+                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
+                        name="email" value="{{ old('email') }}" required>
+                    @error('email')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3 col-md-6">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
+                        name="password" value="{{ old('password') }}">
+                    @error('password')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3 col-md-6">
+                    <label for="password confirmation" class="form-label">Password Confirmation</label>
+                    <input type="password" class="form-control @error('password.confirmation') is-invalid @enderror" id="password confirmation"
+                        name="password.confirmation" value="{{ old('password.confirmation') }}">
+                    @error('password.confirmation')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3 col-md-6">
+                    <label for="classroom_id" class="form-label">Classroom<span class="text-danger">*</span></label>
                     <select class="form-control @error('classroom_id') is-invalid @enderror" id="classroom_id" name="classroom_id">
                         @foreach ($classrooms as $classroom)
                             <option value="{{ $classroom->id }}" @selected(old('classroom_id',$student->classroom_id) == $classroom->id)>{{ $classroom->name }}</option>
@@ -49,25 +89,16 @@
                 </div>
 
                 <div class="mb-3 col-md-6">
-                    <label for="Email" class="form-label">Email<span class="text-danger">*</span></label>
-                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="Email"
-                        name="email" value="{{ $student->user->email }}" required>
-                    @error('email')
+                    <label for="phone" class="form-label">Phone<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone"
+                        name="phone" value="{{ old('phone',$student->phone) }}" >
+                    @error('phone')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="mb-3 col-md-6">
-                    <label for="Phone" class="form-label">Phone</label>
-                    <input type="text" class="form-control @error('Phone') is-invalid @enderror" id="Phone"
-                        name="Phone" value="{{ old('Phone',$student->Phone) }}" >
-                    @error('Phone')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3 col-md-6">
-                    <label for="enrollment_date" class="form-label">Enrollment date</label>
+                    <label for="enrollment_date" class="form-label">Enrollment date<span class="text-danger">*</span></label>
                     <input type="date" class="form-control @error('enrollment_date') is-invalid @enderror"
                         id="enrollment_date" name="enrollment_date" value="{{ old('enrollment_date',$student->enrollment_date) }}" required>
                     @error('enrollment_date')
@@ -85,26 +116,12 @@
                 </div>
 
                 <div class="mb-3 col-md-6">
-                    <label for="date_of_birth" class="form-label">Date of birth</label>
+                    <label for="date_of_birth" class="form-label">Date of birth<span class="text-danger">*</span></label>
                     <input type="date" class="form-control @error('date_of_birth') is-invalid @enderror"
                         id="date_of_birth" name="date_of_birth" value="{{ old('date_of_birth',$student->date_of_birth) }}" required>
                     @error('date_of_birth')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                </div>
-
-                <div class="mb-3 col-md-6">
-                    <label for="parint_id" class="form-label">Parent</label>
-                    <select class="form-control @error('parint_id') is-invalid @enderror" id="parint_id"
-                        name="parint_id">
-                        @foreach ($parints as $parint)
-                            <option value="{{ $parint->id }}" @selected(old('parint_id',$student->parint_id) == $parint->id)>{{ $parint->name }}
-                            </option>
-                        @endforeach
-                        @error('parint_id')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </select>
                 </div>
 
                 <div class="mb-3 col-md-6">

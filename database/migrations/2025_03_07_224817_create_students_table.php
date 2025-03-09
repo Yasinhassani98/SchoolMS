@@ -17,11 +17,11 @@ return new class extends Migration
             $table->foreignId('parint_id')->constrained()->cascadeOnDelete();
             $table->foreignId('classroom_id')->constrained()->cascadeOnDelete();
             $table->string('name');
-            $table->string('phone')->nullable();
-            $table->date('enrollment_date')->nullable();
+            $table->string('phone');
+            $table->date('enrollment_date');
             $table->string('image')->nullable();
             $table->text('address')->nullable();
-            $table->date('date_of_birth')->nullable();
+            $table->date('date_of_birth');
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->enum('gender', ['male', 'female'])->default('male');
             $table->timestamps();

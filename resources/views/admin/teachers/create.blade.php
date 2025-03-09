@@ -64,7 +64,25 @@
                 </div>
 
                 <div class="mb-3 col-md-6">
-                    <label for="phone" class="form-label">Phone</label>
+                    <label for="password" class="form-label">Password<span class="text-danger">*</span></label>
+                    <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
+                        name="password" value="{{ old('password') }}" required>
+                    @error('password')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3 col-md-6">
+                    <label for="password.confirmation" class="form-label">Password Confirmation<span class="text-danger">*</span></label>
+                    <input type="password" class="form-control @error('password.confirmation') is-invalid @enderror" id="password.confirmation"
+                        name="password.confirmation" value="{{ old('password.confirmation') }}" required>
+                    @error('password.confirmation')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3 col-md-6">
+                    <label for="phone" class="form-label">Phone<span class="text-danger">*</span></label>
                     <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone"
                         name="phone" value="{{ old('phone') }}">
                     @error('phone')
@@ -73,7 +91,15 @@
                 </div>
 
                 <div class="mb-3 col-md-6">
-                    <label for="date_of_birth" class="form-label">Date of birth</label>
+                    <label for="hiring_date" class="form-label">Hiring Date<span class="text-danger">*</span></label>
+                    <input type="date" class="form-control @error('hiring_date') is-invalid @enderror"
+                        id="hiring_date" name="hiring_date" value="{{ old('hiring_date') }}" required>
+                    @error('hiring_date')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label for="date_of_birth" class="form-label">Date of birth<span class="text-danger">*</span></label>
                     <input type="date" class="form-control @error('date_of_birth') is-invalid @enderror"
                         id="date_of_birth" name="date_of_birth" value="{{ old('date_of_birth') }}" required>
                     @error('date_of_birth')

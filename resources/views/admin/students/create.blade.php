@@ -36,7 +36,47 @@
                 </div>
 
                 <div class="mb-3 col-md-6">
-                    <label for="classroom" class="form-label">Classroom</label>
+                    <label for="parint" class="form-label">Parent<span class="text-danger">*</span></label>
+                    <select class="form-control @error('parint_id') is-invalid @enderror" id="parint_id" name="parint_id">
+                        @foreach ($parints as $parint)
+                            <option value="{{ $parint->id }}" @selected(old('parint_id') == $parint->id)>{{ $parint->name }}
+                            </option>
+                        @endforeach
+                        @error('parint_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </select>
+                </div>
+
+                <div class="mb-3 col-md-6">
+                    <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
+                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
+                        name="email" value="{{ old('email') }}" required>
+                    @error('email')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3 col-md-6">
+                    <label for="password" class="form-label">Password<span class="text-danger">*</span></label>
+                    <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
+                        name="password" value="{{ old('password') }}" required>
+                    @error('password')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3 col-md-6">
+                    <label for="password confirmation" class="form-label">Password Confirmation<span class="text-danger">*</span></label>
+                    <input type="password" class="form-control @error('password.confirmation') is-invalid @enderror" id="password confirmation"
+                        name="password.confirmation" value="{{ old('password.confirmation') }}" required>
+                    @error('password.confirmation')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3 col-md-6">
+                    <label for="classroom" class="form-label">Classroom<span class="text-danger">*</span></label>
                     <select class="form-control @error('classroom_id') is-invalid @enderror" id="classroom_id"
                         name="classroom_id">
                         @foreach ($classrooms as $classroom)
@@ -50,39 +90,16 @@
                 </div>
 
                 <div class="mb-3 col-md-6">
-                    <label for="parint" class="form-label">Parent</label>
-                    <select class="form-control @error('parint_id') is-invalid @enderror" id="parint_id"
-                        name="parint_id">
-                        @foreach ($parints as $parint)
-                            <option value="{{ $parint->id }}" @selected(old('parint_id') == $parint->id)>{{ $parint->name }}
-                            </option>
-                        @endforeach
-                        @error('parint_id')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </select>
-                </div>
-
-                <div class="mb-3 col-md-6">
-                    <label for="Email" class="form-label">Email<span class="text-danger">*</span></label>
-                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="Email"
-                        name="email" value="{{ old('email') }}" required>
-                    @error('email')
+                    <label for="phone" class="form-label">Phone<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone"
+                        name="phone" value="{{ old('phone') }}">
+                    @error('phone')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="mb-3 col-md-6">
-                    <label for="Phone" class="form-label">Phone</label>
-                    <input type="text" class="form-control @error('Phone') is-invalid @enderror" id="Phone"
-                        name="Phone" value="{{ old('Phone') }}">
-                    @error('Phone')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3 col-md-6">
-                    <label for="enrollment_date" class="form-label">Enrollment date</label>
+                    <label for="enrollment_date" class="form-label">Enrollment date<span class="text-danger">*</span></label>
                     <input type="date" class="form-control @error('enrollment_date') is-invalid @enderror"
                         id="enrollment_date" name="enrollment_date" value="{{ old('enrollment_date') }}" required>
                     @error('enrollment_date')
@@ -100,16 +117,13 @@
                 </div>
 
                 <div class="mb-3 col-md-6">
-                    <label for="date_of_birth" class="form-label">Date of birth</label>
+                    <label for="date_of_birth" class="form-label">Date of birth<span class="text-danger">*</span></label>
                     <input type="date" class="form-control @error('date_of_birth') is-invalid @enderror"
                         id="date_of_birth" name="date_of_birth" value="{{ old('date_of_birth') }}" required>
                     @error('date_of_birth')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-
-
-
 
                 <div class="mb-3 col-md-6">
                     <label for="status" class="form-label">Status<span class="text-danger">*</span></label>

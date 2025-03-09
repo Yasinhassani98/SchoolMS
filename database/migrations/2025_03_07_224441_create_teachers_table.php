@@ -16,10 +16,10 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('image')->nullable();
             $table->string('name');
-            $table->string('phone')->nullable();
-            $table->date('date_of_birth')->nullable();
+            $table->string('phone');
+            $table->date('date_of_birth');
             $table->string('specialization')->nullable();
-            $table->date('hiring_date')->nullable();
+            $table->date('hiring_date');
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->enum('gender', ['male', 'female'])->default('male');
             $table->timestamps();

@@ -8,16 +8,16 @@
             <form enctype="multipart/form-data" class="row" action="{{ route('admin.teachers.update',$teacher->id) }}" method="POST">
                 @method('PUT')
                 @csrf
-                <div class="mb-3 col-md-6">
-                    <label for="image" class="form-label">Image</label>
+                <div class="mb-3 col-md-3">
+                    <img src="{{ $teacher->image ? asset('storage/' . $teacher->image) : asset('images/default.png') }}" alt="Teacher Image" class="img-fluid rounded-circle shadow-sm" width="150">
+                </div>
+                <div class="mb-3 col-md-9">
                     <input type="file" class="form-control @error('image') is-invalid @enderror" id="image"
-                        name="image" value="{{ old('image') }}">
+                        name="image" value="{{ old('image',$teacher->image) }}">
                     @error('image')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                </div>
-                <div class="mb-3 col-md-6">
-                    <label for="name" class="form-label">Teacher Name<span class="text-danger">*</span></label>
+                    <label for="name" class="form-label mt-3">Teacher Name<span class="text-danger">*</span></label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
                         name="name" value="{{ old('name',$teacher->name) }}" required>
                     @error('name')
@@ -32,6 +32,33 @@
                         <option value="female" @selected(old('gender',$teacher->gender) == 'female')>Female</option>
                     </select>
                     @error('gender')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3 col-md-6">
+                    <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
+                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
+                        name="email" value="{{ old('email') }}" required>
+                    @error('email')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3 col-md-6">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
+                        name="password" value="{{ old('password') }}">
+                    @error('password')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3 col-md-6">
+                    <label for="password confirmation" class="form-label">Password Confirmation</label>
+                    <input type="password" class="form-control @error('password.confirmation') is-invalid @enderror" id="password confirmation"
+                        name="password.confirmation" value="{{ old('password.confirmation') }}">
+                    @error('password.confirmation')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
@@ -66,16 +93,7 @@
                 </div>
 
                 <div class="mb-3 col-md-6">
-                    <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
-                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="Email"
-                        name="email" value="{{ old('email',$teacher->email) }}" required>
-                    @error('email')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3 col-md-6">
-                    <label for="phone" class="form-label">Phone</label>
+                    <label for="phone" class="form-label">Phone<span class="text-danger">*</span></label>
                     <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone"
                         name="phone" value="{{ old('phone',$teacher->phone) }}">
                     @error('phone')
@@ -84,9 +102,18 @@
                 </div>
 
                 <div class="mb-3 col-md-6">
-                    <label for="date_of_birth" class="form-label">Date of birth</label>
+                    <label for="hiring_date" class="form-label">Hiring Date<span class="text-danger">*</span></label>
+                    <input type="date" class="form-control @error('hiring_date') is-invalid @enderror"
+                        id="hiring_date" name="hiring_date" value="{{ old('hiring_date',$teacher->hiring_date) }}">
+                    @error('hiring_date')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3 col-md-6">
+                    <label for="date_of_birth" class="form-label">Date of birth<span class="text-danger">*</span></label>
                     <input type="date" class="form-control @error('date_of_birth') is-invalid @enderror"
-                        id="date_of_birth" name="date_of_birth" value="{{ old('date_of_birth',$teacher->date_of_birth) }}" required>
+                        id="date_of_birth" name="date_of_birth" value="{{ old('date_of_birth',$teacher->date_of_birth) }}">
                     @error('date_of_birth')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

@@ -16,7 +16,7 @@ class StudentSeeder extends Seeder
         for ($classroom_id = 1; $classroom_id <= 36; $classroom_id++) {
             for ($i = 1; $i <= 7; $i++) {
                 Student::create([
-                    'user_id' => User::role('student')->first()->id,
+                    'user_id' => User::role('student')->inRandomOrder()->first()->id,
                     'parint_id' => Parint::inRandomOrder()->first()->id,
                     'name' => fake()->name(),
                     'gender' => fake()->randomElement(['male','female']),

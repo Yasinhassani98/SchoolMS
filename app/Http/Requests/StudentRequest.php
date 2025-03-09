@@ -24,8 +24,10 @@ class StudentRequest extends FormRequest
         return [
             'name' => 'required|min:3|max:255',
             'gender' => 'required|in:male,female',
-            'classroom_id' => 'sometimes|required|exists:classrooms,id',
-            'parint_id' => 'sometimes|required|exists:parints,id',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed',
+            'classroom_id' => 'required|exists:classrooms,id',
+            'parint_id' => 'required|exists:parints,id',
             'Phone' => 'nullable|string|max:20',
             'enrollment_date' => 'nullable|date',
             'address' => 'nullable|max:255',

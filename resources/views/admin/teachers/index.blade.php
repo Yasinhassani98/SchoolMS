@@ -21,6 +21,7 @@
                                     <th>Gender</th>
                                     <th>Email</th>
                                     <th>phone</th>
+                                    <th>Hiring Date</th>
                                     <th>Date of Birth</th>
                                     <th>Specialization</th>
                                     <th>status</th>
@@ -34,6 +35,7 @@
                                     <td>{{ $teacher->gender }}</td>
                                     <td>{{ $teacher->email }}</td>
                                     <td>{{ $teacher->phone }}</td>
+                                    <td>{{ $teacher->hiring_date }}</td>
                                     <td>{{ $teacher->date_of_birth }}</td>
                                     <td>{{ $teacher->specialization }}</td>
                                     <td>{{ $teacher->status }}</td>

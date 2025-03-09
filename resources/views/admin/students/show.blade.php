@@ -27,7 +27,7 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <div class="card bg-light p-3">
-                        <strong class="text-secondary">Parint Name:</strong>
+                        <strong class="text-secondary">Parent Name:</strong>
                         <p class="mb-0">{{ $student->parint->name }}</p>
                     </div>
                 </div>

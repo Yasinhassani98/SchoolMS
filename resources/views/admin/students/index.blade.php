@@ -22,7 +22,7 @@
                                     <th>Claasroom Name</th>
                                     <th>Phone</th>
                                     <th>Enrollment Date</th>
-                                    <th>Name Parint</th>
+                                    <th>Parent Name</th>
                                     <th>Address</th>
                                     <th>DOB</th>
 
