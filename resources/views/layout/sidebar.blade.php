@@ -2,9 +2,25 @@
     <div class="nk-nav-scroll">
         <ul class="metismenu" id="menu">
             @role('admin')
+            <li class="nav-label">Admin</li>
             <li>
                 <a href="{{ route('admin.dashboard') }}" class="{{ Route::is('admin.dashboard.*')? 'active' : '' }}" aria-expanded="false">
                     <i class="fa-solid fa-chart-line"></i><span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.roles.index') }}" class="{{ Route::is('admin.roles.*')? 'active' : '' }}" aria-expanded="false">
+                    <i class="fa-solid fa-user-shield"></i><span class="nav-text">Roles</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.permissions.index') }}" class="{{ Route::is('admin.permissions.*')? 'active' : '' }}" aria-expanded="false">
+                    <i class="fa-solid fa-key"></i><span class="nav-text">Permissions</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.users.index') }}" class="{{ Route::is('admin.users.*')? 'active' : '' }}" aria-expanded="false">
+                    <i class="fa-solid fa-users"></i><span class="nav-text">Users</span>
                 </a>
             </li>
             <li>
@@ -19,7 +35,7 @@
             </li>
             <li>
                 <a href="{{ route('admin.classrooms.index') }}" class="{{ Route::is('admin.classrooms.*')? 'active' : '' }}" aria-expanded="false">
-                    <i class="fa-solid fa-users"></i><span class="nav-text">Classrooms</span>
+                    <i class="fa fa-door-closed"></i><span class="nav-text">Classrooms</span>
                 </a>
             </li>
             <li>

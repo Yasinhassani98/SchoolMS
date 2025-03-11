@@ -3,10 +3,13 @@
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\MarkController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\WlcomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,8 +25,16 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin/')->as('admin.')->group(function () {
-    
+    // Dashboard Route
     Route::get('dashboard',[WlcomeController::class,'welcome'])->name('dashboard');
+
+    // Role and Permission Routes
+    Route::resource('roles', RoleController::class)->except(['show']);
+    Route::resource('permissions', PermissionController::class)->except(['show']);
+
+    // User Routes
+    Route::resource('users', UserController::class)->except(['show']);
+
     // Student Routes
     Route::resource('students', StudentController::class);
 
