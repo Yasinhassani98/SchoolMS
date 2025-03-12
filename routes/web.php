@@ -56,9 +56,10 @@ Route::middleware(['auth', 'role:admin|superadmin'])->prefix('admin/')->as('admi
     Route::resource('marks', MarkController::class);
 
     // Academic Year Routes
+    Route::patch('academic-years/set-current/{academicYear}', [AcademicYearController::class, 'setCurrent'])->name('academic-years.set-current');
     Route::resource('academic-years', AcademicYearController::class);
 
-    // Parint Routes
-    Route::resource('parints', ParintController::class);
+    // Parent Routes
+    Route::resource('parents', ParintController::class);
 });
 require __DIR__ . '/auth.php';

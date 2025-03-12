@@ -1,22 +1,22 @@
 @extends('layout.base')
-@section('title', 'Add New Parint')
+@section('title', 'Add New Parent')
 @section('content')
 
     <div class="card mb-4 mt-2 container">
         <div class="card-body p-4">
-            <h5 class="card-title">Add New Parint</h5>
-            <form enctype="multipart/form-data" class="row" action="{{ route('admin.parints.store') }}" method="POST">
+            <h5 class="card-title">Add New Parent</h5>
+            <form enctype="multipart/form-data" class="row" action="{{ route('admin.parents.store') }}" method="POST">
                 @csrf
                 <div class="mb-3 col-md-6">
                     <label for="image" class="form-label">Image</label>
                     <input type="file" class="form-control @error('image') is-invalid @enderror" id="image"
-                        name="image" value="{{ old('image') }}">
+                        name="image">
                     @error('image')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="mb-3 col-md-6">
-                    <label for="name" class="form-label">Parint Name<span class="text-danger">*</span></label>
+                    <label for="name" class="form-label">Parent Name<span class="text-danger">*</span></label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
                         name="name" value="{{ old('name') }}" required>
                     @error('name')
@@ -24,8 +24,8 @@
                     @enderror
                 </div>
                 <div class="mb-3 col-md-6">
-                    <label for="Email" class="form-label">Email<span class="text-danger">*</span></label>
-                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="Email"
+                    <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
+                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
                         name="email" value="{{ old('email') }}" required>
                     @error('email')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -35,7 +35,7 @@
                 <div class="mb-3 col-md-6">
                     <label for="password" class="form-label">Password<span class="text-danger">*</span></label>
                     <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
-                        name="password" value="{{ old('password') }}" required>
+                        name="password" required>
                     @error('password')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -51,7 +51,7 @@
                 <div class="mb-3 col-md-6">
                     <label for="phone" class="form-label">Phone<span class="text-danger">*</span></label>
                     <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone"
-                        name="phone" value="{{ old('phone') }}">
+                        name="phone" value="{{ old('phone') }}" required>
                     @error('phone')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -67,7 +67,7 @@
                 </div>
 
                 <div class="col-md-12 d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary">Add Parint</button>
+                    <button type="submit" class="btn btn-primary">Add Parent</button>
                 </div>
             </form>
         </div>
