@@ -9,10 +9,12 @@
                 @csrf
                 <div class="mb-3 col-md-6">
                     <label for="student_id" class="form-label">Student<span class="text-danger">*</span></label>
-                    <select class="form-control @error('student_id') is-invalid @enderror" id="student_id" name="student_id">
+                    <select class="form-control @error('student_id') is-invalid @enderror" id="student_id"
+                        name="student_id">
                         <option value="">Select Student</option>
                         @foreach ($students as $student)
-                            <option value="{{ $student->id }}" data-level="{{ $student->classroom->level->level }}" @selected(old('student_id') == $student->id)>{{ $student->name }}</option>
+                            <option value="{{ $student->id }}" data-level="{{ $student->classroom->level->level }}"
+                                @selected(old('student_id') == $student->id)>{{ $student->name }}</option>
                         @endforeach
                     </select>
                     @error('student_id')
@@ -21,13 +23,43 @@
                 </div>
                 <div class="mb-3 col-md-6">
                     <label for="subject_id" class="form-label">Subject<span class="text-danger">*</span></label>
-                    <select class="form-control @error('subject_id') is-invalid @enderror" id="subject_id" name="subject_id">
+                    <select class="form-control @error('subject_id') is-invalid @enderror" id="subject_id"
+                        name="subject_id">
                         <option value="">Select Subject</option>
                         @foreach ($subjects as $subject)
-                            <option value="{{ $subject->id }}" data-level="{{ $subject->level->level }}" @selected(old('subject_id') == $subject->id)>{{ $subject->level->level ." ". $subject->name }}</option>
+                            <option value="{{ $subject->id }}" data-level="{{ $subject->level->level }}"
+                                @selected(old('subject_id') == $subject->id)>{{ $subject->level->level . ' ' . $subject->name }}</option>
                         @endforeach
                     </select>
                     @error('subject_id')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label for="classroom_id" class="form-label">Classroom<span class="text-danger">*</span></label>
+                    <select class="form-control @error('classroom_id') is-invalid @enderror" id="classroom_id"
+                        name="classroom_id">
+                        <option value="">Select Classroom</option>
+                        @foreach ($classrooms as $classroom)
+                            <option value="{{ $classroom->id }}" @selected(old('classroom_id') == $classroom->id)>{{ $classroom->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('classroom_id')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label for="academic_year_id" class="form-label">Academic Year<span class="text-danger">*</span></label>
+                    <select class="form-control @error('academic_year_id') is-invalid @enderror" id="academic_year_id"
+                        name="academic_year_id">
+                        <option value="">Select Academic Year</option>
+                        @foreach ($academicYears as $academicYear)
+                            <option value="{{ $academicYear->id }}" @selected(old('academic_year_id') == $academicYear->id)>{{ $academicYear->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('academic_year_id')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>

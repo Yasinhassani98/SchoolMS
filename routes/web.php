@@ -11,6 +11,8 @@ use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WlcomeController;
+use App\Http\Controllers\AcademicYearController;
+use App\Http\Controllers\ParintController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -52,5 +54,11 @@ Route::middleware(['auth', 'role:admin|superadmin'])->prefix('admin/')->as('admi
 
     // Marks Routes
     Route::resource('marks', MarkController::class);
+
+    // Academic Year Routes
+    Route::resource('academic-years', AcademicYearController::class);
+
+    // Parint Routes
+    Route::resource('parints', ParintController::class);
 });
 require __DIR__ . '/auth.php';

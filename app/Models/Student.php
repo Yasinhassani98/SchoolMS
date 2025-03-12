@@ -11,7 +11,7 @@ class Student extends Model
     protected $guarded = [];
     public function marks()
     {
-        return $this->belongsToMany(Mark::class, 'marks');
+        return $this->hasMany(Mark::class);
     }
     public function classroom()
     {

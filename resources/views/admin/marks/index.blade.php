@@ -19,6 +19,8 @@
                                     <tr>
                                         <th>Student Name</th>
                                         <th>Subject Name</th>
+                                        <th>Classroom</th>
+                                        <th>Academic Year</th>
                                         <th>Mark</th>
                                         <th colspan="2">Actions</th>
                                     </tr>
@@ -28,6 +30,8 @@
                                         <tr>
                                             <td>{{ $mark->student->name }}</td>
                                             <td>{{ $mark->subject->name }}</td>
+                                            <td>{{ $mark->classroom->name }}</td>
+                                            <td>{{ $mark->academicYear->name }}</td>
                                             <td>{{ $mark->mark }}</td>
                                             <td>
                                                 <a href="{{ route('admin.marks.edit', $mark->id) }}"><i

@@ -9,17 +9,19 @@ class Mark extends Model
     protected $fillable = [
         'student_id',
         'subject_id',
+        'classroom_id',
+        'academic_year_id',
         'mark',
     ];
 
     public function student()
     {
-        return $this->belongsToMany(Student::class);
+        return $this->belongsTo(Student::class);
     }
 
     public function subject()
     {
-        return $this->belongsToMany(Subject::class);
+        return $this->belongsTo(Subject::class);
     }   
     public function academicYear()
     {
