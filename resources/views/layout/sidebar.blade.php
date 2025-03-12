@@ -1,8 +1,8 @@
 <div class="nk-sidebar">
     <div class="nk-nav-scroll">
         <ul class="metismenu" id="menu">
-            @role('admin')
-            <li class="nav-label">Admin</li>
+            @role(['admin', 'superadmin'])
+            <li class="nav-label">Admin & Superadmin</li>
             <li>
                 <a href="{{ route('admin.dashboard') }}" class="{{ Route::is('admin.dashboard.*')? 'active' : '' }}" aria-expanded="false">
                     <i class="fa-solid fa-chart-line"></i><span class="nav-text">Dashboard</span>

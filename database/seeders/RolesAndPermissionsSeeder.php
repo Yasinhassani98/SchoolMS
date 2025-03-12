@@ -15,6 +15,10 @@ class RolesAndPermissionsSeeder extends Seeder
     public function run(): void
     {
         $adminPermissions = [
+            'view-roles',
+
+            'view-permissions',
+
             'view-users',
             'create-users',
             'edit-users',
@@ -112,7 +116,16 @@ class RolesAndPermissionsSeeder extends Seeder
             $adminPermissions,
             $teacherPermissions,
             $studentPermissions,
-            $parentPermissions
+            $parentPermissions,
+            ['view-roles',
+            'create-roles',
+            'edit-roles',
+            'delete-roles',
+
+            'view-permissions',
+            'create-permissions',
+            'edit-permissions',
+            'delete-permissions']
         ));
         
         foreach ($allPermissions as $permission) {
@@ -131,5 +144,8 @@ class RolesAndPermissionsSeeder extends Seeder
         
         $parentRole = Role::create(['name' => 'parent']);
         $parentRole->givePermissionTo($parentPermissions);
+
+        $superAdminRole = Role::create(['name' => 'superadmin']);
+        $superAdminRole->givePermissionTo($allPermissions);
     }
 }
