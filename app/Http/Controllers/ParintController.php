@@ -12,7 +12,7 @@ class ParintController extends Controller
 {
     public function index()
     {
-        $parints = Parint::paginate(10);
+        $parints = Parint::withCount('students')->paginate(10);
         return view('admin.parints.index', compact('parints'));
     }
     public function create()
@@ -22,14 +22,14 @@ class ParintController extends Controller
     }
     public function store(ParintRequest $request)
     {
-        dd($request->all());
+        // dd($request);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-        ])->assignRole('parint');
-
+        ])->assignRole('parent');
+        // dd($user);
         $parint = new Parint([
             ...$request->except('image', 'email', 'password', 'password_confirmation'),
         ]);
@@ -57,6 +57,11 @@ class ParintController extends Controller
         ]);
         $parint->update($validatedData);
         return redirect()->route('admin.parints.index')->with('success', 'Parint updated successfully');
+    }
+    public function show(Parint $parint)
+    {
+        $studentsNumber = $parint->students->count();
+        return view('admin.parints.show', compact('parint', 'studentsNumber'));
     }
     public function destroy(Parint $parint)
     {

@@ -20,6 +20,7 @@
                                         <th>Name</th>
                                         <th>Phone</th>
                                         <th>DOB</th>
+                                        <th>Number of Students</th>
                                         <th colspan="3">Action</th>
                                     </tr>
 
@@ -29,6 +30,7 @@
                                             <td>{{ $parint->name ?? 'null' }}</td>
                                             <td>{{ $parint->phone ?? 'null' }}</td>
                                             <td>{{ $parint->date_of_birth ?? 'null' }}</td>
+                                            <td>{{ $parint->students_count ?? 'null' }}</td>
                                             <td>
                                                 <a href="{{ route('admin.parints.edit', $parint->id) }}"><i
                                                         class="fa-solid fa-pen-to-square text-warning"></i></a>

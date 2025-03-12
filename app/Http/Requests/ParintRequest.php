@@ -24,6 +24,8 @@ class ParintRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'nullable|min:6|confirmed',
             'date_of_birth' => 'required|date',
             'image' => 'nullable|image',
         ];
