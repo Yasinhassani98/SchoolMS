@@ -22,14 +22,14 @@ class ParintController extends Controller
     }
     public function store(ParintRequest $request)
     {
-        // dd($request);
+        dd($request->all());
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-        ])->assignRole('parent');
-        // dd($user);
+        ])->assignRole('parint');
+
         $parint = new Parint([
             ...$request->except('image', 'email', 'password', 'password_confirmation'),
         ]);
