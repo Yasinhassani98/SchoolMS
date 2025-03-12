@@ -9,7 +9,7 @@
                 @method('PUT')
                 @csrf
                 <div class="mb-3 col-md-3">
-                    <img src="{{ $student->image ? asset('storage/' . $student->image) : asset('images/default.png') }}" alt="Student Image" class="img-fluid rounded-circle shadow-sm" width="150">
+                    <img src="{{ $student->getImageURL() }}" alt="Student Image" class="img-fluid rounded-circle shadow-sm" width="150">
                 </div>
                 <div class="mb-3 col-md-9">
                     <input type="file" class="form-control @error('image') is-invalid @enderror" id="image"
