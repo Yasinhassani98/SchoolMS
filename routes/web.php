@@ -62,7 +62,7 @@ Route::middleware(['auth', 'role:admin|superadmin'])->prefix('admin/')->as('admi
     Route::resource('academic-years', AcademicYearController::class)->except(['show']);
 
     // Parint Routes
-    Route::resource('parints', ParintController::class);
+    Route::resource('parents', ParintController::class);
 
 });
 // Attendance Routes

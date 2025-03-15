@@ -12,6 +12,7 @@ class Mark extends Model
         'classroom_id',
         'academic_year_id',
         'mark',
+        'note',
     ];
 
     public function student()
