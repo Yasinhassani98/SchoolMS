@@ -75,6 +75,12 @@
                         <i class="fa-solid fa-users-line"></i><span class="nav-text">Parints</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('attendances.index') }}" class="{{ Route::is('attendances.*') ? 'active' : '' }}"
+                        aria-expanded="false">
+                        <i class="fa-solid fa-clipboard-check"></i><span class="nav-text">Attendances</span>
+                    </a>
+                </li>
             @endrole
         </ul>
     </div>

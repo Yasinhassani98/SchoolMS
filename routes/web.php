@@ -12,7 +12,9 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WlcomeController;
 use App\Http\Controllers\AcademicYearController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\ParintController;
+use App\Http\Controllers\SuperAdminController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -59,7 +61,10 @@ Route::middleware(['auth', 'role:admin|superadmin'])->prefix('admin/')->as('admi
     Route::patch('academic-years/set-current/{academicYear}', [AcademicYearController::class, 'setCurrent'])->name('academic-years.set-current');
     Route::resource('academic-years', AcademicYearController::class);
 
-    // Parent Routes
-    Route::resource('parents', ParintController::class);
+    // Parint Routes
+    Route::resource('parints', ParintController::class);
+
 });
+// Attendance Routes
+Route::resource('attendances', AttendanceController::class)->middleware(['auth','role:admin|superadmin|teacher']);
 require __DIR__ . '/auth.php';

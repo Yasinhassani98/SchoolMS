@@ -26,8 +26,18 @@ class UsersSeeder extends Seeder
         ])->assignRole('superadmin');
         
         User::create([
-            'name' => 'Test',
-            'email' => 'test@gmail.com',
+            'name' => 'Test 1',
+            'email' => 'test1@gmail.com',
+            'password' => Hash::make('123456789')
+        ])->assignRole('admin');
+        User::create([
+            'name' => 'Test 2',
+            'email' => 'test2@gmail.com',
+            'password' => Hash::make('123456789')
+        ])->assignRole('admin');
+        User::create([
+            'name' => 'Test 3',
+            'email' => 'test3@gmail.com',
             'password' => Hash::make('123456789')
         ])->assignRole('admin');
 
@@ -43,7 +53,7 @@ class UsersSeeder extends Seeder
                 'name' => fake()->name(),
                 'email' => fake()->email(),
                 'password' => Hash::make('12345678')
-            ])->assignRole('parent');
+            ])->assignRole('parint');
         }
         for ($i = 0; $i < 10; $i++) {
             User::create([

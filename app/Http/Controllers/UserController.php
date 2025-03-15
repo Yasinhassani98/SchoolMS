@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
@@ -23,9 +24,12 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create',[
-            'roles' => Role::all(),
-        ]);
+        if(Auth::user()->hasRole('admin')){
+            $roles = Role::whereNotIn('name', ['superadmin','admin'])->get();
+        }elseif(Auth::user()->hasRole('superadmin')){
+            $roles  = Role::all();
+        }
+        return view('admin.users.create',compact('roles'));
     }
 
     /**
