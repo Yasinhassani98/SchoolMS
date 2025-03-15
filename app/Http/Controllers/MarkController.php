@@ -7,30 +7,25 @@ use App\Models\Classroom;
 use App\Models\Mark;
 use App\Models\Student;
 use App\Models\Subject;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreMarkRequest;
+use App\Http\Requests\UpdateMarkRequest;
+use App\Models\Level;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class MarkController extends Controller
 {
     public function index()
     {
-        $marks = Mark::query()
-            ->join('students', 'marks.student_id', '=', 'students.id')
-            ->join('classrooms', 'students.classroom_id', '=', 'classrooms.id')
-            ->join('academic_years', 'marks.academic_year_id', '=', 'academic_years.id')
-            ->select(
-                'marks.*',
-                'students.name as student_name',
-                'classrooms.name as classroom_name',
-                'academic_years.name as academic_year_name'
-            )
-            ->with(['student', 'subject', 'classroom', 'academicYear'])
-            ->orderBy('marks.created_at', 'desc')
+        $marks = Mark::with(['student', 'subject', 'classroom', 'academicYear'])
+            ->latest()
             ->paginate(10);
 
         return view('admin.marks.index', compact('marks'));
     }
     public function create()
     {
+        $levels = Level::all();
         $students = Student::with('classroom.level')
             ->whereHas('classroom.level')
             ->get();
@@ -45,21 +40,44 @@ class MarkController extends Controller
 
         $academicYears = AcademicYear::all();
 
-        return view('admin.marks.create', compact('students', 'subjects', 'classrooms', 'academicYears'));
+        return view('admin.marks.create', compact('students', 'subjects', 'classrooms', 'academicYears','levels'));
     }
-    public function store(Request $request)
+
+    public function store(StoreMarkRequest $request)
     {
-        $validatedData = $request->validate([
-            'student_id' => 'required|exists:students,id',
-            'subject_id' => 'required|exists:subjects,id',
-            'classroom_id' => 'required|exists:classrooms,id',
-            'academic_year_id' => 'required|exists:academic_years,id',
-            'mark' => 'required|numeric|min:0|max:100',
-        ]);
-        Mark::create($validatedData);
-        return redirect()->route('admin.marks.index')->with('success', 'Mark added successfully.');
+        $academicYear = AcademicYear::where('is_current', true)->first();
+        
+        // Get the arrays of student IDs and their corresponding marks
+        $studentIds = $request->input('student_ids', []);
+        $marks = $request->input('marks', []);
+        $classroomId = $request->input('classroom_id');
+        $subjectId = $request->input('subject_id');
+        $note = $request->input('note');
+        
+        // Create a mark record for each student
+        foreach ($studentIds as $index => $studentId) {
+            // Skip if no mark is provided
+            if (!isset($marks[$index]) || $marks[$index] === '') {
+                continue;
+            }
+            
+            Mark::create([
+                'student_id' => $studentId,
+                'subject_id' => $subjectId,
+                'classroom_id' => $classroomId,
+                'academic_year_id' => $academicYear->id,
+                'mark' => $marks[$index],
+                'note' => $note,
+            ]);
+        }
+        
+        return redirect()
+            ->route('admin.marks.index')
+            ->with('success', 'Marks added successfully for classroom ' . Classroom::find($classroomId)->name . ' and subject ' . Subject::find($subjectId)->name);
     }
-    public function edit(Mark $mark)
+
+
+    public function edit(Mark $mark): View
     {
         $students = Student::with('classroom.level')
             ->whereHas('classroom.level')
@@ -77,19 +95,25 @@ class MarkController extends Controller
 
         return view('admin.marks.edit', compact('mark', 'students', 'subjects', 'classrooms', 'academicYears'));
     }
-    public function update(Request $request, Mark $mark)
+
+    public function update(UpdateMarkRequest $request, Mark $mark): RedirectResponse
     {
-        $validatedData = $request->validate([
-            'student_id' => 'required|exists:students,id',
-            'subject_id' => 'required|exists:subjects,id',
-            'mark' => 'required|numeric|min:0|max:100',
-        ]);
-        $mark->update($validatedData);
-        return redirect()->route('admin.marks.index')->with('success', 'Mark updated successfully');
+        $academicYear = AcademicYear::where('is_current', true)->first();
+
+        $data = array_merge($request->validated(),['academic_year_id' => $academicYear->id]);
+        $mark->update($data);
+        
+        return redirect()
+            ->route('admin.marks.index')
+            ->with('success', 'Mark updated successfully');
     }
-    public function destroy(Mark $mark)
+
+    public function destroy(Mark $mark): RedirectResponse
     {
         $mark->delete();
-        return redirect()->route('admin.marks.index')->with('success', 'Mark deleted successfully');
+        
+        return redirect()
+            ->route('admin.marks.index')
+            ->with('success', 'Mark deleted successfully');
     }
 }

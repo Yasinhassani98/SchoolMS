@@ -18,10 +18,6 @@
                     <strong class="text-secondary">Description:</strong>
                     <p>{{ $subject->description ?? '' }}</p>
                 </div>
-                <div class="col-md-6 mb-3">
-                    <strong class="text-secondary">Type:</strong>
-                    <p>{{ ucfirst($subject->type ?? '') }}</p>
-                </div>
             </div>
             <div class="d-flex justify-content-end">
                 <button href="{{ route('admin.subjects.index') }}" class="btn btn-gray mx-2">Back</button>

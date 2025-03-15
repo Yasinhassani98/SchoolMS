@@ -136,6 +136,7 @@
                     @enderror
                 </div>
                 <div class="col-md-12 d-flex justify-content-end">
+                    <a href="{{ route('admin.students.index') }}" class="btn btn-outline-secondary me-2">Cancel</a>
                     <button type="submit" class="btn btn-primary">Add Student</button>
                 </div>
             </form>

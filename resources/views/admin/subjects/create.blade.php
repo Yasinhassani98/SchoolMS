@@ -26,25 +26,16 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="mb-3 col-md-6">
-                    <label for="description" class="form-label">Description<span class="text-danger">*</span></label>
+                <div class="mb-3 col-md-12">
+                    <label for="description" class="form-label">Description</label>
                     <textarea name="description" class="form-control @error('description') is-invalid @enderror" id="description"
                         cols="30" rows="10">{{ old('description') }}</textarea>
                     @error('description')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="mb-3 col-md-6">
-                    <label for="type" class="form-label">Type<span class="text-danger">*</span></label>
-                    <select class="form-control @error('type') is-invalid @enderror" id="type" name="type">
-                        <option value="required" @selected(old('type') == 'required')>Required</option>
-                        <option value="optional" @selected(old('type') == 'optional')>Optional</option>
-                    </select>
-                    @error('type')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
                 <div class="col-md-12 d-flex justify-content-end">
+                    <a href="{{ route('admin.subjects.index') }}" class="btn btn-outline-secondary me-2">Cancel</a>
                     <button type="submit" class="btn btn-primary">Create Subject</button>
                 </div>
             </form>

@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center m-3">
                         <h4 class="card-title">Parents List</h4>
-                        <form action="{{ route('admin.parints.create') }}" method="GET">
+                        <form action="{{ route('admin.parents.create') }}" method="GET">
                             @csrf
                             <button type="submit" class="btn btn-primary">Add Parent</button>
                         </form>
@@ -20,27 +20,27 @@
                                         <th>Name</th>
                                         <th>Phone</th>
                                         <th>DOB</th>
-                                        <th>Number of Students</th>
+                                        <th>Number of children</th>
                                         <th colspan="3">Action</th>
                                     </tr>
 
                                 <tbody>
-                                    @forelse($parints as $parint)
+                                    @forelse($parents as $parent)
                                         <tr>
-                                            <td>{{ $parint->name ?? 'null' }}</td>
-                                            <td>{{ $parint->phone ?? 'null' }}</td>
-                                            <td>{{ $parint->date_of_birth ?? 'null' }}</td>
-                                            <td>{{ $parint->students_count ?? 'null' }}</td>
+                                            <td>{{ $parent->name ?? 'null' }}</td>
+                                            <td>{{ $parent->phone ?? 'null' }}</td>
+                                            <td>{{ $parent->date_of_birth ?? 'null' }}</td>
+                                            <td>{{ $parent->children_count ?? 'null' }}</td>
                                             <td>
-                                                <a href="{{ route('admin.parints.edit', $parint->id) }}"><i
+                                                <a href="{{ route('admin.parents.edit', $parent->id) }}"><i
                                                         class="fa-solid fa-pen-to-square text-warning"></i></a>
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.parints.show', $parint->id) }}"><i
+                                                <a href="{{ route('admin.parents.show', $parent->id) }}"><i
                                                         class="fa-solid fa-eye text-success"></i></a>
                                             </td>
                                             <td>
-                                                <form action="{{ route('admin.parints.destroy', $parint->id) }}"
+                                                <form action="{{ route('admin.parents.destroy', $parent->id) }}"
                                                     method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
@@ -60,7 +60,7 @@
                     </div>
                 </div>
             </div>
-            {{ $parints->links() }}
+            {{ $parents->links() }}
         </div>
     </div>
 @endsection

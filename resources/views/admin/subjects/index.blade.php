@@ -20,7 +20,6 @@
                                         <th>Subject Name</th>
                                         <th>Level Name</th>
                                         <th>Description</th>
-                                        <th>Type</th>
                                         <th colspan="3">Actions</th>
                                     </tr>
                                 </thead>
@@ -30,7 +29,6 @@
                                             <td>{{ $subject->name }}</td>
                                             <td>{{ $subject->level->name }}</td>
                                             <td>{{ $subject->description }}</td>
-                                            <td>{{ $subject->type }}</td>
                                             <td>
                                                 <a href="{{ route('admin.subjects.edit', $subject->id) }}"><i
                                                         class="fa-solid fa-pen-to-square text-warning"></i></a>

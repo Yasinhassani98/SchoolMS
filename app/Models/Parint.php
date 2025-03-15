@@ -13,7 +13,7 @@ class Parint extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function students()
+    public function children()
     {
         return $this->hasMany(Student::class);
     }

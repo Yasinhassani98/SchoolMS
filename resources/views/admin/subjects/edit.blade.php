@@ -5,9 +5,9 @@
     <div class="card mb-4 mt-2 container">
         <div class="card-body p-4">
             <h5 class="card-title">Edit Subject {{ $subject->name }}</h5>
-            <form class="row" method="POST" action="{{ route('admin.subjects.store') }}">
-                @csrf
+            <form class="row" method="POST" action="{{ route('admin.subjects.update',$subject->id) }}">
                 @method('PUT')
+                @csrf
                 <div class="mb-3 col-md-6">
                     <label for="name" class="form-label">Subject Name<span class="text-danger">*</span></label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
@@ -27,25 +27,16 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="mb-3 col-md-6">
-                    <label for="description" class="form-label">Description<span class="text-danger">*</span></label>
+                <div class="mb-3 col-md-12">
+                    <label for="description" class="form-label">Description</label>
                     <textarea name="description" class="form-control @error('description') is-invalid @enderror" id="description"
                         cols="30" rows="10">{{ old('description',$subject->description) }}</textarea>
                     @error('description')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="mb-3 col-md-6">
-                    <label for="type" class="form-label">Type<span class="text-danger">*</span></label>
-                    <select class="form-control @error('type') is-invalid @enderror" id="type" name="type">
-                        <option value="required" @selected(old('type',$subject->type) == 'required')>Required</option>
-                        <option value="optional" @selected(old('type',$subject->type) == 'optional')>Optional</option>
-                    </select>
-                    @error('type')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
                 <div class="col-md-12 d-flex justify-content-end">
+                    <a href="{{ route('admin.subjects.index') }}" class="btn btn-outline-secondary me-2">Cancel</a>
                     <button type="submit" class="btn btn-primary">Update Subject</button>
                 </div>
             </form>

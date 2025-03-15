@@ -56,6 +56,7 @@
                 </div>
 
                 <div class="col-md-12 d-flex justify-content-end">
+                    <a href="{{ route('admin.academic-years.index') }}" class="btn btn-outline-secondary me-2">Cancel</a>
                     <button type="submit" class="btn btn-primary">Create Academic Year</button>
                 </div>
             </form>

@@ -14,7 +14,7 @@
                 </div>
                 <div class="active-member">
                     <div class="table-responsive">
-                        <table class="table table-xs mb-0">
+                        <table class="table table-xs text-center mb-0">
                             <thead>
                                 <tr>
                                     <th>Name</th>

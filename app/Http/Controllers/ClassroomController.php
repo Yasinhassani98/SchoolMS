@@ -36,7 +36,7 @@ class ClassroomController extends Controller
     public function update(Request $request, Classroom $classroom)
     {
         $validated = $request->validate([
-            'level_id' => 'required|exists:Levels,id,'. $classroom->id,
+            'level_id' => 'required|exists:levels,id',
             'name' => 'required|max:255'
         ]);
         $classroom->update($validated);

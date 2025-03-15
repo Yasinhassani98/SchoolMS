@@ -54,6 +54,7 @@
                 </div>
 
                 <div class="col-md-12 d-flex justify-content-end">
+                    <a href="{{ route('admin.users.index') }}" class="btn btn-outline-secondary me-2">Cancel</a>
                     <button type="submit" class="btn btn-primary">Add User</button>
                 </div>
             </form>

@@ -7,13 +7,14 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\ParintRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class ParintController extends Controller
 {
     public function index()
     {
-        $parints = Parint::withCount('students')->paginate(10);
-        return view('admin.parints.index', compact('parints'));
+        $parents = Parint::withCount('children')->paginate(10);
+        return view('admin.parints.index', compact('parents'));
     }
     public function create()
     {
@@ -22,50 +23,88 @@ class ParintController extends Controller
     }
     public function store(ParintRequest $request)
     {
-        dd($request->all());
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-        ])->assignRole('parint');
+        ])->assignRole('parent');
 
-        $parint = new Parint([
+        $parent = new Parint([
             ...$request->except('image', 'email', 'password', 'password_confirmation'),
         ]);
 
-        $parint->user_id = $user->id;
+        $parent->user_id = $user->id;
 
         if ($request->hasFile('image')) {
-            $parint->image = $request->file('image')->store('Parints', 'public');
+            $parent->image = $request->file('image')->store('Parents', 'public');
         }
 
-        $parint->save();
+        $parent->save();
 
-        return redirect()->route('admin.parints.index')->with('success', 'Parint created successfully');
+        return redirect()->route('admin.parents.index')->with('success', 'Parent created successfully');
     }
-    public function edit(Parint $parint)
+    public function edit(Parint $parent)
     {
         $users = User::all();
-        return view('admin.parints.edit', compact('parint', 'users'));
+        return view('admin.parints.edit', compact('parent', 'users'));
     }
-    public function update(Request $request, Parint $parint)
+    public function update(Request $request, Parint $parent)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
+        $validated = $request->validate([
+            'name' => 'required|min:3|max:255',
+            'email' => 'required|email|unique:users,email,' . $parent->user_id,
+            'password' => 'nullable|min:6|confirmed',
+            'Phone' => 'nullable|string|max:20',
+            'date_of_birth' => 'nullable|date',
+            'image' => 'nullable|image',
         ]);
-        $parint->update($validatedData);
-        return redirect()->route('admin.parints.index')->with('success', 'Parint updated successfully');
+    
+        // Update user information
+        $user = User::findOrFail($parent->user_id);
+        
+        $user->update([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => !empty($validated['password']) 
+                ? Hash::make($validated['password']) 
+                : $user->password,
+        ]);
+        
+        // Remove fields that belong to user model
+        $parentData = collect($validated)
+            ->except(['email', 'password', 'password_confirmation'])
+            ->toArray();
+        
+        // Handle image upload if provided
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($parent->image && Storage::disk('public')->exists($parent->image)) {
+                Storage::disk('public')->delete($parent->image);
+            }
+            
+            $parentData['image'] = $request->file('image')->store('Parent', 'public');
+        }
+    
+        $parent->update($parentData);
+    
+        return redirect()
+            ->route('admin.parents.index')
+            ->with('success', 'Parent updated successfully');
     }
-    public function show(Parint $parint)
+    public function show(Parint $parent)
     {
-        $studentsNumber = $parint->students->count();
-        return view('admin.parints.show', compact('parint', 'studentsNumber'));
+        $childrenNumber = $parent->children->count();
+        return view('admin.parints.show', compact('parent', 'childrenNumber'));
     }
-    public function destroy(Parint $parint)
+    public function destroy(Parint $parent)
     {
-        $parint->delete();
-        return redirect()->route('admin.parints.index')->with('success', 'Parint deleted successfully');
+        if ($parent->image && Storage::disk('public')->exists($parent->image)) {
+            Storage::disk('public')->delete($parent->image);
+        }
+
+        $user = User::findorfail($parent->user_id);
+        $user->delete();
+        return redirect()->route('admin.parents.index')->with('success', 'Parent deleted successfully');
     }
 }

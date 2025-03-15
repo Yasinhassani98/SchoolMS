@@ -24,8 +24,7 @@ class SubjectController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|min:3|max:255',
             'level_id' => 'required|exists:levels,id',
-            'description' => 'required|string',
-            'type' => 'required|in:required,optional',
+            'description' => 'nullable|string|min:3|max:255',
         ]);
         Subject::create($validatedData);
 
@@ -48,12 +47,9 @@ class SubjectController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'level_id' => 'required|exists:levels,id',
-            'description' => 'required|string|min:3|max:255',
-            'type' => 'required|in:required,optional',
+            'description' => 'nullable|string|min:3|max:255',
         ]);
         $subject->update($request->all());
-
-
 
         return redirect()
             ->route('admin.subjects.index')
@@ -61,13 +57,8 @@ class SubjectController extends Controller
     }
     public function destroy(Subject $subject)
     {
-        if ($subject->delete()) {
-            return view('admin.subjects.index')
-                ->with('success', 'Subject deleted successfully');
-        } else {
-            return redirect()
-                ->back()
-                ->with('success', 'Failed to delete subject');
-        }
+        $subject->delete();
+        return redirect()->route('admin.subjects.index')
+            ->with('success', 'Subject deleted successfully');
     }
 }

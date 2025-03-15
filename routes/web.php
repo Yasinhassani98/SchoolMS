@@ -44,7 +44,7 @@ Route::middleware(['auth', 'role:admin|superadmin'])->prefix('admin/')->as('admi
     Route::resource('teachers', TeacherController::class);
 
     // Classroom Routes
-    Route::resource('classrooms', ClassroomController::class);
+    Route::resource('classrooms', ClassroomController::class)->except(['show']);
 
     // Subject Routes
     Route::resource('subjects', SubjectController::class);
@@ -57,7 +57,7 @@ Route::middleware(['auth', 'role:admin|superadmin'])->prefix('admin/')->as('admi
 
     // Academic Year Routes
     Route::patch('academic-years/set-current/{academicYear}', [AcademicYearController::class, 'setCurrent'])->name('academic-years.set-current');
-    Route::resource('academic-years', AcademicYearController::class);
+    Route::resource('academic-years', AcademicYearController::class)->except(['show']);
 
     // Parent Routes
     Route::resource('parents', ParintController::class);

@@ -31,7 +31,6 @@ class StudentController extends Controller
     }
     public function store(StudentRequest $request)
     {
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -39,9 +38,10 @@ class StudentController extends Controller
         ])->assignRole('student');
 
 
-        $valedated = $request->validated();
+        $student = new Student([
+            ...$request->except('image', 'email', 'password', 'password_confirmation'),
+        ]);
 
-        $student = new Student($valedated);
         $student->user_id = $user->id;
 
         if (request()->hasFile('image')) {

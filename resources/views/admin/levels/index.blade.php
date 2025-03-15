@@ -19,7 +19,7 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Level</th>
-                                        <th>Actions</th>
+                                        <th colspan="2">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -30,6 +30,8 @@
                                             <td>
                                                 <a href="{{ route('admin.levels.edit', $level->id) }}"
                                                     ><i class="fa-solid fa-pen-to-square text-warning"></i></a>
+                                            </td>
+                                            <td>
                                                 <form action="{{ route('admin.levels.destroy', $level->id) }}" method="POST"
                                                     class="d-inline">
                                                     @csrf

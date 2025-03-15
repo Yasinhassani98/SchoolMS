@@ -56,11 +56,6 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="{{ route('admin.academic-years.show', $academicYear->id) }}">
-                                            <i class="fa-solid fa-eye text-success"></i>
-                                        </a>
-                                    </td>
-                                    <td>
                                         <form action="{{ route('admin.academic-years.destroy', $academicYear->id) }}" method="POST" class="d-inline">
                                             @csrf
                                             @method('DELETE')

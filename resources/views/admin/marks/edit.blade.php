@@ -14,7 +14,9 @@
                         name="student_id">
                         <option value="">Select Student</option>
                         @foreach ($students as $student)
-                            <option value="{{ $student->id }}" data-level="{{ $student->classroom->level->level }}"
+                            <option value="{{ $student->id }}" 
+                                data-level="{{ $student->classroom->level->level }}"
+                                data-level-id="{{ $student->classroom->level->id }}"
                                 @selected(old('student_id', $mark->student_id) == $student->id)>{{ $student->name }}</option>
                         @endforeach
                     </select>
@@ -42,25 +44,13 @@
                         name="classroom_id">
                         <option value="">Select Classroom</option>
                         @foreach ($classrooms as $classroom)
-                            <option value="{{ $classroom->id }}" data-level="{{ $classroom->level->level }}"
+                            <option value="{{ $classroom->id }}" 
+                                data-level="{{ $classroom->level->level }}"
+                                data-level-id="{{ $classroom->level->id }}"
                                 @selected(old('classroom_id', $mark->classroom_id) == $classroom->id)>{{ $classroom->level->level . ' ' . $classroom->name }}</option>
                         @endforeach
                     </select>
                     @error('classroom_id')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="mb-3 col-md-6">
-                    <label for="academic_year_id" class="form-label">Academic Year<span class="text-danger">*</span></label>
-                    <select class="form-control @error('academic_year_id') is-invalid @enderror" id="academic_year_id"
-                        name="academic_year_id">
-                        <option value="">Select Academic Year</option>
-                        @foreach ($academicYears as $academicYear)
-                            <option value="{{ $academicYear->id }}" @selected(old('academic_year_id', $mark->academic_year_id) == $academicYear->id)>{{ $academicYear->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('academic_year_id')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
@@ -72,7 +62,18 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
+                
+                <div class="mb-3 col-md-12">
+                    <label for="note" class="form-label">Note</label>
+                    <textarea name="note" class="form-control @error('note') is-invalid @enderror" id="note"
+                        cols="30" rows="5">{{ old('note', $mark->note) }}</textarea>
+                    @error('note')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                
                 <div class="col-md-12 d-flex justify-content-end">
+                    <a href="{{ route('admin.marks.index') }}" class="btn btn-outline-secondary me-2">Cancel</a>
                     <button type="submit" class="btn btn-primary">Update Mark</button>
                 </div>
             </form>
@@ -82,13 +83,24 @@
 
 @push('scripts')
     <script>
-        document.getElementById('student_id').addEventListener('change', function() {
-            var selectedStudentLevel = this.options[this.selectedIndex].getAttribute('data-level');
+        // Function to filter classrooms and subjects based on student level
+        function filterByStudentLevel() {
+            var studentSelect = document.getElementById('student_id');
+            var selectedOption = studentSelect.options[studentSelect.selectedIndex];
+            
+            if (selectedOption.value === "") {
+                return; // No student selected
+            }
+            
+            var selectedStudentLevel = selectedOption.getAttribute('data-level');
+            var selectedLevelId = selectedOption.getAttribute('data-level-id');
+            
+            // Filter subjects based on student level
             var subjectSelect = document.getElementById('subject_id');
-            var options = subjectSelect.options;
+            var subjectOptions = subjectSelect.options;
 
-            for (var i = 0; i < options.length; i++) {
-                var option = options[i];
+            for (var i = 0; i < subjectOptions.length; i++) {
+                var option = subjectOptions[i];
                 var subjectLevel = option.getAttribute('data-level');
 
                 if (subjectLevel === selectedStudentLevel || option.value === "") {
@@ -97,8 +109,72 @@
                     option.style.display = 'none';
                 }
             }
+            
+            // Filter classrooms based on student level
+            var classroomSelect = document.getElementById('classroom_id');
+            var classroomOptions = classroomSelect.options;
+            
+            for (var j = 0; j < classroomOptions.length; j++) {
+                var classroomOption = classroomOptions[j];
+                var classroomLevelId = classroomOption.getAttribute('data-level-id');
+                
+                if (classroomLevelId === selectedLevelId || classroomOption.value === "") {
+                    classroomOption.style.display = 'block';
+                } else {
+                    classroomOption.style.display = 'none';
+                }
+            }
+        }
 
-            subjectSelect.value = ""; // Reset subject selection
+        // Add event listener for student selection change
+        document.getElementById('student_id').addEventListener('change', function() {
+            var selectedStudentLevel = this.options[this.selectedIndex].getAttribute('data-level');
+            var selectedLevelId = this.options[this.selectedIndex].getAttribute('data-level-id');
+            
+            // Filter subjects based on student level
+            var subjectSelect = document.getElementById('subject_id');
+            var subjectOptions = subjectSelect.options;
+
+            for (var i = 0; i < subjectOptions.length; i++) {
+                var option = subjectOptions[i];
+                var subjectLevel = option.getAttribute('data-level');
+
+                if (subjectLevel === selectedStudentLevel || option.value === "") {
+                    option.style.display = 'block';
+                } else {
+                    option.style.display = 'none';
+                }
+            }
+            
+            if (this.value !== "") {
+                // Only reset if a new student is selected
+                subjectSelect.value = ""; 
+            }
+            
+            // Filter classrooms based on student level
+            var classroomSelect = document.getElementById('classroom_id');
+            var classroomOptions = classroomSelect.options;
+            
+            for (var j = 0; j < classroomOptions.length; j++) {
+                var classroomOption = classroomOptions[j];
+                var classroomLevelId = classroomOption.getAttribute('data-level-id');
+                
+                if (classroomLevelId === selectedLevelId || classroomOption.value === "") {
+                    classroomOption.style.display = 'block';
+                } else {
+                    classroomOption.style.display = 'none';
+                }
+            }
+            
+            if (this.value !== "") {
+                // Only reset if a new student is selected
+                classroomSelect.value = ""; 
+            }
+        });
+        
+        // Run the filter on page load to handle pre-selected values
+        document.addEventListener('DOMContentLoaded', function() {
+            filterByStudentLevel();
         });
     </script>
 @endpush
