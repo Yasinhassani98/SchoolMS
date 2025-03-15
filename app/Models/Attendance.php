@@ -6,15 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Attendance extends Model
 {
-    protected $fillable = [
-        'date',
-        'status',
-        'teacher_id',
-        'student_id',
-        'subject_id',
-        'classroom_id',
-        'academic_year_id',
+    protected $casts = [
+        'date' => 'date', // تأكيد أن `date` يتم تحويله تلقائيًا إلى كائن `Carbon`
     ];
+
+    protected $guarded = [];
 
     public function teacher()
     {
