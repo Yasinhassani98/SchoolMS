@@ -7,41 +7,53 @@
             <h5 class="card-title">Add New Attendance</h5>
             <form class="row" method="POST" action="{{ route('attendances.store') }}">
                 @csrf
-@role(['admin','superadmin'])
+                @role(['admin','superadmin'])
                 <div class="mb-3 col-md-6">
-                    <label for="teacher_id" class="form-label">teacher<span class="text-danger">*</span></label>
-                    <select class="form-control @error('student_id') is-invalid @enderror" id="teacher_id"
-                        name="teacher_id">
-                        <option value="">Select teacher</option>
+                    <label for="teacher_id" class="form-label">Teacher<span class="text-danger">*</span></label>
+                    <select class="form-control @error('teacher_id') is-invalid @enderror" id="teacher_id" name="teacher_id">
+                        <option value="">Select Teacher</option>
                         @foreach ($teachers as $teacher)
-                            <option value="{{ $teacher->id }}" 
-                                @selected(old('teacher_id') == $teacher->id)>{{ $teacher->name }}</option>
+                            <option value="{{ $teacher->id }}" @selected(old('teacher_id') == $teacher->id)>{{ $teacher->name }}</option>
                         @endforeach
                     </select>
-                    @error('student_id')
+                    @error('teacher_id')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-@endrole
+                @endrole
+
                 <div class="mb-3 col-md-6">
-                    <label for="student_id" class="form-label">Student<span class="text-danger">*</span></label>
-                    <select class="form-control @error('student_id') is-invalid @enderror" id="student_id"
-                        name="student_id">
-                        <option value="">Select Student</option>
-                        @foreach ($students as $student)
-                            <option value="{{ $student->id }}" data-level="{{ $student->classroom->level->level }}"
-                                @selected(old('student_id') == $student->id)>{{ $student->name }}</option>
+                    <label for="classroom_id" class="form-label">Classroom<span class="text-danger">*</span></label>
+                    <select class="form-control @error('classroom_id') is-invalid @enderror" id="classroom_id" name="classroom_id">
+                        <option value="">Select Classroom</option>
+                        @foreach ($classrooms as $classroom)
+                            <option value="{{ $classroom->id }}" @selected(old('classroom_id') == $classroom->id)>{{ $classroom->name }}</option>
                         @endforeach
                     </select>
-                    @error('student_id')
+                    @error('classroom_id')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+
+
+                <div class="mb-3 col-md-6">
+                    <label for="academic_year_id" class="form-label">Academic Year<span class="text-danger">*</span></label>
+                    <select class="form-control @error('academic_year_id') is-invalid @enderror" id="academic_year_id"
+                        name="academic_year_id">
+                        <option value="">Select Academic Year</option>
+                        @foreach ($academicYears as $academicYear)
+                            <option value="{{ $academicYear->id }}" @selected(old('academic_year_id') == $academicYear->id)>{{ $academicYear->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('academic_year_id')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="mb-3 col-md-6">
                     <label for="subject_id" class="form-label">Subject<span class="text-danger">*</span></label>
-                    <select class="form-control @error('subject_id') is-invalid @enderror" id="subject_id"
-                        name="subject_id">
+                    <select class="form-control @error('subject_id') is-invalid @enderror" id="subject_id" name="subject_id">
                         <option value="">Select Subject</option>
                         @foreach ($subjects as $subject)
                             <option value="{{ $subject->id }}" data-level="{{ $subject->level->level }}"
@@ -53,50 +65,20 @@
                     @enderror
                 </div>
 
-                <div class="mb-3 col-md-6">
-                    <label for="classroom_id" class="form-label">Classroom<span class="text-danger">*</span></label>
-                    <select class="form-control @error('classroom_id') is-invalid @enderror" id="classroom_id"
-                        name="classroom_id">
-                        <option value="">Select Classroom</option>
-                        @foreach ($classrooms as $classroom)
-                            <option value="{{ $classroom->id }}" @selected(old('classroom_id') == $classroom->id)>{{ $classroom->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('classroom_id')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3 col-md-6">
-                    <label for="academic_year_id" class="form-label">Academic Year<span class="text-danger">*</span></label>
-                    <select class="form-control @error('academic_year_id') is-invalid @enderror" id="academic_year_id"
-                        name="academic_year_id">
-                        <option value="">Select Academic Year</option>
-                        @foreach ($academicYears as $academicYear)
-                            <option value="{{ $academicYear->id }}" @selected(old('academic_year_id') == $academicYear->id)>{{ $academicYear->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('academic_year_id')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3 col-md-6">
+                {{-- <div class="mb-3 col-md-6">
                     <label for="status" class="form-label">Status<span class="text-danger">*</span></label>
                     <select class="form-control @error('status') is-invalid @enderror" id="status" name="status">
-                        <option value="present" @selected(old('status') == 'present')>present</option>
-                        <option value="absent" @selected(old('status') == 'absent')>absent</option>
-                        <option value="late" @selected(old('status') == 'late')>late</option>
+                        <option value="present" @selected(old('status') == 'present')>Present</option>
+                        <option value="absent" @selected(old('status') == 'absent')>Absent</option>
+                        <option value="late" @selected(old('status') == 'late')>Late</option>
                     </select>
                     @error('status')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                </div>
+                </div> --}}
 
                 <div class="mb-3 col-md-6">
-                    <label for="date" class="form-label">date<span class="text-danger">*</span></label>
+                    <label for="date" class="form-label">Date<span class="text-danger">*</span></label>
                     <input type="date" class="form-control @error('date') is-invalid @enderror" id="date"
                         name="date" value="{{ old('date') }}" required>
                     @error('date')
@@ -104,18 +86,19 @@
                     @enderror
                 </div>
 
-
                 <div class="mb-3 col-md-6">
-                    <label for="note" class="form-label">note<span class="text-danger">*</span></label>
+                    <label for="note" class="form-label">Note</label>
                     <input class="form-control @error('note') is-invalid @enderror" id="note"
-                        name="note" value="{{ old('note') }}" required>
+                        name="note" value="{{ old('note') }}">
                     @error('note')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-
+                <div id="students-container" class="col-md-12">
+                    <!-- Student attendance inputs will be dynamically inserted here -->
+                </div>
                 <div class="col-md-12 d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary">Create date</button>
+                    <button type="submit" class="btn btn-primary">Create Attendance</button>
                 </div>
             </form>
         </div>
@@ -124,23 +107,38 @@
 
 @push('scripts')
     <script>
-        document.getElementById('student_id').addEventListener('change', function() {
-            var selectedStudentLevel = this.options[this.selectedIndex].getAttribute('data-level');
-            var subjectSelect = document.getElementById('subject_id');
-            var options = subjectSelect.options;
+        document.getElementById('classroom_id').addEventListener('change', function() {
+            const selectedClassroomId = this.value;
+            const studentsContainer = document.getElementById('students-container');
 
-            for (var i = 0; i < options.length; i++) {
-                var option = options[i];
-                var subjectLevel = option.getAttribute('data-level');
+            studentsContainer.innerHTML = ''; // Clear previous students
 
-                if (subjectLevel === selectedStudentLevel || option.value === "") {
-                    option.style.display = 'block';
-                } else {
-                    option.style.display = 'none';
-                }
+            if (selectedClassroomId) {
+                const studentsList = document.createElement('div');
+                studentsList.className = 'row mt-4';
+                studentsList.innerHTML = '<h6 class="col-12 mb-3">Student Attendance</h6>';
+
+                @foreach ($students as $student)
+                    if ("{{ $student->classroom->id }}" === selectedClassroomId) {
+                        const studentRow = document.createElement('div');
+                        studentRow.className = 'col-md-6 mb-3 d-flex align-items-center';
+                        studentRow.innerHTML = `
+                            <div class="flex-grow-1">
+                                <label class="form-label">{{ $student->name }}</label>
+                                <input type="hidden" name="student_ids[]" value="{{ $student->id }}">
+                                <select class="form-control" name="attendance_status[]">
+                                    <option value="present">Present</option>
+                                    <option value="late">Late</option>
+                                    <option value="absent">Absent</option>
+                                </select>
+                            </div>
+                        `;
+                        studentsList.appendChild(studentRow);
+                    }
+                @endforeach
+
+                studentsContainer.appendChild(studentsList);
             }
-
-            subjectSelect.value = ""; // Reset subject selection
         });
     </script>
 @endpush

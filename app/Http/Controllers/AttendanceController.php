@@ -31,30 +31,28 @@ class AttendanceController extends Controller
             'academicYears' => AcademicYear::all(),
         ]);
     }
+    
     public function store(Request $request)
     {
-
-
-        $validatedData = $request->validate([
-            'student_id' => 'required|exists:students,id',
-            'classroom_id' => 'required|exists:classrooms,id',
-            'subject_id' => 'required|exists:subjects,id',
-            'academic_year_id' => 'required|exists:academic_years,id',
-            'date' => 'required|date',
-            'note' => 'nullable',
-            'status' => 'required|in:present,absent,late'
-        ]);
-        if (Auth::user()->hasRole(['admin', 'superadmin'])) {
-            $validatedData['teacher_id'] = $request['teacher_id'];
-        } else {
-            $validatedData['teacher_id'] = Auth::user()->id;
+        $academicYear = AcademicYear::where('is_current', true)->firstOrFail();
+        $teacherId = Auth::user()->hasRole(['admin', 'superadmin']) 
+            ? $request->input('teacher_id') 
+            : Auth::user()->id;
+    
+        foreach ($request->student_ids as $index => $studentId) {
+            Attendance::create([
+                'student_id' => $studentId,
+                'classroom_id' => $request->classroom_id,
+                'subject_id' => $request->subject_id,
+                'academic_year_id' => $academicYear->id,
+                'date' => $request->date,
+                'note' => $request->note,
+                'status' => $request->attendance_status[$index] ?? 'absent', // استخدام الاسم الصحيح
+                'teacher_id' => $teacherId,
+            ]);
         }
-        Attendance::create($validatedData);
-        return redirect()->route('attendances.index')->with('success', 'Attendadnce added successfully.');
-    }
-    public function show(Attendance $attendance)
-    {
-        return view('admin.attendances.show', compact('attendance'));
+    
+        return redirect()->route('attendances.index')->with('success', 'Attendance recorded successfully.');
     }
     public function edit(Attendance $attendance)
     {

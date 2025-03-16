@@ -100,8 +100,8 @@
                     <label for="status" class="form-label">Status<span class="text-danger">*</span></label>
                     <select class="form-control @error('status') is-invalid @enderror" id="status" name="status">
                         <option value="present" @selected(old('status', $attendance->status) == 'present')>Present</option>
-                        <option value="absent" @selected(old('status', $attendance->status) == 'absent')>Absent</option>
                         <option value="late" @selected(old('status', $attendance->status) == 'late')>Late</option>
+                        <option value="absent" @selected(old('status', $attendance->status) == 'absent')>Absent</option>
                     </select>
                     @error('status')
                         <div class="invalid-feedback">{{ $message }}</div>
