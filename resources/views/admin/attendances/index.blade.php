@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center m-3">
                         <h4 class="card-title">Attendance List</h4>
-                        <form action="{{ route('attendances.create') }}" method="GET">
+                        <form action="{{ route('admin.attendances.create') }}" method="GET">
                             @csrf
                             <button type="submit" class="btn btn-primary">Add Attendance</button>
                         </form>
@@ -48,13 +48,13 @@
                                                     <span class="badge badge-secondary">{{ $attendance->status }}</span>
                                                 @endif
                                             </td>
-                                            <td>{{ $attendance->note ?? '-' }}</td>
+                                            <td>{{ Str::limit($attendance->note, 10, '...') ?? '-' }}</td>
                                             <td>
-                                                <a href="{{ route('attendances.edit', $attendance->id) }}"><i
+                                                <a href="{{ route('admin.attendances.edit', $attendance->id) }}"><i
                                                         class="fa-solid fa-pen-to-square text-warning"></i></a>
                                             </td>
                                             <td>
-                                                <form action="{{ route('attendances.destroy', $attendance->id) }}"
+                                                <form action="{{ route('admin.attendances.destroy', $attendance->id) }}"
                                                     method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')

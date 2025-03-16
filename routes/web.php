@@ -64,7 +64,8 @@ Route::middleware(['auth', 'role:admin|superadmin'])->prefix('admin/')->as('admi
     // Parint Routes
     Route::resource('parents', ParintController::class);
 
+    // Attendance Routes
+    Route::resource('attendances', AttendanceController::class)->except(['show']);
 });
 // Attendance Routes
-Route::resource('attendances', AttendanceController::class)->middleware(['auth','role:admin|superadmin|teacher']);
 require __DIR__ . '/auth.php';

@@ -76,7 +76,7 @@
                 </a>
             </li>
                 <li>
-                    <a href="{{ route('attendances.index') }}" class="{{ Route::is('attendances.*') ? 'active' : '' }}"
+                    <a href="{{ route('admin.attendances.index') }}" class="{{ Route::is('attendances.*') ? 'active' : '' }}"
                         aria-expanded="false">
                         <i class="fa-solid fa-clipboard-check"></i><span class="nav-text">Attendances</span>
                     </a>

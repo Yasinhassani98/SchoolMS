@@ -5,7 +5,7 @@
     <div class="card mb-4 mt-2 container">
         <div class="card-body p-4">
             <h5 class="card-title">Add New Attendance</h5>
-            <form class="row" method="POST" action="{{ route('attendances.store') }}">
+            <form class="row" method="POST" action="{{ route('admin.attendances.store') }}">
                 @csrf
                 @role(['admin','superadmin'])
                 <div class="mb-3 col-md-6">
@@ -36,20 +36,6 @@
                 </div>
 
 
-
-                <div class="mb-3 col-md-6">
-                    <label for="academic_year_id" class="form-label">Academic Year<span class="text-danger">*</span></label>
-                    <select class="form-control @error('academic_year_id') is-invalid @enderror" id="academic_year_id"
-                        name="academic_year_id">
-                        <option value="">Select Academic Year</option>
-                        @foreach ($academicYears as $academicYear)
-                            <option value="{{ $academicYear->id }}" @selected(old('academic_year_id') == $academicYear->id)>{{ $academicYear->name }}</option>
-                        @endforeach
-                    </select>
-                    @error('academic_year_id')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
 
                 <div class="mb-3 col-md-6">
                     <label for="subject_id" class="form-label">Subject<span class="text-danger">*</span></label>
@@ -86,18 +72,21 @@
                     @enderror
                 </div>
 
-                <div class="mb-3 col-md-6">
+                
+                <div id="students-container" class="col-md-12">
+                    <!-- Student attendance inputs will be dynamically inserted here -->
+                </div>
+                
+                <div class="mb-3 col-md-12">
                     <label for="note" class="form-label">Note</label>
-                    <input class="form-control @error('note') is-invalid @enderror" id="note"
-                        name="note" value="{{ old('note') }}">
+                    <textarea name="note" class="form-control @error('note') is-invalid @enderror" id="note"
+                        cols="30" rows="10">{{ old('note') }}</textarea>
                     @error('note')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-                <div id="students-container" class="col-md-12">
-                    <!-- Student attendance inputs will be dynamically inserted here -->
-                </div>
                 <div class="col-md-12 d-flex justify-content-end">
+                    <a href="{{ route('admin.attendances.index') }}" class="btn btn-outline-secondary me-2">Cancel</a>
                     <button type="submit" class="btn btn-primary">Create Attendance</button>
                 </div>
             </form>

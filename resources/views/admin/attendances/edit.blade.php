@@ -5,7 +5,7 @@
     <div class="card mb-4 mt-2 container">
         <div class="card-body p-4">
             <h5 class="card-title">Edit Attendance</h5>
-            <form class="row" method="POST" action="{{ route('attendances.update', $attendance->id) }}">
+            <form class="row" method="POST" action="{{ route('admin.attendances.update', $attendance->id) }}">
                 @csrf
                 @method('PUT')
 
@@ -80,23 +80,6 @@
                 </div>
 
                 <div class="mb-3 col-md-6">
-                    <label for="academic_year_id" class="form-label">Academic Year<span class="text-danger">*</span></label>
-                    <select class="form-control @error('academic_year_id') is-invalid @enderror" id="academic_year_id"
-                        name="academic_year_id">
-                        <option value="">Select Academic Year</option>
-                        @foreach ($academicYears as $academicYear)
-                            <option value="{{ $academicYear->id }}" 
-                                @selected(old('academic_year_id', $attendance->academic_year_id) == $academicYear->id)>
-                                {{ $academicYear->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('academic_year_id')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3 col-md-6">
                     <label for="status" class="form-label">Status<span class="text-danger">*</span></label>
                     <select class="form-control @error('status') is-invalid @enderror" id="status" name="status">
                         <option value="present" @selected(old('status', $attendance->status) == 'present')>Present</option>
@@ -117,16 +100,17 @@
                     @enderror
                 </div>
 
-                <div class="mb-3 col-md-6">
+                <div class="mb-3 col-md-12">
                     <label for="note" class="form-label">Note</label>
-                    <input class="form-control @error('note') is-invalid @enderror" id="note"
-                        name="note" value="{{ old('note', $attendance->note) }}">
+                    <textarea name="note" class="form-control @error('note') is-invalid @enderror" id="note"
+                        cols="30" rows="10">{{ old('note',$attendance->note) }}</textarea>
                     @error('note')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="col-md-12 d-flex justify-content-end">
+                    <a href="{{ route('admin.attendances.index') }}" class="btn btn-outline-secondary me-2">Cancel</a>
                     <button type="submit" class="btn btn-primary">Update Attendance</button>
                 </div>
             </form>

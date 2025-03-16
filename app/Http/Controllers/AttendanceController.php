@@ -28,12 +28,22 @@ class AttendanceController extends Controller
             'students' => Student::all(),
             'subjects' => Subject::all(),
             'classrooms' => Classroom::all(),
-            'academicYears' => AcademicYear::all(),
         ]);
     }
     
     public function store(Request $request)
     {
+        $request->validate([
+            'student_ids' => 'required|array',
+            'student_ids.*' => 'required|exists:students,id',
+            'classroom_id' => 'required|exists:classrooms,id',
+            'subject_id' => 'required|exists:subjects,id',
+            'date' => 'required|date',
+            'note' => 'nullable|string',
+            'attendance_status' => 'required|array',
+            'attendance_status.*' => 'required|in:present,absent,late'
+        ]);
+        
         $academicYear = AcademicYear::where('is_current', true)->firstOrFail();
         $teacherId = Auth::user()->hasRole(['admin', 'superadmin']) 
             ? $request->input('teacher_id') 
@@ -52,7 +62,7 @@ class AttendanceController extends Controller
             ]);
         }
     
-        return redirect()->route('attendances.index')->with('success', 'Attendance recorded successfully.');
+        return redirect()->route('admin.attendances.index')->with('success', 'Attendance recorded successfully.');
     }
     public function edit(Attendance $attendance)
     {
@@ -62,7 +72,6 @@ class AttendanceController extends Controller
             'students' => Student::all(),
             'subjects' => Subject::all(),
             'classrooms' => Classroom::all(),
-            'academicYears' => AcademicYear::all(),
         ]);
     }
     public function update(Request $request, Attendance $attendance)
@@ -71,20 +80,18 @@ class AttendanceController extends Controller
             'student_id' => 'required|exists:students,id',
             'classroom_id' => 'required|exists:classrooms,id',
             'subject_id' => 'required|exists:subjects,id',
-            'academic_year_id' => 'required|exists:academic_years,id',
             'date' => 'required|date',
             'note' => 'nullable|string',
             'status' => 'required|in:present,absent,late'
         ]);
-
+        $academicYear = AcademicYear::where('is_current', true)->firstOrFail();
         if (Auth::user()->hasRole(['admin', 'superadmin'])) {
             $validatedData['teacher_id'] = $request->teacher_id;
         } else {
             $validatedData['teacher_id'] = Auth::user()->id;
         }
-
-        $attendance->update($validatedData);
-
-        return redirect()->route('attendances.index')->with('success', 'Attendance updated successfully.');
+        $data = array_merge($validatedData, ['academic_year_id' => $academicYear->id]);
+        $attendance->update($data);
+        return redirect()->route('admin.attendances.index')->with('success', 'Attendance updated successfully.');
     }
 }

@@ -34,7 +34,7 @@
                                             <td>{{ $mark->classroom->name }}</td>
                                             <td>{{ $mark->academicYear->name }}</td>
                                             <td>{{ $mark->mark }}</td>
-                                            <td>{{ $mark->note }}</td>
+                                            <td>{{ Str::limit($mark->note, 10, '...') ?? '-' }}</td>
                                             <td>
                                                 <a href="{{ route('admin.marks.edit', $mark->id) }}"><i
                                                         class="fa-solid fa-pen-to-square text-warning"></i></a>
