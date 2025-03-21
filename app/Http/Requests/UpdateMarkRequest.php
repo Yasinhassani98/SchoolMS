@@ -14,6 +14,7 @@ class UpdateMarkRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'teacher_id' => 'required|exists:students,id',
             'student_id' => 'required|exists:students,id',
             'subject_id' => 'required|exists:subjects,id',
             'classroom_id' => 'required|exists:classrooms,id',

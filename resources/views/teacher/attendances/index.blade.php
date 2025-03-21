@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center m-3">
                         <h4 class="card-title">Attendance List</h4>
-                        <form action="{{ route('admin.attendances.create') }}" method="GET">
+                        <form action="{{ route('teacher.attendances.create') }}" method="GET">
                             @csrf
                             <button type="submit" class="btn btn-primary">Add Attendance</button>
                         </form>
@@ -30,7 +30,7 @@
                                 </thead>
                                 <tbody>
                                     @forelse($attendances as $attendance)
-                                        <tr>
+                                    <tr>
                                             <td>{{ $attendance->teacher->name }}</td>
                                             <td>{{ $attendance->student->name }}</td>
                                             <td>{{ $attendance->classroom->name }}</td>
@@ -52,18 +52,20 @@
                                             </td>
                                             <td>{{ Str::limit($attendance->note, 10, '...') ?? '-' }}</td>
                                             <td>
-                                                <a href="{{ route('admin.attendances.edit', $attendance->id) }}"><i
+                                                <a href="{{ route('teacher.attendances.edit', $attendance->id) }}"><i
                                                         class="fa-solid fa-pen-to-square text-warning"></i></a>
                                             </td>
-                                            <td>
-                                                <form action="{{ route('admin.attendances.destroy', $attendance->id) }}"
-                                                    method="POST" class="d-inline">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn p-0 border-0 shadow-none bg-white" type="submit"><i
-                                                            class="fa-solid fa-trash text-danger"></i></button>
-                                                </form>
-                                            </td>
+                                            @can('delete-attendance')
+                                                <td>
+                                                    <form action="{{ route('teacher.attendances.destroy', $attendance->id) }}"
+                                                        method="POST" class="d-inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn p-0 border-0 shadow-none bg-white" type="submit"><i
+                                                                class="fa-solid fa-trash text-danger"></i></button>
+                                                    </form>
+                                                </td>
+                                            @endcan
                                         </tr>
                                     @empty
                                         <tr>

@@ -7,10 +7,6 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center m-3">
                     <h4 class="card-title">students List</h4>
-                    <form action="{{ route('admin.students.create') }}" method="GET">
-                        @csrf
-                        <button type="submit" class="btn btn-primary">Add student</button>
-                    </form>
                 </div>
                 <div class="active-member">
                     <div class="table-responsive">
@@ -38,20 +34,8 @@
                                     <td>{{ $student->address ?? 'null'}}</td>
                                     <td>{{ $student->status ?? 'null'}}</td>
                                     <td>
-                                        <a href="{{ route('admin.students.edit', $student->id) }}"
-                                            ><i class="fa-solid fa-pen-to-square text-warning"></i></a>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('admin.students.show', $student->id) }}"
+                                        <a href="{{ route('teacher.students.show', $student->id) }}"
                                             ><i class="fa-solid fa-eye text-success"></i></a>
-                                    </td>
-                                    <td>
-                                        <form action="{{ route('admin.students.destroy', $student->id) }}" method="POST"
-                                            class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn p-0 border-0 shadow-none bg-white" type="submit"><i class="fa-solid fa-trash text-danger"></i></button>
-                                        </form>
                                     </td>
                                 </tr>
                                 @empty

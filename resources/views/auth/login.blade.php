@@ -9,6 +9,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
+        :root {
+            --primary: #6d28d9;
+            --primary-light: #8b5cf6;
+            --primary-dark: #5b21b6;
+            --secondary: #f8f9fa;
+            --text-dark: #212529;
+            --text-light: #6c757d;
+        }
+        
         .login-container {
             min-height: 100vh;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -49,6 +58,12 @@
             width: 120px;
             margin-bottom: 2rem;
         }
+        .gradient-text {
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
     </style>
 </head>
 
@@ -59,7 +74,7 @@
                 <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                     <div class="login-card p-4 p-md-5">
                         <div class="text-center mb-4">
-                            <img src="{{ asset('assets/images/logo.png') }}" alt="School Logo" class="brand-logo">
+                            <a class="navbar-brand fw-bold fs-4 gradient-text" href="/">SchoolMS</a>
                             <h2 class="login-title">Welcome Back</h2>
                             <p class="text-muted">Please sign in to continue</p>
                         </div>

@@ -13,7 +13,8 @@ class TeacherSeeder extends Seeder
         
 
         for ($i = 0; $i < 10; $i++) {
-            Teacher::create(['user_id' => User::role('teacher')->first()->id,
+            Teacher::create([
+                'user_id' => User::role('teacher')->inRandomOrder()->first()->id,
                 'name' =>fake()->name(),
                 'date_of_birth' => fake()->date(),
                 'gender' => fake()->randomElement(['male','female']),
@@ -21,7 +22,7 @@ class TeacherSeeder extends Seeder
                 'specialization' => fake()->randomElement(['Math', 'Science', 'English', 'Arabic']),
                 'hiring_date' => fake()->date(),
                 'status' => fake()->randomElement(['active', 'inactive']),
-            ]);
+            ])->classrooms()->attach(random_int(1, 10));
         }
     }
 }

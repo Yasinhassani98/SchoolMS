@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('marks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('teacher_id')->constrained()->cascadeOnDelete();
             $table->foreignId('student_id')->constrained()->cascadeOnDelete();
             $table->foreignId('subject_id')->constrained()->cascadeOnDelete();
             $table->foreignId('classroom_id')->constrained()->cascadeOnDelete();

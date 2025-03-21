@@ -14,6 +14,7 @@ class StoreMarkRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'teacher_id' => 'required|exists:teachers,id',
             'level_id' => 'required|exists:levels,id',
             'classroom_id' => 'required|exists:classrooms,id',
             'subject_id' => 'required|exists:subjects,id',

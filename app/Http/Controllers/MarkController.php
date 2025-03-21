@@ -10,6 +10,7 @@ use App\Models\Subject;
 use App\Http\Requests\StoreMarkRequest;
 use App\Http\Requests\UpdateMarkRequest;
 use App\Models\Level;
+use App\Models\Teacher;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 
@@ -17,7 +18,7 @@ class MarkController extends Controller
 {
     public function index()
     {
-        $marks = Mark::with(['student', 'subject', 'classroom', 'academicYear'])
+        $marks = Mark::with(['teacher','student', 'subject', 'classroom', 'academicYear'])
             ->latest()
             ->paginate(10);
 
@@ -26,6 +27,7 @@ class MarkController extends Controller
     public function create()
     {
         $levels = Level::all();
+        $teachers = Teacher::all();
         $students = Student::with('classroom.level')
             ->whereHas('classroom.level')
             ->get();
@@ -40,28 +42,26 @@ class MarkController extends Controller
 
         $academicYears = AcademicYear::all();
 
-        return view('admin.marks.create', compact('students', 'subjects', 'classrooms', 'academicYears','levels'));
+        return view('admin.marks.create', compact('teachers', 'students', 'subjects', 'classrooms', 'academicYears','levels'));
     }
 
     public function store(StoreMarkRequest $request)
     {
-        $academicYear = AcademicYear::where('is_current', true)->first();
+        $academicYear = AcademicYear::where('is_current', true)->firstOrFail();
         
-        // Get the arrays of student IDs and their corresponding marks
+        // Make sure teacher_id is set
+        $teacherId = $request->input('teacher_id');
         $studentIds = $request->input('student_ids', []);
         $marks = $request->input('marks', []);
         $classroomId = $request->input('classroom_id');
         $subjectId = $request->input('subject_id');
         $note = $request->input('note');
-        
-        // Create a mark record for each student
         foreach ($studentIds as $index => $studentId) {
-            // Skip if no mark is provided
             if (!isset($marks[$index]) || $marks[$index] === '') {
                 continue;
             }
-            
             Mark::create([
+                'teacher_id' => $teacherId, // Ensure this is included
                 'student_id' => $studentId,
                 'subject_id' => $subjectId,
                 'classroom_id' => $classroomId,
@@ -79,6 +79,7 @@ class MarkController extends Controller
 
     public function edit(Mark $mark): View
     {
+        $teachers = Teacher::all();
         $students = Student::with('classroom.level')
             ->whereHas('classroom.level')
             ->get();
@@ -93,7 +94,7 @@ class MarkController extends Controller
 
         $academicYears = AcademicYear::all();
 
-        return view('admin.marks.edit', compact('mark', 'students', 'subjects', 'classrooms', 'academicYears'));
+        return view('admin.marks.edit', compact('teachers','mark', 'students', 'subjects', 'classrooms', 'academicYears'));
     }
 
     public function update(UpdateMarkRequest $request, Mark $mark): RedirectResponse

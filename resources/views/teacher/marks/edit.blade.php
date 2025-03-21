@@ -5,7 +5,7 @@
     <div class="card mb-4 mt-2 container">
         <div class="card-body p-4">
             <h5 class="card-title">Edit Mark</h5>
-            <form class="row" method="POST" action="{{ route('admin.marks.update', $mark->id) }}">
+            <form class="row" method="POST" action="{{ route('teacher.marks.update', $mark->id) }}">
                 @csrf
                 @method('PUT')
                 <div class="mb-3 col-md-6">
@@ -55,20 +55,6 @@
                     @enderror
                 </div>
                 <div class="mb-3 col-md-6">
-                    <label for="teacher_id" class="form-label">Teacher<span class="text-danger">*</span></label>
-                    <select class="form-control @error('teacher_id') is-invalid @enderror" id="teacher_id"
-                        name="teacher_id">
-                        <option value="">Select Teacher</option>
-                        @foreach ($teachers as $teacher)
-                            <option value="{{ $teacher->id }}" 
-                                @selected(old('teacher_id',$mark->teacher_id) == $teacher->id)>{{ $teacher->name }}</option>
-                        @endforeach
-                    </select>
-                    @error('teacher_id')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="mb-3 col-md-6">
                     <label for="mark" class="form-label">Mark<span class="text-danger">*</span></label>
                     <input type="number" class="form-control @error('mark') is-invalid @enderror" id="mark"
                         name="mark" value="{{ old('mark', $mark->mark) }}" required>
@@ -87,7 +73,7 @@
                 </div>
                 
                 <div class="col-md-12 d-flex justify-content-end">
-                    <a href="{{ route('admin.marks.index') }}" class="btn btn-outline-secondary me-2">Cancel</a>
+                    <a href="{{ route('teacher.marks.index') }}" class="btn btn-outline-secondary me-2">Cancel</a>
                     <button type="submit" class="btn btn-primary">Update Mark</button>
                 </div>
             </form>

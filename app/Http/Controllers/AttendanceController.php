@@ -9,15 +9,15 @@ use App\Models\Classroom;
 use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Teacher;
-use Illuminate\Container\Attributes\Auth as AttributesAuth;
 use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
 {
-    //
+
     public function index(Request $request)
     {
-        $attendances = Attendance::orderBy('classroom_id', 'desc')->orderBy('created_at', 'desc')->paginate(10);
+        $attendances = Attendance::with(['student', 'teacher', 'classroom', 'subject','academicYear'])
+        ->orderBy('created_at', 'desc')->paginate(10);
         return view('admin.attendances.index', compact('attendances'));
     }
     public function create()
