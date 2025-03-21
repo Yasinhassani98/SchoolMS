@@ -132,9 +132,23 @@
                     
                     @auth
                         <li class="nav-item">
-                            <a href="{{ url('/dashboard') }}" class="nav-link px-3 text-primary-custom">
-                                Dashboard
-                            </a>
+                            @if(Auth::user()->hasAnyRole(['admin','superadmin']))
+                                <a href="{{ url('/admin/dashboard') }}" class="nav-link px-3 text-primary-custom">
+                                    Admin Dashboard
+                                </a>
+                            @elseif(Auth::user()->hasRole('teacher'))
+                                <a href="{{ url('/teacher/dashboard') }}" class="nav-link px-3 text-primary-custom">
+                                    Teacher Dashboard
+                                </a>
+                            @elseif(Auth::user()->hasRole('parent'))
+                                <a href="{{ url('/parent/dashboard') }}" class="nav-link px-3 text-primary-custom">
+                                    Parent Dashboard
+                                </a>
+                            @else
+                                <a href="{{ url('/student/dashboard') }}" class="nav-link px-3 text-primary-custom">
+                                    Student Dashboard
+                                </a>
+                            @endif
                         </li>
                         <li class="nav-item ms-2">
                             <form method="POST" action="{{ route('logout') }}">
@@ -150,13 +164,6 @@
                                 Login
                             </a>
                         </li>
-                        @if (Route::has('register'))
-                            <li class="nav-item ms-2">
-                                <a href="{{ route('register') }}" class="btn btn-outline-primary-custom rounded-pill px-4">
-                                    Register
-                                </a>
-                            </li>
-                        @endif
                     @endauth
                 </ul>
             </div>
@@ -173,22 +180,31 @@
                         A comprehensive solution for educational institutions to manage students, teachers, classes, and more.
                     </p>
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="btn btn-primary-custom btn-lg rounded-pill px-5 py-3 me-3">
-                            Go to Dashboard
-                        </a>
+                            @if(Auth::user()->hasAnyRole(['admin','superadmin']))
+                                <a href="{{ url('/admin/dashboard') }}" class="btn btn-primary-custom btn-lg rounded-pill px-5 py-3 me-3">
+                                    Go to Dashboard
+                                </a>
+                            @elseif(Auth::user()->hasRole('teacher'))
+                                <a href="{{ url('/teacher/dashboard') }}" class="btn btn-primary-custom btn-lg rounded-pill px-5 py-3 me-3">
+                                    Go to Dashboard
+                                </a>
+                            @elseif(Auth::user()->hasRole('parent'))
+                                <a href="{{ url('/parent/dashboard') }}" class="btn btn-primary-custom btn-lg rounded-pill px-5 py-3 me-3">
+                                    Go to Dashboard
+                                </a>
+                            @else
+                                <a href="{{ url('/student/dashboard') }}" class="btn btn-primary-custom btn-lg rounded-pill px-5 py-3 me-3">
+                                    Go to Dashboard
+                                </a>
+                            @endif
                     @else
                         <a href="{{ route('login') }}" class="btn btn-primary-custom btn-lg rounded-pill px-5 py-3 me-3">
                             Get Started
                         </a>
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="btn btn-outline-primary-custom btn-lg rounded-pill px-5 py-3">
-                                Create Account
-                            </a>
-                        @endif
                     @endauth
                 </div>
                 <div class="col-lg-6">
-                    <img src="https://cdn.pixabay.com/photo/2018/01/17/07/06/laptop-3087585_1280.jpg" alt="School Management System" 
+                    <img src="https://media.istockphoto.com/id/1407194547/tr/foto%C4%9Fraf/modern-classroom-with-connections.jpg?s=612x612&w=0&k=20&c=ZYdjVS7gUfTyPSt1MP6mDxEmLbyHhxX-s9zaYvMJlKU=" alt="School Management System" 
                          class="img-fluid rounded-4 shadow-lg">
                 </div>
             </div>
@@ -435,14 +451,17 @@
                     <h5 class="fw-bold mb-3">Contact</h5>
                     <ul class="list-unstyled text-white-50">
                         <li class="mb-2">Email: info@schoolms.com</li>
-                        <li class="mb-2">Phone: +1 (123) 456-7890</li>
-                        <li class="mb-2">Address: 123 Education St, Learning City</li>
+                        <li class="mb-2">Phone: +963985419305</li>
+                        <li class="mb-2">Address: Azaz, Aleppo, Syria</li>
                     </ul>
                 </div>
             </div>
             <hr class="my-4 border-secondary">
             <div class="text-center text-white-50">
-                &copy; {{ date('Y') }} School Management System. All rights reserved.
+                <p class="mb-0">
+                    Copyright &copy; 2025 - Designed & Developed by
+                    <span class="gradient-text fw-bold fs-5">Yasin & Omar</span>
+                </p>
             </div>
         </div>
     </footer>
