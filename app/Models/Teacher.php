@@ -26,6 +26,10 @@ class Teacher extends Model
     {
         return $this->hasMany(Attendance::class);
     }
+    public function marks()
+    {
+        return $this->hasMany(Mark::class);
+    }
     public function  getImageURL()
     {
         if ($this->image) {

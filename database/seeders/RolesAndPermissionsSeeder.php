@@ -73,18 +73,18 @@ class RolesAndPermissionsSeeder extends Seeder
         // Teacher permissions
         $teacherPermissions = [
             'view-own-profile',
-            'edit-own-profile',
             
             'view-assigned-classrooms',
             'view-assigned-subjects',
             
-            'view-attendances',
-            'create-attendances',
-            'edit-attendances',
+            'view-own-attendances',
+            'create-own-attendances',
+            'edit-own-attendances',
             
-            'view-marks',
-            'create-marks',
-            'edit-marks',
+            'view-own-marks',
+            'create-own-marks',
+            'edit-own-marks',
+            
             
             'view-students',
         ];
@@ -142,7 +142,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $studentRole = Role::create(['name' => 'student']);
         $studentRole->givePermissionTo($studentPermissions);
         
-        $parentRole = Role::create(['name' => 'parint']);
+        $parentRole = Role::create(['name' => 'parent']);
         $parentRole->givePermissionTo($parentPermissions);
 
         $superAdminRole = Role::create(['name' => 'superadmin']);

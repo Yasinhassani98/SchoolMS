@@ -6,7 +6,7 @@
             <span class="brand-title">
                 <img src="{{ asset('images/logo-text.png') }}" alt="">
             </span>
-        </a>
+            </a>
     </div>
 </div>
 <!--**********************************
@@ -178,27 +178,28 @@
                 <li class="icons dropdown">
                     <div class="user-img c-pointer position-relative" data-toggle="dropdown">
                         <span class="activity active"></span>
-                        @if (Auth::user()->hasRole('admin'))
-                            <img src="{{ asset('images/user.png') }}" height="40" width="40" alt="">
-                        @elseif (Auth::user()->hasRole('teacher'))
-                            {{ $teacher = \App\Models\Teacher::where('user_id', Auth::id())->first() }}
-                            <img src="{{ asset($teacher && $teacher->image ? 'storage/' . $teacher->image : 'images/user.png') }}"
-                                height="40" width="40" alt="">
-                        @elseif (Auth::user()->hasRole('student'))
-                            {{ $student = \App\Models\Student::where('user_id', Auth::id())->first() }}
-                            <img src="{{ asset($student && $student->image ? 'storage/' . $student->image : 'images/user.png') }}"
-                                height="40" width="40" alt="">
-                        @elseif (Auth::user()->hasRole('parent'))
-                            {{ $parent = \App\Models\Parint::where('user_id', Auth::id())->first() }}
-                            <img src="{{ asset($parent && $parent->image ? 'storage/' . $parent->image : 'images/user.png') }}"
-                                height="40" width="40" alt="">
-                        @endif
+                        @php
+                            $profileImage = 'images/user.png';
+                            
+                            if (Auth::check()) {
+                                $user = Auth::user();
+                                
+                                if ($user->hasRole('teacher') && $user->teacher) {
+                                    $profileImage = $user->teacher->image ? 'storage/' . $user->teacher->image : 'images/user.png';
+                                } elseif ($user->hasRole('student') && $user->student) {
+                                    $profileImage = $user->student->image ? 'storage/' . $user->student->image : 'images/user.png';
+                                } elseif ($user->hasRole('parint') && $user->parint) {
+                                    $profileImage = $user->parint->image ? 'storage/' . $user->parint->image : 'images/user.png';
+                                }
+                            }
+                        @endphp
+                        <img src="{{ asset($profileImage) }}" height="40" width="40" alt="Profile" class="rounded-circle">
                     </div>
                     <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
                         <div class="dropdown-content-body">
                             <ul>
                                 <li>
-                                    <a href="app-profile.html"><i class="icon-user"></i>
+                                    <a href="{{ route('profile.edit') }}"><i class="icon-user"></i>
                                         <span>Profile</span></a>
                                 </li>
                                 <li>

@@ -40,6 +40,21 @@ class UsersSeeder extends Seeder
             'email' => 'test3@gmail.com',
             'password' => Hash::make('123456789')
         ])->assignRole('admin');
+        User::create([
+            'name' => 'Teacher',
+            'email' => 'teacher@gmail.com',
+            'password' => Hash::make('123456789')
+        ])->assignRole('teacher');
+        User::create([
+            'name' => 'Parent',
+            'email' => 'parent@gmail.com',
+            'password' => Hash::make('123456789')
+        ])->assignRole('parent');
+        User::create([
+            'name' => 'Student',
+            'email' => 'student@gmail.com',
+            'password' => Hash::make('123456789')
+        ])->assignRole('student');
 
         for ($i = 0; $i < 10; $i++) {
             User::create([
@@ -53,7 +68,7 @@ class UsersSeeder extends Seeder
                 'name' => fake()->name(),
                 'email' => fake()->email(),
                 'password' => Hash::make('12345678')
-            ])->assignRole('parint');
+            ])->assignRole('parent');
         }
         for ($i = 0; $i < 10; $i++) {
             User::create([

@@ -33,7 +33,7 @@
                                 <tr>
                                     <td>{{ $teacher->name }}</td>
                                     <td>{{ $teacher->gender }}</td>
-                                    <td>{{ $teacher->email }}</td>
+                                    <td>{{ $teacher->user->email }}</td>
                                     <td>{{ $teacher->phone }}</td>
                                     <td>{{ $teacher->hiring_date }}</td>
                                     <td>{{ $teacher->date_of_birth }}</td>
