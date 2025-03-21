@@ -16,7 +16,7 @@ class ParentSeeder extends Seeder
     {
         for ($i = 0; $i < 10; $i++) {
             Parint::create([
-                'user_id' => User::role('parint')->first()->id,
+                'user_id' => User::role('parent')->inRandomOrder()->first()->id,
                 'name' => fake()->name(),
                 'phone' => fake()->phoneNumber(),
                 'date_of_birth' => fake()->date(),

@@ -13,7 +13,12 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WlcomeController;
 use App\Http\Controllers\AcademicYearController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\parent\dashboardController as ParentDashboardController;
 use App\Http\Controllers\ParintController;
+use App\Http\Controllers\student\AttendanceController as StudentAttendanceController;
+use App\Http\Controllers\student\dashboardController;
+use App\Http\Controllers\student\MarkController as StudentMarkController;
+use App\Http\Controllers\student\SubjectController as StudentSubjectController;
 use App\Http\Controllers\SuperAdminController;
 use Illuminate\Support\Facades\Route;
 
@@ -67,5 +72,24 @@ Route::middleware(['auth', 'role:admin|superadmin'])->prefix('admin/')->as('admi
     // Attendance Routes
     Route::resource('attendances', AttendanceController::class)->except(['show']);
 });
-// Attendance Routes
+
+Route::middleware(['auth', 'role:student'])->prefix('student/')->as('student.')->group(function () {
+    // Dashboard Route
+    Route::get('dashboard',[dashboardController::class,'welcome'])->name('dashboard');
+
+    // Attendance Routes
+    Route::resource('attendances', StudentAttendanceController::class)->only(['index']);
+    
+    // Subject Routes
+    Route::resource('subjects', StudentSubjectController::class)->only(['index']);
+
+    // Marks Routes
+    Route::resource('marks', StudentMarkController::class)->only(['index']);
+});
+
+Route::middleware(['auth', 'role:parent'])->prefix('parent/')->as('parent.')->group(function () {
+    // Dashboard Route
+    Route::get('dashboard',[ParentDashboardController::class,'welcome'])->name('dashboard');
+});
+
 require __DIR__ . '/auth.php';

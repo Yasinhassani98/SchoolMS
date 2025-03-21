@@ -6,7 +6,7 @@
             <span class="brand-title">
                 <img src="{{ asset('images/logo-text.png') }}" alt="">
             </span>
-        </a>
+            </a>
     </div>
 </div>
 <!--**********************************
@@ -179,21 +179,22 @@
                     <div class="user-img c-pointer position-relative" data-toggle="dropdown">
                         <span class="activity active"></span>
                         @if (Auth::user()->hasRole('admin'))
-                            <img src="{{ asset('images/user.png') }}" height="40" width="40" alt="">
+                        <img src="{{ asset('images/user.png') }}" height="40" width="40" alt="">
                         @elseif (Auth::user()->hasRole('teacher'))
-                            {{ $teacher = \App\Models\Teacher::where('user_id', Auth::id())->first() }}
-                            <img src="{{ asset($teacher && $teacher->image ? 'storage/' . $teacher->image : 'images/user.png') }}"
-                                height="40" width="40" alt="">
+                        @php $teacher = \App\Models\Teacher::where('user_id', Auth::id())->first(); @endphp
+                        <img src="{{ asset(optional($teacher)->image ? 'storage/' . $teacher->image : 'images/user.png') }}"
+                            height="40" width="40" alt="">
                         @elseif (Auth::user()->hasRole('student'))
-                            {{ $student = \App\Models\Student::where('user_id', Auth::id())->first() }}
-                            <img src="{{ asset($student && $student->image ? 'storage/' . $student->image : 'images/user.png') }}"
-                                height="40" width="40" alt="">
+                        @php $student = \App\Models\Student::where('user_id', Auth::id())->first(); @endphp
+                        <img src="{{ asset(optional($student)->image ? 'storage/' . $student->image : 'images/user.png') }}"
+                            height="40" width="40" alt="">
                         @elseif (Auth::user()->hasRole('parent'))
-                            {{ $parent = \App\Models\Parint::where('user_id', Auth::id())->first() }}
-                            <img src="{{ asset($parent && $parent->image ? 'storage/' . $parent->image : 'images/user.png') }}"
-                                height="40" width="40" alt="">
+                        @php $parent = \App\Models\Parint::where('user_id', Auth::id())->first(); @endphp
+                        <img src="{{ asset(optional($parent)->image ? 'storage/' . $parent->image : 'images/user.png') }}"
+                            height="40" width="40" alt="">
                         @endif
                     </div>
+
                     <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
                         <div class="dropdown-content-body">
                             <ul>

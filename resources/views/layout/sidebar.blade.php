@@ -75,16 +75,49 @@
                     <i class="fa-solid fa-marker"></i><span class="nav-text">Marks</span>
                 </a>
             </li>
-                <li>
-                    <a href="{{ route('admin.attendances.index') }}" class="{{ Route::is('attendances.*') ? 'active' : '' }}"
-                        aria-expanded="false">
-                        <i class="fa-solid fa-clipboard-check"></i><span class="nav-text">Attendances</span>
-                    </a>
-                </li>
+            <li>
+                <a href="{{ route('admin.attendances.index') }}" class="{{ Route::is('attendances.*') ? 'active' : '' }}"
+                    aria-expanded="false">
+                    <i class="fa-solid fa-clipboard-check"></i><span class="nav-text">Attendances</span>
+                </a>
+            </li>
+            @endrole
+            @role('student')
+            <li>
+                <a href="{{ route('student.dashboard') }}" class="{{ Route::is('student.dashboard.*') ? 'active' : '' }}"
+                    aria-expanded="false">
+                    <i class="fa-solid fa-chart-line"></i><span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('student.subjects.index') }}"
+                    class="{{ Route::is('student.subjects.*') ? 'active' : '' }}" aria-expanded="false">
+                    <i class="fa-solid fa-book"></i><span class="nav-text">Subjects</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('student.marks.index') }}" class="{{ Route::is('student.marks.*') ? 'active' : '' }}"
+                    aria-expanded="false">
+                    <i class="fa-solid fa-marker"></i><span class="nav-text">Marks</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('student.attendances.index') }}" class="{{ Route::is('attendances.*') ? 'active' : '' }}"
+                    aria-expanded="false">
+                    <i class="fa-solid fa-clipboard-check"></i><span class="nav-text">Attendances</span>
+                </a>
+            </li>
+            @endrole
+
+            @role('parent')
+            <li>
+                <a href="{{ route('parent.dashboard') }}" class="{{ Route::is('parent.dashboard.*')? 'active' : '' }}"
+                    aria-expanded="false">
+                    <i class="fa-solid fa-chart-line"></i><span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+
             @endrole
         </ul>
     </div>
 </div>
-
-
-

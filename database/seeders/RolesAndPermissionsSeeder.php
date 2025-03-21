@@ -142,7 +142,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $studentRole = Role::create(['name' => 'student']);
         $studentRole->givePermissionTo($studentPermissions);
         
-        $parentRole = Role::create(['name' => 'parint']);
+        $parentRole = Role::create(['name' => 'parent']);
         $parentRole->givePermissionTo($parentPermissions);
 
         $superAdminRole = Role::create(['name' => 'superadmin']);
