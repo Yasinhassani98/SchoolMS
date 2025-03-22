@@ -1,12 +1,10 @@
 <div class="nav-header">
     <div class="brand-logo">
-        <a">
-            <b class="logo-abbr"><img src="images/logo.png" alt=""> </b>
-            <span class="logo-compact"><img src="{{ asset('images/logo-compact.png') }}" alt=""></span>
-            <span class="brand-title">
-                <img src="{{ asset('images/logo-text.png') }}" alt="">
+        <a href="{{ route('welcome') }}" class="text-decoration-none">
+            <span class="brand-title" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 24px; background: linear-gradient(45deg, #2E3192, #1BFFFF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; letter-spacing: 1px;">
+                School MS
             </span>
-            </a>
+        </a>
     </div>
 </div>
 <!--**********************************
@@ -180,10 +178,10 @@
                         <span class="activity active"></span>
                         @php
                             $profileImage = 'images/user.png';
-                            
+
                             if (Auth::check()) {
                                 $user = Auth::user();
-                                
+
                                 if ($user->hasRole('teacher') && $user->teacher) {
                                     $profileImage = $user->teacher->image ? 'storage/' . $user->teacher->image : 'images/user.png';
                                 } elseif ($user->hasRole('student') && $user->student) {

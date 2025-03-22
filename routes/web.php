@@ -32,7 +32,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 
 Route::middleware('auth')->group(function () {
@@ -88,7 +88,7 @@ Route::middleware(['auth', 'role:student'])->prefix('student/')->as('student.')-
 
     // Attendance Routes
     Route::resource('attendances', StudentAttendanceController::class)->only(['index']);
-    
+
     // Subject Routes
     Route::resource('subjects', StudentSubjectController::class)->only(['index']);
 
@@ -99,6 +99,8 @@ Route::middleware(['auth', 'role:student'])->prefix('student/')->as('student.')-
 Route::middleware(['auth', 'role:parent'])->prefix('parent/')->as('parent.')->group(function () {
     // Dashboard Route
     Route::get('dashboard',[ParentDashboardController::class,'welcome'])->name('dashboard');
+    // Students Routes
+    Route::get('children/{student}',[ParentDashboardController::class,'show'])->name('children.show');
 });
 
 
