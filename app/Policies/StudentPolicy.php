@@ -32,7 +32,8 @@ class StudentPolicy
     {
         return ($user->teacher && $user->teacher->classrooms->contains('id', $student->classroom_id)) ||
             ($user->student && $user->student->id === $student->id) ||
-            ($user->parint && $user->parint->students->contains('id', $student->id));
+            ($user->parent && $user->parent->id === $student->parint_id &&
+            $user->can('view-children'));
     }
 
     /**
@@ -48,7 +49,7 @@ class StudentPolicy
      */
     public function update(User $user, Student $student): bool
     {
-        return $user->can('edit-students') || 
+        return $user->can('edit-students') ||
             ($user->student && $user->student->id === $student->id && $user->can('edit-own-profile'));
     }
 

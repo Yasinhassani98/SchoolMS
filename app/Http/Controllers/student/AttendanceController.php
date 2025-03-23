@@ -10,9 +10,11 @@ use Illuminate\Support\Facades\Auth;
 class AttendanceController extends Controller
 {
     public function index() {
-        
-        $studentId = Auth::user()->student()->first()->id;
-        $attendances = Attendance::where('student_id', $studentId)->get();
+
+
+        $user_id = Auth::user()->id;
+        $attendances = Attendance::where('student_id', $user_id)->get();
+
         return view('student.attendance', compact('attendances'));
     }
 }
