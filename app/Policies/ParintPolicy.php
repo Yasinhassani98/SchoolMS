@@ -28,9 +28,9 @@ class ParintPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Parint $parint): bool
+    public function view(User $user, Parint $parent): bool
     {
-        return $user->parint && $user->parint->id === $parint->id ||
+        return $user->student && $user->parent->id === $parent->id ||
                $user->can('view-children');
     }
 
@@ -45,16 +45,16 @@ class ParintPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Parint $parint): bool
+    public function update(User $user, Parint $parent): bool
     {
-        return ($user->parint && $user->parint->id === $parint->id && $user->can('edit-own-profile')) ||
+        return ($user->parent && $user->parent->id === $parent->id && $user->can('edit-own-profile')) ||
                $user->can('edit-parents');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Parint $parint): bool
+    public function delete(User $user, Parint $parent): bool
     {
         return $user->can('delete-parents');
     }
@@ -62,7 +62,7 @@ class ParintPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Parint $parint): bool
+    public function restore(User $user, Parint $parent): bool
     {
         return $user->can('delete-parents');
     }
@@ -70,7 +70,7 @@ class ParintPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Parint $parint): bool
+    public function forceDelete(User $user, Parint $parent): bool
     {
         return $user->can('delete-parents');
     }

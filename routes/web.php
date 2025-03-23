@@ -84,7 +84,7 @@ Route::middleware(['auth', 'role:admin|superadmin'])->prefix('admin/')->as('admi
 
 Route::middleware(['auth', 'role:student'])->prefix('student/')->as('student.')->group(function () {
     // Dashboard Route
-    Route::get('dashboard',[dashboardController::class,'welcome'])->name('dashboard');
+    Route::get('dashboard',[WlcomeController::class,'studentWelcome'])->name('dashboard');
 
     // Attendance Routes
     Route::resource('attendances', StudentAttendanceController::class)->only(['index']);

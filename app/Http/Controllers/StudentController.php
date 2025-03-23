@@ -15,14 +15,14 @@ class StudentController extends Controller
 {
     public function index()
     {
-        $students = Student::with(['classroom','parint'])->orderBy('created_at', 'desc')->paginate(10);
+        $students = Student::with(['classroom','parent'])->orderBy('created_at', 'desc')->paginate(10);
         return view('admin.students.index', ['students' => $students]);
     }
     public function create()
     {
         return view('admin.students.create', [
             'classrooms' => Classroom::all(),
-            'parints' => Parint::all()
+            'parents' => Parint::all()
         ]);
     }
     public function show(Student $student)
@@ -58,7 +58,7 @@ class StudentController extends Controller
         return view('admin.students.edit', [
             'classrooms' => Classroom::all(),
             'student' => $student,
-            'parints' => Parint::all()
+            'parents' => Parint::all()
         ]);
     }
     public function update(Request $request, Student $student)

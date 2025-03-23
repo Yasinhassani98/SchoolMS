@@ -19,11 +19,11 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Gender</th>
+                                    <th>Parent Name</th>
+                                    <th>Classroom Name</th>
                                     <th>phone</th>
                                     <th>Enrollment Date</th>
                                     <th>Date of Birth</th>
-                                    <th>Address</th>
-                                    <th>status</th>
                                     <th colspan="3">action</th>
                                 </tr>
                             </thead>
@@ -32,11 +32,11 @@
                                 <tr>
                                     <td>{{ $student->name ?? 'null'}}</td>
                                     <td>{{ $student->gender ?? 'null'}}</td>
+                                    <td>{{ $student->parent->name ?? 'null'}}</td>
+                                    <td>{{ $student->classroom->name ?? 'null'}}</td>
                                     <td>{{ $student->phone ?? 'null'}}</td>
                                     <td>{{ $student->enrollment_date ?? 'null'}}</td>
                                     <td>{{ $student->date_of_birth ?? 'null'}}</td>
-                                    <td>{{ $student->address ?? 'null'}}</td>
-                                    <td>{{ $student->status ?? 'null'}}</td>
                                     <td>
                                         <a href="{{ route('admin.students.edit', $student->id) }}"
                                             ><i class="fa-solid fa-pen-to-square text-warning"></i></a>

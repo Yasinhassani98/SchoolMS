@@ -262,4 +262,9 @@ class WlcomeController extends Controller
             'upcomingBirthdays'
         ));
     }
+
+    public function studentWelcome()
+    {
+        return view('student.dashboard');
+    }
 }

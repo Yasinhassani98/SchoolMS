@@ -39,8 +39,8 @@
                 <div class="mb-3 col-md-6">
                     <label for="parint" class="form-label">Parent<span class="text-danger">*</span></label>
                     <select class="form-control @error('parint_id') is-invalid @enderror" id="parint_id" name="parint_id">
-                        @foreach ($parints as $parint)
-                            <option value="{{ $parint->id }}" @selected(old('parint_id',$student->parint_id) == $parint->id)>{{ $parint->name }}
+                        @foreach ($parents as $parent)
+                            <option value="{{ $parent->id }}" @selected(old('parint_id',$student->parint_id) == $parent->id)>{{ $parent->name }}
                             </option>
                         @endforeach
                         @error('parint_id')
@@ -52,7 +52,7 @@
                 <div class="mb-3 col-md-6">
                     <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
                     <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
-                        name="email" value="{{ old('email') }}" required>
+                        name="email" value="{{ old('email',$student->user->email) }}" required>
                     @error('email')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

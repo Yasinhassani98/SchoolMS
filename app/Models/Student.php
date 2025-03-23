@@ -21,9 +21,9 @@ class Student extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function parint()
+    public function parent()
     {
-        return $this->belongsTo(Parint::class);
+        return $this->belongsTo(Parint::class,'parint_id','id');
     }
     public function attendances()
     {
