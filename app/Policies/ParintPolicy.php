@@ -30,8 +30,8 @@ class ParintPolicy
      */
     public function view(User $user, Parint $parint): bool
     {
-        return $user->parint && $user->parint->id === $parint->id || 
-               $user->can('view-parents');
+        return $user->parint && $user->parint->id === $parint->id ||
+               $user->can('view-children');
     }
 
     /**
@@ -47,7 +47,7 @@ class ParintPolicy
      */
     public function update(User $user, Parint $parint): bool
     {
-        return ($user->parint && $user->parint->id === $parint->id && $user->can('edit-own-profile')) || 
+        return ($user->parint && $user->parint->id === $parint->id && $user->can('edit-own-profile')) ||
                $user->can('edit-parents');
     }
 

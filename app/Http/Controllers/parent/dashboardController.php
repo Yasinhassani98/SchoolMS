@@ -8,8 +8,11 @@ use App\Models\Mark;
 use App\Models\Parint;
 use App\Models\Student;
 use App\Models\Subject;
+use Illuminate\Auth\Access\Gate;
+use Illuminate\Contracts\Auth\Access\Gate as AccessGate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate as FacadesGate;
 
 class dashboardController extends Controller
 {
@@ -22,6 +25,7 @@ class dashboardController extends Controller
     }
     public function show(Student $student)
     {
+        FacadesGate::authorize('view-children', $student);
         $subjects = Subject::whereHas('marks', function ($query) use ($student) {
             $query->where('student_id', $student->id);
         })->get();
