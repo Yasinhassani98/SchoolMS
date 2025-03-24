@@ -48,11 +48,15 @@ class dashboardController extends Controller
                 'late_count' => $attendance->where('status', 'late')->count(),
             ];
         }
-        $marks = Mark::where('student_id', $student->id)->get();
-        $totalMarks = $marks->sum('mark');
-        $numberOfSubjects = $marks->count();
-        $average = $numberOfSubjects > 0 ? $totalMarks / $numberOfSubjects : 0;
-
+        $sum = 0;
+        $count = 0;
+        foreach ($subjectData as $subject) {
+            if ($subject['mark'] !== null) {
+                $sum += $subject['mark'];
+                $count++;
+            }
+        }
+        $average = $count > 0 ? $sum / $count : 0;
         return view('parent.child', compact('student', 'subjectData', 'average'));
     }
 }
