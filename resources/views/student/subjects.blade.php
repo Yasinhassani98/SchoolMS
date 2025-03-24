@@ -16,15 +16,20 @@
                                         <th>Subject Name</th>
                                         <th>Level Name</th>
                                         <th>Description</th>
-                                        <th colspan="3">Actions</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse($subjects as $subject)
                                         <tr>
-                                            <td>{{ $subject->name }}</td>
-                                            <td>{{ $subject->level->name }}</td>
-                                            <td>{{ $subject->description }}</td>
+                                            <td>{{ $subject->name ?? '' }}</td>
+                                            <td>{{ $subject->level->name ?? '' }}</td>
+                                            <td>{{ $subject->description ?? '' }}</td>
+                                            <td>
+                                                <a href="{{ route('student.subjects.show', $subject->id) }}"
+                                                    class="btn btn-info btn-sm rounded-pill shadow-sm"><i
+                                                        class="fas fa-eye me-1"></i>Show</a>
+                                            </td>
                                         </tr>
                                     @empty
                                         <tr>

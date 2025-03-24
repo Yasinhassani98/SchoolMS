@@ -23,9 +23,7 @@ class dashboardController extends Controller
     }
     public function show(Student $student)
     {
-        // dd(Auth::user()->parent());
         Gate::authorize('view', $student);
-        // Gate::authorize('view',Auth::user()->parent(), $student);
 
         $subjects = Subject::whereHas('marks', function ($query) use ($student) {
             $query->where('student_id', $student->id);

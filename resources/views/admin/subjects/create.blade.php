@@ -5,7 +5,7 @@
     <div class="card mb-4 mt-2 container">
         <div class="card-body p-4">
             <h5 class="card-title">Add New Subject</h5>
-            <form class="row" method="POST" action="{{ route('admin.subjects.store') }}">
+            <form class="row" method="POST" action="{{ route('admin.subjects.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3 col-md-6">
                     <label for="name" class="form-label">Subject Name<span class="text-danger">*</span></label>
@@ -34,6 +34,8 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
+                <label for="file">تحميل ملف المادة (اختياري):</label>
+                <input type="file" name="file" id="file" accept=".pdf">
                 <div class="col-md-12 d-flex justify-content-end">
                     <a href="{{ route('admin.subjects.index') }}" class="btn btn-outline-secondary me-2">Cancel</a>
                     <button type="submit" class="btn btn-primary">Create Subject</button>

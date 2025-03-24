@@ -12,11 +12,12 @@ class SubjectController extends Controller
 {
     public function index()
     {
-        $user_Id = Auth::user()->id;
-        $Marks = Mark::where('student_id', $user_Id)->get();
-        // dd($Marks[0]->subject->name);
-        $subjects = $Marks->pluck('subject');
-        // dd($subjects);
-        return view('student.subjects' , compact('subjects'));
+        $student = Auth::user()->student->first();
+        $subjects = Subject::where('level_id', $student->classroom->level_id)->get();
+        return view('student.subjects', compact('subjects'));
+    }
+    public function show(Subject $subject)
+    {
+        return view('student.subject', compact('subject'));
     }
 }

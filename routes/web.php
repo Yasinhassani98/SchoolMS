@@ -33,6 +33,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
+use Spatie\Permission\Models\Role;
+
+Route::get('/test-roles', function () {
+    return Role::all();
+});
 
 
 Route::middleware('auth')->group(function () {
@@ -90,7 +95,7 @@ Route::middleware(['auth', 'role:student'])->prefix('student/')->as('student.')-
     Route::resource('attendances', StudentAttendanceController::class)->only(['index']);
 
     // Subject Routes
-    Route::resource('subjects', StudentSubjectController::class)->only(['index']);
+    Route::resource('subjects', StudentSubjectController::class)->only(['index','show']);
 
     // Marks Routes
     Route::resource('marks', StudentMarkController::class)->only(['index']);
