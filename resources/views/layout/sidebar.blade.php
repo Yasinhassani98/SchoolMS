@@ -113,10 +113,15 @@
             <li>
                 <a href="{{ route('parent.dashboard') }}" class="{{ Route::is('parent.dashboard.*')? 'active' : '' }}"
                     aria-expanded="false">
-                    <i class="fa-solid fa-chart-line"></i><span class="nav-text">Dashboard</span>
+                    <i class="fa-solid fa-children"></i><span class="nav-text">Dashboard</span>
                 </a>
             </li>
-
+            <li>
+                <a href="{{ route('parent.children') }}" class="{{ Route::is('parent.dashboard.*')? 'active' : '' }}"
+                    aria-expanded="false">
+                    <i class="fa-solid fa-chart-line"></i><span class="nav-text">Children</span>
+                </a>
+            </li>
             @endrole
 
             @role('teacher')
@@ -157,7 +162,7 @@
                     <i class="fa-solid fa-marker"></i><span class="nav-text">Marks</span>
                 </a>
             </li>
-            
+
             @endrole
         </ul>
     </div>

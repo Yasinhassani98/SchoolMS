@@ -103,7 +103,9 @@ Route::middleware(['auth', 'role:student'])->prefix('student/')->as('student.')-
 
 Route::middleware(['auth', 'role:parent'])->prefix('parent/')->as('parent.')->group(function () {
     // Dashboard Route
-    Route::get('dashboard',[ParentDashboardController::class,'welcome'])->name('dashboard');
+    Route::get('dashboard',[ParentDashboardController::class,'dashboard'])->name('dashboard');
+    // Children Routes
+    Route::get('children',[ParentDashboardController::class,'children'])->name('children');
     // Students Routes
     Route::get('children/{student}',[ParentDashboardController::class,'show'])->name('children.show');
 });
