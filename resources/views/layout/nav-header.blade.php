@@ -23,154 +23,101 @@
                 <span class="toggle-icon"><i class="icon-menu"></i></span>
             </div>
         </div>
-        {{-- <div class="header-left">
-            <div class="input-group icons">
-                <div class="input-group-prepend">
-                    <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i
-                            class="mdi mdi-magnify"></i></span>
-                </div>
-                <input type="search" class="form-control" placeholder="Search Dashboard" aria-label="Search Dashboard">
-                <div class="drop-down animated flipInX d-md-none">
-                    <form action="#">
-                        <input type="text" class="form-control" placeholder="Search">
-                    </form>
-                </div>
-            </div>
-        </div> --}}
+
+
         <div class="header-right">
             <ul class="clearfix">
-                <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
-                        <i class="mdi mdi-email-outline"></i>
-                        <span class="badge badge-pill gradient-1">3</span>
-                    </a>
-                    <div class="drop-down animated fadeIn dropdown-menu">
-                        <div class="dropdown-content-heading d-flex justify-content-between">
-                            <span class="">3 New Messages</span>
-                            <a href="javascript:void()" class="d-inline-block">
-                                <span class="badge badge-pill gradient-1">3</span>
-                            </a>
-                        </div>
-                        <div class="dropdown-content-body">
-                            <ul>
-                                <li class="notification-unread">
-                                    <a href="javascript:void()">
-                                        <img class="float-left mr-3 avatar-img" src="{{ asset('images/avatar/1.jpg') }}"
-                                            alt="">
-                                        <div class="notification-content">
-                                            <div class="notification-heading">Saiful Islam</div>
-                                            <div class="notification-timestamp">08 Hours ago</div>
-                                            <div class="notification-text">Hi Teddy, Just wanted to let you ...
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="notification-unread">
-                                    <a href="javascript:void()">
-                                        <img class="float-left mr-3 avatar-img" src="{{ asset('images/avatar/2.jpg') }}"
-                                            alt="">
-                                        <div class="notification-content">
-                                            <div class="notification-heading">Adam Smith</div>
-                                            <div class="notification-timestamp">08 Hours ago</div>
-                                            <div class="notification-text">Can you do me a favour?</div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void()">
-                                        <img class="float-left mr-3 avatar-img" src="{{ asset('images/avatar/3.jpg') }}"
-                                            alt="">
-                                        <div class="notification-content">
-                                            <div class="notification-heading">Barak Obama</div>
-                                            <div class="notification-timestamp">08 Hours ago</div>
-                                            <div class="notification-text">Hi Teddy, Just wanted to let you ...
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void()">
-                                        <img class="float-left mr-3 avatar-img" src="{{ asset('images/avatar/4.jpg') }}"
-                                            alt="">
-                                        <div class="notification-content">
-                                            <div class="notification-heading">Hilari Clinton</div>
-                                            <div class="notification-timestamp">08 Hours ago</div>
-                                            <div class="notification-text">Hello</div>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-
-                        </div>
-                    </div>
-                </li>
-                <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
+                <li class="icons dropdown mx-2">
+                    <a href="javascript:void(0)" data-toggle="dropdown" class="position-relative">
                         <i class="mdi mdi-bell-outline"></i>
-                        <span class="badge badge-pill gradient-2">3</span>
+                        @if(auth()->user()->unreadNotifications->count() > 0)
+                            <span class="badge badge-pill gradient-2 position-absolute d-flex justify-content-center align-items-center" style="top: -5px; right: -5px;">
+                                {{ auth()->user()->unreadNotifications->count() }}
+                            </span>
+                        @endif
                     </a>
                     <div class="drop-down animated fadeIn dropdown-menu dropdown-notfication">
-                        <div class="dropdown-content-heading d-flex justify-content-between">
-                            <span class="">2 New Notifications</span>
-                            <a href="javascript:void()" class="d-inline-block">
-                                <span class="badge badge-pill gradient-2">5</span>
-                            </a>
+                        <div class="dropdown-content-heading d-flex justify-content-between align-items-center">
+                            <span class="font-weight-bold">Notifications</span>
+                            @if(auth()->user()->unreadNotifications->count() > 0)
+                                <form action="{{ route('notifications.markAllAsRead') }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-link p-0 text-primary" style="font-size: 0.8rem;">
+                                        Mark all as read
+                                    </button>
+                                </form>
+                            @endif
                         </div>
                         <div class="dropdown-content-body">
-                            <ul>
-                                <li>
-                                    <a href="javascript:void()">
-                                        <span class="mr-3 avatar-icon bg-success-lighten-2"><i
-                                                class="icon-present"></i></span>
-                                        <div class="notification-content">
-                                            <h6 class="notification-heading">Events near you</h6>
-                                            <span class="notification-text">Within next 5 days</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void()">
-                                        <span class="mr-3 avatar-icon bg-danger-lighten-2"><i
-                                                class="icon-present"></i></span>
-                                        <div class="notification-content">
-                                            <h6 class="notification-heading">Event Started</h6>
-                                            <span class="notification-text">One hour ago</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void()">
-                                        <span class="mr-3 avatar-icon bg-success-lighten-2"><i
-                                                class="icon-present"></i></span>
-                                        <div class="notification-content">
-                                            <h6 class="notification-heading">Event Ended Successfully</h6>
-                                            <span class="notification-text">One hour ago</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void()">
-                                        <span class="mr-3 avatar-icon bg-danger-lighten-2"><i
-                                                class="icon-present"></i></span>
-                                        <div class="notification-content">
-                                            <h6 class="notification-heading">Events to Join</h6>
-                                            <span class="notification-text">After two days</span>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
+                            <ul class="notification-list">
+                                @forelse(auth()->user()->notifications()->latest()->take(5)->get() as $notification)
+                                    <li class="{{ $notification->read_at ? 'notification-read' : 'notification-unread' }}">
+                                        <a href="javascript:void(0)" class="d-flex align-items-center">
+                                            @php
+                                                $notificationType = $notification->data['type'] ?? 'info';
+                                                $iconClass = 'icon-bell';
+                                                $bgClass = 'bg-primary-light';
 
+                                                if ($notificationType == 'success') {
+                                                    $iconClass = 'icon-check';
+                                                    $bgClass = 'bg-success-lighten-2';
+                                                } elseif ($notificationType == 'warning') {
+                                                    $iconClass = 'icon-exclamation';
+                                                    $bgClass = 'bg-warning-lighten-2';
+                                                } elseif ($notificationType == 'danger') {
+                                                    $iconClass = 'icon-close';
+                                                    $bgClass = 'bg-danger-lighten-2';
+                                                } elseif ($notificationType == 'info') {
+                                                    $iconClass = 'icon-info';
+                                                    $bgClass = 'bg-info-lighten-2';
+                                                }
+                                            @endphp
+                                            <span class="mr-3 avatar-icon {{ $bgClass }}">
+                                                <i class="{{ $iconClass }}"></i>
+                                            </span>
+                                            <div class="notification-content flex-grow-1">
+                                                <h6 class="notification-heading font-weight-bold mb-0">
+                                                    {{ $notification->data['title'] ?? 'Notification' }}
+                                                </h6>
+                                                <p class="notification-text mb-0">
+                                                    {{ $notification->data['message'] ?? '' }}
+                                                </p>
+                                            </div>
+                                            <div >
+                                                <small class="notification-timestamp text-muted">
+                                                    {{ \Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}
+                                                </small>
+                                                @if(!$notification->read_at)
+                                                    <form action="{{ route('notifications.markAsRead', $notification->id) }}" method="POST" class="d-inline">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-link p-0 text-primary" style="font-size: 0.7rem;">
+                                                            Mark as read
+                                                        </button>
+                                                    </form>
+                                                @endif
+                                            </div>
+                                        </a>
+                                    </li>
+                                @empty
+                                    <li class="text-center py-3">
+                                        <span class="text-muted">No notifications</span>
+                                    </li>
+                                @endforelse
+                            </ul>
                         </div>
+                        @if(auth()->user()->notifications->count() > 5)
+                            <div class="text-center py-2 border-top">
+                                <a href="{{ route('notifications.index') }}" class="text-primary">View all notifications</a>
+                            </div>
+                        @endif
                     </div>
                 </li>
+
                 <li class="icons dropdown d-none d-md-flex">
-                    <div class="log-user">
-                        @auth
-                            <span>{{ Auth::user()->name }}</span>
-                            <span>{{ Auth::user()->roles->first()->name ?? 'null' }}</span>
-                        @else
-                            <span>Guest</span>
-                        @endauth
-                    </div>
-                    <div class="drop-down animated fadeIn dropdown-menu">
+                    <a href="javascript:void(0)" class="log-user" data-toggle="dropdown">
+                        <span>English</span> <i class="fa fa-angle-down f-s-12" aria-hidden="true"></i>
+                    </a>
+                    <div class="drop-down dropdown-language animated fadeIn  dropdown-menu">
                         <div class="dropdown-content-body">
                             <ul>
                                 @auth
@@ -224,21 +171,12 @@
                                     <a href="{{ route('profile.edit') }}"><i class="icon-user"></i>
                                         <span>Profile</span></a>
                                 </li>
-                                <li>
-                                    <a href="javascript:void()">
-                                        <i class="icon-envelope-open"></i> <span>Inbox</span>
-                                        <div class="badge gradient-3 badge-pill gradient-1">3</div>
-                                    </a>
-                                </li>
                                 <hr class="my-2">
-                                <li>
-                                    <a href="page-lock.html"><i class="icon-lock"></i> <span>Lock Screen</span></a>
-                                </li>
                                 <li>
                                     <form action="{{ route('logout') }}" method="post" class="d-inline">
                                         @csrf
                                         <button type="submit" class="btn p-0 border-0 shadow-none bg-transparent">
-                                            <i class="icon-logout"></i> <span class="text-danger mx-1">Logout</span>
+                                            <i class="icon-power text-danger"></i> <span class="text-danger mx-1">Logout</span>
                                         </button>
                                     </form>
                                 </li>

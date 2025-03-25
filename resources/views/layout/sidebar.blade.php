@@ -82,9 +82,15 @@
                 </a>
             </li>
             <li>
+
                 <a href="{{ route('admin.reports.index') }}" class="{{ Route::is('admin.reports.*') ? 'active' : '' }}"
                     aria-expanded="false">
                     <i class="fa-solid fa-file-alt"></i><span class="nav-text">Reports</span>
+
+                <a href="{{ route('notifications.index') }}" class="{{ Route::is('notifications.*') ? 'active' : '' }}"
+                    aria-expanded="false">
+                    <i class="fa-solid fa-bell"></i><span class="nav-text">Notifications</span>
+
                 </a>
             </li>
             @endrole
@@ -113,6 +119,12 @@
                     <i class="fa-solid fa-clipboard-check"></i><span class="nav-text">Attendances</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('notifications.index') }}" class="{{ Route::is('notifications.*') ? 'active' : '' }}"
+                    aria-expanded="false">
+                    <i class="fa-solid fa-bell"></i><span class="nav-text">Notifications</span>
+                </a>
+            </li>
             @endrole
 
             @role('parent')
@@ -126,6 +138,12 @@
                 <a href="{{ route('parent.children') }}" class="{{ Route::is('parent.dashboard.*')? 'active' : '' }}"
                     aria-expanded="false">
                     <i class="fa-solid fa-chart-line"></i><span class="nav-text">Children</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('notifications.index') }}" class="{{ Route::is('notifications.*') ? 'active' : '' }}"
+                    aria-expanded="false">
+                    <i class="fa-solid fa-bell"></i><span class="nav-text">Notifications</span>
                 </a>
             </li>
             @endrole
@@ -168,7 +186,12 @@
                     <i class="fa-solid fa-marker"></i><span class="nav-text">Marks</span>
                 </a>
             </li>
-
+            <li>
+                <a href="{{ route('notifications.index') }}" class="{{ Route::is('notifications.*') ? 'active' : '' }}"
+                    aria-expanded="false">
+                    <i class="fa-solid fa-bell"></i><span class="nav-text">Notifications</span>
+                </a>
+            </li>
             @endrole
         </ul>
     </div>

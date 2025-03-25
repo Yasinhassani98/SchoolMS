@@ -23,7 +23,7 @@
                     <form action="{{ route('notifications.send') }}" method="POST">
                         @csrf
                         <div class="form-group mb-3">
-                            <label for="user_id">User</label>
+                            <label for="user_id">User<span class="text-danger">*</span></label>
                             <select name="user_id" id="user_id" class="form-control" required>
                                 <option value="">Select User</option>
                                 @foreach($users as $user)
@@ -32,15 +32,15 @@
                             </select>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="title">Notification Title</label>
+                            <label for="title">Notification Title<span class="text-danger">*</span></label>
                             <input type="text" name="title" id="title" class="form-control" required>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="message">Notification Message</label>
+                            <label for="message">Notification Message<span class="text-danger">*</span></label>
                             <textarea name="message" id="message" class="form-control" rows="3" required></textarea>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="type">Notification Type</label>
+                            <label for="type">Notification Type<span class="text-danger">*</span></label>
                             <select name="type" id="type" class="form-control" required>
                                 <option value="info">Information (Blue)</option>
                                 <option value="success">Success (Green)</option>
@@ -64,15 +64,15 @@
                     <form action="{{ route('notifications.broadcast') }}" method="POST">
                         @csrf
                         <div class="form-group mb-3">
-                            <label for="broadcast_title">Notification Title</label>
+                            <label for="broadcast_title">Notification Title<span class="text-danger">*</span></label>
                             <input type="text" name="title" id="broadcast_title" class="form-control" required>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="broadcast_message">Notification Message</label>
+                            <label for="broadcast_message">Notification Message<span class="text-danger">*</span></label>
                             <textarea name="message" id="broadcast_message" class="form-control" rows="3" required></textarea>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="broadcast_type">Notification Type</label>
+                            <label for="broadcast_type">Notification Type<span class="text-danger">*</span></label>
                             <select name="type" id="broadcast_type" class="form-control" required>
                                 <option value="info">Information (Blue)</option>
                                 <option value="success">Success (Green)</option>
@@ -80,7 +80,7 @@
                                 <option value="danger">Error (Red)</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-danger">Send to All</button>
+                        <button type="submit" class="btn btn-primary">Send to All</button>
                     </form>
                 </div>
             </div>
@@ -96,25 +96,24 @@
                     <form action="{{ route('notifications.sendToGroup') }}" method="POST">
                         @csrf
                         <div class="form-group mb-3">
-                            <label for="role">Group</label>
+                            <label for="role">Group<span class="text-danger">*</span></label>
                             <select name="role" id="role" class="form-control" required>
-                                <option value="">Select Group</option>
-                                <option value="admin">Administrators</option>
-                                <option value="teacher">Teachers</option>
-                                <option value="parent">Parents</option>
-                                <option value="student">Students</option>
+                                <option value="">Select Role</option>
+                                @foreach($roles as $role)
+                                    <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="group_title">Notification Title</label>
+                            <label for="group_title">Notification Title<span class="text-danger">*</span></label>
                             <input type="text" name="title" id="group_title" class="form-control" required>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="group_message">Notification Message</label>
+                            <label for="group_message">Notification Message<span class="text-danger">*</span></label>
                             <textarea name="message" id="group_message" class="form-control" rows="3" required></textarea>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="group_type">Notification Type</label>
+                            <label for="group_type">Notification Type<span class="text-danger">*</span></label>
                             <select name="type" id="group_type" class="form-control" required>
                                 <option value="info">Information (Blue)</option>
                                 <option value="success">Success (Green)</option>
