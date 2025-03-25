@@ -6,19 +6,40 @@ use Illuminate\Http\Request;
 use App\Notifications\GeneralNotification;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
 
 class NotificationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $notifications = Auth::user()->notifications()->paginate(10);
-
-        return view('notifications.index', compact('notifications'));
+        $query = Auth::user()->notifications();
+        
+        // Filter by read/unread status
+        if ($request->has('filter') && in_array($request->filter, ['read', 'unread'])) {
+            if ($request->filter === 'read') {
+                $query = Auth::user()->readNotifications();
+            } else {
+                $query = Auth::user()->unreadNotifications();
+            }
+        }
+        
+        // Filter by notification type
+        if ($request->has('type') && in_array($request->type, ['info', 'success', 'warning', 'danger'])) {
+            $query = $query->where('data->type', $request->type);
+        }
+        
+        $notifications = $query->paginate(10);
+        
+        // Get available notification types for the filter dropdown
+        $notificationTypes = ['info', 'success', 'warning', 'danger'];
+        
+        return view('notifications.index', compact('notifications', 'notificationTypes'));
     }
     public function create()
     {
         $users = User::all();
-        return view('admin.notifications.create', compact('users'));
+        $roles = Role::all();
+        return view('admin.notifications.create', compact('users', 'roles'));
     }
     public function destroy($notificationId)
     {
@@ -27,17 +48,17 @@ class NotificationController extends Controller
         return back()->with('success', 'Notification deleted successfully.');
     }
 
-    public function markAsRead(Request $request, $id)
+    public function markAsRead(Request $request, $notificationId)
     {
-        $notification = Auth::user()->notifications()->findOrFail($id);
+        $notification = Auth::user()->notifications()->findOrFail($notificationId);
         $notification->markAsRead();
         
         return back();
     }
 
-    public function markAsUnread(Request $request, $id)
+    public function markAsUnread(Request $request, $notificationId)
     {
-        $notification = Auth::user()->notifications()->findOrFail($id);
+        $notification = Auth::user()->notifications()->findOrFail($notificationId);
         $notification->markAsUnread();
 
         return back();
@@ -60,20 +81,22 @@ class NotificationController extends Controller
     {
         $request->validate([
             'user_id' => 'required|exists:users,id',
-            'title' => 'required|string|max:255',
+            'title' => 'required|string',
             'message' => 'required|string',
-            'type' => 'required|in:info,success,warning,danger',
+            'type' =>'required|in:info,success,warning,danger'
         ]);
-        
+
         $user = User::findOrFail($request->user_id);
-        $user->notify(new GeneralNotification(
+        $notification = new GeneralNotification(
             $request->title,
             $request->message,
             $request->data ?? [],
             $request->type
-        ));
+        );
         
-        return back()->with('success', 'Notification sent successfully.');
+        $user->notify($notification);
+
+        return redirect()->back()->with('success', 'Notification sent successfully.');
     }
     
     /**
@@ -112,7 +135,7 @@ class NotificationController extends Controller
     public function sendNotificationToGroup(Request $request)
     {
         $request->validate([
-            'role' => 'required|string',
+            'role' => 'required|exists:roles,name',
             'title' => 'required|string|max:255',
             'message' => 'required|string',
             'type' => 'required|in:info,success,warning,danger',

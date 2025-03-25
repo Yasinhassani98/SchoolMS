@@ -3,91 +3,59 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\BroadcastMessage;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Messages\BroadcastMessage;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
+use Illuminate\Notifications\Messages\MailMessage;
 
-class GeneralNotification extends Notification
+class GeneralNotification extends Notification implements ShouldBroadcastNow
 {
     use Queueable;
 
-    /**
-     * Create a new notification instance.
-     */
-    public function __construct(
-        protected string $title,
-        protected string $message,
-        protected array $data = [],
-        protected string $type = 'info',
-        protected bool $sendMail = false
-    ) {}
+    public $title;
+    public $message;
+    public $data;
+    public $type;
 
-    /**
-     * Get the notification's delivery channels.
-     */
-    public function via(object $notifiable): array
+    public function __construct($title, $message, $data = [], $type )
     {
-        $channels = ['database', 'broadcast'];
-        
-        if ($this->sendMail && isset($notifiable->email)) {
-            $channels[] = 'mail';
-        }
-        
-        return $channels;
+        $this->title = $title;
+        $this->message = $message;
+        $this->data = $data;
+        $this->type = $type;
     }
 
-    /**
-     * Get the database representation of the notification.
-     */
-    public function toArray(object $notifiable): array
+    public function via($notifiable)
+    {
+        return ['database', 'broadcast'];
+    }
+
+    public function toArray($notifiable)
     {
         return [
             'title' => $this->title,
             'message' => $this->message,
             'data' => $this->data,
             'type' => $this->type,
-            'time' => now()->toDateTimeString(),
         ];
     }
 
-    /**
-     * Get the broadcastable representation of the notification.
-     */
-    public function toBroadcast(object $notifiable): BroadcastMessage
-    {
+    public function toBroadcast($notifiable)
+    {   
         return new BroadcastMessage([
-            'id' => $this->id,
             'title' => $this->title,
             'message' => $this->message,
-            'type' => $this->type,
-            'time' => now()->toDateTimeString(),
             'data' => $this->data,
+            'notification_type' => $this->type, 
         ]);
     }
-    
-    /**
-     * Get the mail representation of the notification.
-     */
-    public function toMail(object $notifiable): MailMessage
-    {
-        $mail = (new MailMessage)
-            ->subject($this->title)
-            ->line($this->message);
-            
-        if (isset($this->data['action_url'], $this->data['action_text'])) {
-            $mail->action($this->data['action_text'], $this->data['action_url']);
-        }
-        
-        return $mail;
-    }
-    
 
-    /**
-     * Get the type of the notification being broadcast.
-     */
-    public function broadcastType(): string
+    public function toMail($notifiable)
     {
-        return 'notification.received';
+        return (new MailMessage)
+            ->subject($this->title)
+            ->line($this->message)
+            ->action('View Notification', url('/notifications'))
+            ->line('Thank you for using our application!');
     }
 }

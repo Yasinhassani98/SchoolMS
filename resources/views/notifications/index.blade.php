@@ -28,42 +28,107 @@
                                 <form class="d-inline" action="{{ route('notifications.create') }}" method="GET">
                                     @csrf
                                     <button type="submit" class="btn btn-sm btn-primary">
-                                        <i class="fas fa-plus"></i>
+                                        <i class="fas fa-plus"></i> Add New Notification
                                     </button>
                                 </form>
                             @endcan
-                            
+
                             @if (auth()->user()->unreadNotifications->count() > 0)
                                 <form action="{{ route('notifications.markAllAsRead') }}" method="POST" class="d-inline">
                                     @csrf
                                     <button type="submit" class="btn btn-sm btn-primary">
-                                        <i class="fas fa-check-double"></i>
+                                        <i class="fas fa-check-double" title="Mark All As Read"></i>
                                     </button>
                                 </form>
                             @endif
 
                             <div class="dropdown ml-2 d-inline">
-                                <button class="btn btn-sm btn-primary dropdown-toggle" type="button"
-                                    id="filterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-filter"></i>
+                                <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="filterDropdown"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-filter"></i> Filter
+                                    @if(request('filter') || request('type'))
+                                        <span class="badge bg-light text-dark ms-1">Active</span>
+                                    @endif
                                 </button>
-                                <div class="dropdown-menu" aria-labelledby="filterDropdown">
-                                    <a class="dropdown-item {{ request('filter') == '' ? 'active' : '' }}"
-                                        href="{{ route('notifications.index') }}">All</a>
-                                    <a class="dropdown-item {{ request('filter') == 'unread' ? 'active' : '' }}"
-                                        href="{{ route('notifications.index', ['filter' => 'unread']) }}">Unread</a>
-                                    <a class="dropdown-item {{ request('filter') == 'read' ? 'active' : '' }}"
-                                        href="{{ route('notifications.index', ['filter' => 'read']) }}">Read</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item {{ request('type') == 'info' ? 'active' : '' }}"
-                                        href="{{ route('notifications.index', ['type' => 'info']) }}">Information</a>
-                                    <a class="dropdown-item {{ request('type') == 'success' ? 'active' : '' }}"
-                                        href="{{ route('notifications.index', ['type' => 'success']) }}">Success</a>
-                                    <a class="dropdown-item {{ request('type') == 'warning' ? 'active' : '' }}"
-                                        href="{{ route('notifications.index', ['type' => 'warning']) }}">Warning</a>
-                                    <a class="dropdown-item {{ request('type') == 'danger' ? 'active' : '' }}"
-                                        href="{{ route('notifications.index', ['type' => 'danger']) }}">Error</a>
-                                </div>
+                                <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="filterDropdown" style="min-width: 200px;">
+                                    <li><h6 class="dropdown-header">Status</h6></li>
+                                    <li>
+                                        <a class="dropdown-item d-flex justify-content-between align-items-center {{ !request('filter') ? 'active' : '' }}"
+                                            href="{{ route('notifications.index') }}">
+                                            All
+                                            @if(!request('filter'))
+                                                <i class="fas fa-check text-primary"></i>
+                                            @endif
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item d-flex justify-content-between align-items-center {{ request('filter') == 'unread' ? 'active' : '' }}"
+                                            href="{{ route('notifications.index', array_merge(['filter' => 'unread'], request('type') ? ['type' => request('type')] : [])) }}">
+                                            Unread
+                                            @if(request('filter') == 'unread')
+                                                <i class="fas fa-check text-primary"></i>
+                                            @endif
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item d-flex justify-content-between align-items-center {{ request('filter') == 'read' ? 'active' : '' }}"
+                                            href="{{ route('notifications.index', array_merge(['filter' => 'read'], request('type') ? ['type' => request('type')] : [])) }}">
+                                            Read
+                                            @if(request('filter') == 'read')
+                                                <i class="fas fa-check text-primary"></i>
+                                            @endif
+                                        </a>
+                                    </li>
+                                    
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><h6 class="dropdown-header">Type</h6></li>
+                                    
+                                    <li>
+                                        <a class="dropdown-item d-flex justify-content-between align-items-center {{ !request('type') ? 'active' : '' }}"
+                                            href="{{ route('notifications.index', request('filter') ? ['filter' => request('filter')] : []) }}">
+                                            All Types
+                                            @if(!request('type'))
+                                                <i class="fas fa-check text-primary"></i>
+                                            @endif
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item d-flex justify-content-between align-items-center {{ request('type') == 'info' ? 'active' : '' }}"
+                                            href="{{ route('notifications.index', array_merge(['type' => 'info'], request('filter') ? ['filter' => request('filter')] : [])) }}">
+                                            <span><i class="fas fa-info-circle text-info me-2"></i> Information</span>
+                                            @if(request('type') == 'info')
+                                                <i class="fas fa-check text-primary"></i>
+                                            @endif
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item d-flex justify-content-between align-items-center {{ request('type') == 'success' ? 'active' : '' }}"
+                                            href="{{ route('notifications.index', array_merge(['type' => 'success'], request('filter') ? ['filter' => request('filter')] : [])) }}">
+                                            <span><i class="fas fa-check-circle text-success me-2"></i> Success</span>
+                                            @if(request('type') == 'success')
+                                                <i class="fas fa-check text-primary"></i>
+                                            @endif
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item d-flex justify-content-between align-items-center {{ request('type') == 'warning' ? 'active' : '' }}"
+                                            href="{{ route('notifications.index', array_merge(['type' => 'warning'], request('filter') ? ['filter' => request('filter')] : [])) }}">
+                                            <span><i class="fas fa-exclamation-triangle text-warning me-2"></i> Warning</span>
+                                            @if(request('type') == 'warning')
+                                                <i class="fas fa-check text-primary"></i>
+                                            @endif
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item d-flex justify-content-between align-items-center {{ request('type') == 'danger' ? 'active' : '' }}"
+                                            href="{{ route('notifications.index', array_merge(['type' => 'danger'], request('filter') ? ['filter' => request('filter')] : [])) }}">
+                                            <span><i class="fas fa-exclamation-circle text-danger me-2"></i> Error</span>
+                                            @if(request('type') == 'danger')
+                                                <i class="fas fa-check text-primary"></i>
+                                            @endif
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -92,22 +157,22 @@
                                                 <td>
                                                     @php
                                                         $notificationType = $notification->data['type'] ?? 'info';
-                                                        $iconClass = 'fa-info-circle';
-                                                        $bgClass = 'bg-info';
+                                                        $iconClass = 'fas fa-exclamation-circle text-danger me-2';
+                                                        
 
                                                         if ($notificationType == 'success') {
-                                                            $iconClass = 'fa-check-circle';
-                                                            $bgClass = 'bg-success';
+                                                            $iconClass = 'fas fa-check-circle text-success me-2';
+                                                            
                                                         } elseif ($notificationType == 'warning') {
-                                                            $iconClass = 'fa-exclamation-triangle';
-                                                            $bgClass = 'bg-warning';
+                                                            $iconClass = 'fas fa-exclamation-triangle text-warning me-2';
+                                                            
                                                         } elseif ($notificationType == 'danger') {
-                                                            $iconClass = 'fa-exclamation-circle';
-                                                            $bgClass = 'bg-danger';
+                                                            $iconClass = 'fas fa-exclamation-circle text-danger me-2';
+                                                            
                                                         }
                                                     @endphp
-                                                    <span class="badge {{ $bgClass }} text-white p-2">
-                                                        <i class="fas {{ $iconClass }}"></i>
+                                                    <span>
+                                                        <i class="{{ $iconClass }}"></i>
                                                     </span>
                                                 </td>
                                                 <td>
@@ -125,8 +190,8 @@
                                                                 action="{{ route('notifications.markAsRead', $notification->id) }}"
                                                                 method="POST" class="mr-1">
                                                                 @csrf
-                                                                <button type="submit" class="btn btn-sm btn-primary">
-                                                                    <i class="fas fa-check"></i>
+                                                                <button type="submit" class="btn p-0 border-0 shadow-none">
+                                                                    <i class="fa-solid fa-eye text-success"></i>
                                                                 </button>
                                                             </form>
                                                         @else
@@ -134,9 +199,8 @@
                                                                 action="{{ route('notifications.markAsUnread', $notification->id) }}"
                                                                 method="POST" class="mr-1">
                                                                 @csrf
-                                                                <button type="submit"
-                                                                    class="btn btn-sm btn-outline-primary">
-                                                                    <i class="fas fa-undo"></i>
+                                                                <button type="submit" class="btn p-0 border-0 shadow-none">
+                                                                    <i class="fa-solid fa-eye-slash text-success"></i>
                                                                 </button>
                                                             </form>
                                                         @endif
@@ -146,8 +210,8 @@
                                                             onsubmit="return confirm('Are you sure you want to delete this notification?');">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="btn btn-sm btn-outline-danger">
-                                                                <i class="fas fa-trash"></i>
+                                                            <button type="submit" class="btn p-0 border-0 shadow-none ">
+                                                                <i class="fa-solid fa-trash text-danger"></i>
                                                             </button>
                                                         </form>
                                                     </div>
@@ -157,24 +221,11 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="d-flex justify-content-center mt-4">
-                                {{ $notifications->links() }}
-                            </div>
                         @endif
                     </div>
                 </div>
             </div>
+            {{ $notifications->links() }}
         </div>
     </div>
-@endsection
-
-@section('scripts')
-    <script>
-        $(document).ready(function() {
-            // Auto-dismiss alerts after 5 seconds
-            setTimeout(function() {
-                $('.alert-dismissible').alert('close');
-            }, 5000);
-        });
-    </script>
 @endsection

@@ -127,4 +127,24 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher/')->as('teacher.')-
     Route::get('subjects',[TeacherSubjectController::class,'index'])->name('subjects.index');
 
 });
+
+use App\Http\Controllers\NotificationController;
+
+// Notification Routes 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/notifications', [NotificationController::class,'index'])->name('notifications.index');
+    Route::post('/notifications/{notification}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
+    Route::post('/notifications/{notification}/mark-as-unread', [NotificationController::class,'markAsUnread'])->name('notifications.markAsUnread');
+    Route::post('/notifications/mark-all-as-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
+    Route::delete('/notifications/{notification}', [NotificationController::class,'destroy'])->name('notifications.destroy');
+    
+    // Admins and Superadmins Only
+    Route::middleware(['can:manage-notifications'])->group(function () {
+        Route::get('/notifications/create', [NotificationController::class,'create'])->name('notifications.create');
+        Route::post('/notifications/send', [NotificationController::class, 'sendNotification'])->name('notifications.send');
+        Route::post('/notifications/broadcast', [NotificationController::class, 'broadcastNotification'])->name('notifications.broadcast');
+        Route::post('/notifications/send-to-group', [NotificationController::class, 'sendNotificationToGroup'])->name('notifications.sendToGroup');
+    });
+});
+
 require __DIR__ . '/auth.php';
