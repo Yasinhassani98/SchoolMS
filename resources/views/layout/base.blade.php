@@ -5,27 +5,70 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Pignose Calender -->
     <link href="{{ asset('plugins/pg-calendar/css/pignose.calendar.min.css') }}" rel="stylesheet">
-    
+
     <!-- Chartist -->
     <link rel="stylesheet" href="{{ asset('plugins/chartist/css/chartist.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css') }}">
-    
+
     <!-- Custom Stylesheet -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+    <style>
+        .notification-list {
+            max-height: 350px;
+            overflow-y: auto;
+        }
+
+        .notification-list li {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 10px 15px;
+            transition: background-color 0.3s;
+        }
+
+        .notification-list li:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        .notification-unread {
+            background-color: rgba(46, 49, 146, 0.05);
+        }
+
+        .notification-heading {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .notification-text {
+            font-size: 12px;
+            color: #666;
+            white-space: normal;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .notification-timestamp {
+            font-size: 11px;
+        }
+    </style>
     @stack('styles')
+    
+    <!-- Vite Assets -->
+    @vite(['resources/js/app.js'])
 </head>
 
 <body>
@@ -651,12 +694,12 @@
         <div class="content-body">
             <div class="container-fluid mt-3">
                 @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                 @endif
                 @yield('content')
             </div>
@@ -682,30 +725,186 @@
         Scripts
     ***********************************-->
     <!-- مكتبات الطرف الثالث -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/datamaps/0.5.9/datamaps.world.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datamaps/0.5.9/datamaps.world.min.js"></script>
 
-<!-- مكتبات المشروع -->
-<script src="{{ asset('plugins/common/common.min.js') }}"></script>
-<script src="{{ asset('js/custom.min.js') }}"></script>
-<script src="{{ asset('js/settings.js') }}"></script>
-<script src="{{ asset('js/gleek.js') }}"></script>
-<script src="{{ asset('js/styleSwitcher.js') }}"></script>
-<script src="{{ asset('plugins/circle-progress/circle-progress.min.js') }}"></script>
-<script src="{{ asset('plugins/pg-calendar/js/pignose.calendar.min.js') }}"></script>
-<script src="{{ asset('plugins/chartist/js/chartist.min.js') }}"></script>
-<script src="{{ asset('plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js') }}"></script>
-<script src="{{ asset('js/dashboard/dashboard-1.js') }}"></script>
+    <!-- مكتبات المشروع -->
+    <script src="{{ asset('plugins/common/common.min.js') }}"></script>
+    <script src="{{ asset('js/custom.min.js') }}"></script>
+    <script src="{{ asset('js/settings.js') }}"></script>
+    <script src="{{ asset('js/gleek.js') }}"></script>
+    <script src="{{ asset('js/styleSwitcher.js') }}"></script>
+    <script src="{{ asset('plugins/circle-progress/circle-progress.min.js') }}"></script>
+    <script src="{{ asset('plugins/pg-calendar/js/pignose.calendar.min.js') }}"></script>
+    <script src="{{ asset('plugins/chartist/js/chartist.min.js') }}"></script>
+    <script src="{{ asset('plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js') }}"></script>
+    <script src="{{ asset('js/dashboard/dashboard-1.js') }}"></script>
 
-<!-- أكواد إضافية -->
-@stack('scripts')
+    <!-- أكواد إضافية -->
+    @stack('scripts')
 
+</body>
+
+</html>
+
+
+    <!--**********************************
+        Notification handling script -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Setup for Laravel Reverb notifications
+                if (window.Echo) {
+                    // Listen for notifications on the user's private channel
+                    window.Echo.private('App.Models.User.{{ auth()->id() }}')
+                        .notification((notification) => {
+                            // Create notification element
+                            displayNotification(notification);
+                            
+                            // Update notification counter
+                            updateNotificationCounter();
+                            
+                            // Show toast notification
+                            showToast(notification.title, notification.message, notification.type);
+                        });
+                }
+                
+                // Function to display notification in the dropdown
+                function displayNotification(notification) {
+                    const notificationList = document.querySelector('.notification-list');
+                    if (!notificationList) return;
+                    
+                    // Create notification item
+                    const notificationItem = document.createElement('li');
+                    notificationItem.className = 'notification-unread';
+                    
+                    // Set notification type icon
+                    let iconClass = 'fa-info-circle text-info';
+                    if (notification.type === 'success') {
+                        iconClass = 'fa-check-circle text-success';
+                    } else if (notification.type === 'warning') {
+                        iconClass = 'fa-exclamation-triangle text-warning';
+                    } else if (notification.type === 'danger') {
+                        iconClass = 'fa-exclamation-circle text-danger';
+                    }
+                    
+                    // Set notification content
+                    notificationItem.innerHTML = `
+                        <div class="d-flex align-items-center">
+                            <div class="notification-icon">
+                                <i class="fas ${iconClass} fa-lg mr-2"></i>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="notification-heading mb-0">${notification.title}</h6>
+                                <p class="notification-text mb-0">${notification.message}</p>
+                                <small class="notification-timestamp text-muted">Just now</small>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Add to notification list
+                    notificationList.prepend(notificationItem);
+                    
+                    // Remove oldest notification if more than 10
+                    if (notificationList.children.length > 10) {
+                        notificationList.removeChild(notificationList.lastChild);
+                    }
+                }
+                
+                // Function to update notification counter
+                function updateNotificationCounter() {
+                    const counter = document.querySelector('.notification-count');
+                    if (counter) {
+                        let count = parseInt(counter.textContent || '0');
+                        counter.textContent = count + 1;
+                        counter.style.display = 'inline-block';
+                    }
+                }
+                
+                // Function to show toast notification
+                function showToast(title, message, type = 'info') {
+                    // If you have a toast library, use it here
+                    // This is a simple implementation
+                    const toastContainer = document.getElementById('toast-container');
+                    if (!toastContainer) {
+                        const container = document.createElement('div');
+                        container.id = 'toast-container';
+                        container.className = 'position-fixed top-0 end-0 p-3';
+                        container.style.zIndex = '1050';
+                        document.body.appendChild(container);
+                    }
+                    
+                    const toastElement = document.createElement('div');
+                    toastElement.className = `toast align-items-center text-white bg-${type} border-0`;
+                    toastElement.setAttribute('role', 'alert');
+                    toastElement.setAttribute('aria-live', 'assertive');
+                    toastElement.setAttribute('aria-atomic', 'true');
+                    
+                    toastElement.innerHTML = `
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                <strong>${title}</strong>: ${message}
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                    `;
+                    
+                    document.getElementById('toast-container').appendChild(toastElement);
+                    
+                    // Initialize Bootstrap toast
+                    const toast = new bootstrap.Toast(toastElement, {
+                        delay: 5000
+                    });
+                    toast.show();
+                }
+                
+                // Mark notification as read when clicked
+                document.addEventListener('click', function(e) {
+                    const notificationItem = e.target.closest('.notification-list li');
+                    if (notificationItem) {
+                        const notificationId = notificationItem.dataset.id;
+                        if (notificationId) {
+                            fetch(`/notifications/${notificationId}/read`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                                }
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    notificationItem.classList.remove('notification-unread');
+                                    
+                                    // Update counter
+                                    const counter = document.querySelector('.notification-count');
+                                    if (counter) {
+                                        let count = parseInt(counter.textContent || '0');
+                                        if (count > 0) {
+                                            count--;
+                                            counter.textContent = count;
+                                            if (count === 0) {
+                                                counter.style.display = 'none';
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+        </script>
+
+        <!-- Bootstrap Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        
+        @stack('scripts')
 </body>
 
 </html>

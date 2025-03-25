@@ -19,6 +19,8 @@ class RolesAndPermissionsSeeder extends Seeder
 
             'view-permissions',
 
+            'manage-notifications',
+
             'view-users',
             'create-users',
             'edit-users',

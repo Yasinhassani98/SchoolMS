@@ -7,6 +7,7 @@ use App\Models\Classroom;
 use App\Models\Parint;
 use App\Models\Student;
 use App\Models\User;
+use App\Notifications\GeneralNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -15,7 +16,7 @@ class StudentController extends Controller
 {
     public function index()
     {
-        $students = Student::with(['classroom','parent'])->orderBy('created_at', 'desc')->paginate(10);
+        $students = Student::with(['classroom', 'parent'])->orderBy('created_at', 'desc')->paginate(10);
         return view('admin.students.index', ['students' => $students]);
     }
     public function create()
@@ -50,6 +51,16 @@ class StudentController extends Controller
             $student->image = $path;
         }
         $student->save();
+        $admins = User::role('admin')->get();
+        foreach ($admins as $admin) {
+
+            $admin->notify(new GeneralNotification(
+                'New Student',
+                'New student registered ' . $student->name,
+                ['student_id' => $student->id],
+                'success'
+            ));
+        }
 
         return redirect()->route('admin.students.index')->with('success', 'Student created successfully');
     }
@@ -77,35 +88,35 @@ class StudentController extends Controller
             'image' => 'nullable|image',
             'status' => 'required|in:active,inactive'
         ]);
-    
+
         // Update user information
         $user = User::findOrFail($student->user_id);
-        
+
         $user->update([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'password' => !empty($validated['password']) 
-                ? Hash::make($validated['password']) 
+            'password' => !empty($validated['password'])
+                ? Hash::make($validated['password'])
                 : $user->password,
         ]);
-        
+
         // Remove fields that belong to user model
         $studentData = collect($validated)
             ->except(['email', 'password', 'password_confirmation'])
             ->toArray();
-        
+
         // Handle image upload if provided
         if ($request->hasFile('image')) {
             // Delete old image if exists
             if ($student->image && Storage::disk('public')->exists($student->image)) {
                 Storage::disk('public')->delete($student->image);
             }
-            
+
             $studentData['image'] = $request->file('image')->store('Students', 'public');
         }
-    
+
         $student->update($studentData);
-    
+
         return redirect()
             ->route('admin.students.index')
             ->with('success', 'Student updated successfully');
@@ -118,7 +129,7 @@ class StudentController extends Controller
 
         $user = User::findorfail($student->user_id);
         $user->delete();
-        
+
         return redirect()->route('admin.students.index')->with('success', 'Student deleted successfully');
     }
 }
