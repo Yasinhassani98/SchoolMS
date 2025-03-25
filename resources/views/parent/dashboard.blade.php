@@ -156,13 +156,6 @@
                                 <tr>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <div class="avatar-circle me-2" style="width: 35px; height: 35px;">
-                                                @if($item['student']->gender == 'male')
-                                                    <i class="fas fa-male text-primary"></i>
-                                                @else
-                                                    <i class="fas fa-female text-danger"></i>
-                                                @endif
-                                            </div>
                                             <span>{{ $item['student']->name }}</span>
                                         </div>
                                     </td>
@@ -221,27 +214,29 @@
                         @forelse($upcomingBirthdays as $child)
                         <div class="birthday-item d-flex align-items-center mb-3 p-2 border-bottom">
                             <div class="avatar-circle me-3 bg-light">
-                                @if($child->gender == 'male')
-                                    <i class="fas fa-male text-primary"></i>
-                                @else
-                                    <i class="fas fa-female text-danger"></i>
-                                @endif
+                                    <img src="{{ $child->getImageURL() }}" alt="{{ $child->name }}" class="img-fluid rounded-circle" style="width: 100%; height: 100%; object-fit: cover;">
                             </div>
                             <div class="flex-grow-1">
                                 <h6 class="mb-0">{{ $child->name }}</h6>
+                                <!-- In the birthday display section -->
                                 <div class="d-flex justify-content-between">
                                     @php
                                         $birthday = \Carbon\Carbon::parse($child->date_of_birth);
                                         $nextBirthday = $birthday->copy()->year(now()->year);
-                                        if ($nextBirthday->isPast()) {
-                                            $nextBirthday->addYear();
-                                        }
-                                        $daysLeft = $nextBirthday->diffInDays(now());
-                                        $age = $birthday->age;
-                                        $nextAge = $age + 1;
+                                    // Fix for negative days - if birthday has passed this year, use next year's date
+                                    if ($nextBirthday->isPast()) {
+                                    $nextBirthday->addYear();
+                                    }
+                                    // Calculate days remaining (always positive)
+                                    $daysLeft = now()->diffInDays($nextBirthday, false);
+                                    if ($daysLeft < 0) {
+                                    $daysLeft = 0; // Failsafe to ensure no negative values
+                                    }
+                                    $age = $birthday->age;
+                                    $nextAge = $age + 1;
                                     @endphp
                                     <small class="text-muted">{{ $nextBirthday->format('Y-m-d') }} ({{ $nextAge }} years)</small>
-                                    <span class="badge bg-info">{{ $daysLeft }} days</span>
+                                    <span class="badge bg-info">{{ $daysLeft }}</span>
                                 </div>
                             </div>
                         </div>
@@ -256,6 +251,59 @@
             </div>
         </div>
     </div>
+
+    <!-- Children Performance table - update avatar display -->
+    <tbody>
+        @forelse($childrenWithAverages as $item)
+        <tr>
+            <td>
+                <div class="d-flex align-items-center">
+                    <div class="avatar-circle me-2" style="width: 35px; height: 35px;">
+                        <img src="{{ $item['student']->getImageURL() }}" alt="{{ $item['student']->name }}" class="img-fluid rounded-circle" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <span>{{ $item['student']->name }}</span>
+                </div>
+            </td>
+            <td>{{ $item['student']->classroom->name ?? 'Not assigned' }}</td>
+            <td>
+                <span class="badge bg-{{ $item['average'] >= 70 ? 'success' : ($item['average'] >= 50 ? 'warning' : 'danger') }}">
+                    {{ number_format($item['average'], 1) }}
+                </span>
+            </td>
+            <td>
+                @php
+                    $attendanceCount = 0;
+                    $presentCount = 0;
+                    foreach($item['student']->attendances as $attendance) {
+                        $attendanceCount++;
+                        if($attendance->status == 'present') {
+                            $presentCount++;
+                        }
+                    }
+                    $attendanceRate = $attendanceCount > 0 ? ($presentCount / $attendanceCount) * 100 : 0;
+                @endphp
+                <div class="progress" style="height: 8px; width: 80px;">
+                    <div class="progress-bar bg-{{ $attendanceRate >= 75 ? 'success' : ($attendanceRate >= 50 ? 'warning' : 'danger') }}"
+                        role="progressbar"
+                        style="width: {{ $attendanceRate }}%;"
+                        aria-valuenow="{{ $attendanceRate }}"
+                        aria-valuemin="0"
+                        aria-valuemax="100">
+                    </div>
+                </div>
+            </td>
+            <td>
+                <a href="{{ route('parent.children.show', $item['student']->id) }}" class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-eye"></i>
+                </a>
+            </td>
+        </tr>
+        @empty
+        <tr>
+            <td colspan="5" class="text-center py-3">No children registered</td>
+        </tr>
+        @endforelse
+    </tbody>
 
     <!-- Quick Actions -->
     <div class="row mt-4">

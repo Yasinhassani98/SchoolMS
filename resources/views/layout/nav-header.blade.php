@@ -1,7 +1,8 @@
 <div class="nav-header">
     <div class="brand-logo">
         <a href="{{ route('welcome') }}" class="text-decoration-none">
-            <span class="brand-title" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 24px; background: linear-gradient(45deg, #2E3192, #1BFFFF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; letter-spacing: 1px;">
+            <span class="brand-title"
+                style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 24px; background: linear-gradient(45deg, #2E3192, #1BFFFF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; letter-spacing: 1px;">
                 School MS
             </span>
         </a>
@@ -22,7 +23,7 @@
                 <span class="toggle-icon"><i class="icon-menu"></i></span>
             </div>
         </div>
-        <div class="header-left">
+        {{-- <div class="header-left">
             <div class="input-group icons">
                 <div class="input-group-prepend">
                     <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1"><i
@@ -35,7 +36,7 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="header-right">
             <ul class="clearfix">
                 <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
@@ -161,14 +162,28 @@
                     </div>
                 </li>
                 <li class="icons dropdown d-none d-md-flex">
-                    <a href="javascript:void(0)" class="log-user" data-toggle="dropdown">
-                        <span>English</span> <i class="fa fa-angle-down f-s-14" aria-hidden="true"></i>
-                    </a>
-                    <div class="drop-down dropdown-language animated fadeIn  dropdown-menu">
+                    <div class="log-user">
+                        @auth
+                            <span>{{ Auth::user()->name }}</span>
+                            <span>{{ Auth::user()->roles->first()->name ?? 'null' }}</span>
+                        @else
+                            <span>Guest</span>
+                        @endauth
+                    </div>
+                    <div class="drop-down animated fadeIn dropdown-menu">
                         <div class="dropdown-content-body">
                             <ul>
-                                <li><a href="javascript:void()">English</a></li>
-                                <li><a href="javascript:void()">Dutch</a></li>
+                                @auth
+                                    <li><a href="{{ route('profile.edit') }}">My Profile</a></li>
+                                    <li>
+                                        <form action="{{ route('logout') }}" method="post">
+                                            @csrf
+                                            <button type="submit" class="btn p-0 border-0 text-danger">Logout</button>
+                                        </form>
+                                    </li>
+                                @else
+                                    <li><a href="{{ route('login') }}">Login</a></li>
+                                @endauth
                             </ul>
                         </div>
                     </div>
@@ -183,15 +198,22 @@
                                 $user = Auth::user();
 
                                 if ($user->hasRole('teacher') && $user->teacher) {
-                                    $profileImage = $user->teacher->image ? 'storage/' . $user->teacher->image : 'images/user.png';
+                                    $profileImage = $user->teacher->image
+                                        ? 'storage/' . $user->teacher->image
+                                        : 'images/user.png';
                                 } elseif ($user->hasRole('student') && $user->student) {
-                                    $profileImage = $user->student->image ? 'storage/' . $user->student->image : 'images/user.png';
+                                    $profileImage = $user->student->image
+                                        ? 'storage/' . $user->student->image
+                                        : 'images/user.png';
                                 } elseif ($user->hasRole('parint') && $user->parint) {
-                                    $profileImage = $user->parint->image ? 'storage/' . $user->parint->image : 'images/user.png';
+                                    $profileImage = $user->parint->image
+                                        ? 'storage/' . $user->parint->image
+                                        : 'images/user.png';
                                 }
                             }
                         @endphp
-                        <img src="{{ asset($profileImage) }}" height="40" width="40" alt="Profile" class="rounded-circle">
+                        <img src="{{ asset($profileImage) }}" height="40" width="40" alt="Profile"
+                            class="rounded-circle">
 
                     </div>
 

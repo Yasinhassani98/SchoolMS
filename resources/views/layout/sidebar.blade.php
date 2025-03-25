@@ -81,6 +81,12 @@
                     <i class="fa-solid fa-clipboard-check"></i><span class="nav-text">Attendances</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('admin.reports.index') }}" class="{{ Route::is('admin.reports.*') ? 'active' : '' }}"
+                    aria-expanded="false">
+                    <i class="fa-solid fa-file-alt"></i><span class="nav-text">Reports</span>
+                </a>
+            </li>
             @endrole
             @role('student')
             <li>

@@ -11,10 +11,10 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Custom styles -->
     <style>
         :root {
@@ -114,7 +114,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
         <div class="container">
             <a class="navbar-brand fw-bold fs-4 gradient-text" href="/">SchoolMS</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -129,7 +129,7 @@
                     <li class="nav-item">
                         <a class="nav-link px-3" href="#contact">Contact</a>
                     </li>
-                    
+
                     @auth
                         <li class="nav-item">
                             @if(Auth::user()->hasAnyRole(['admin','superadmin']))
@@ -204,7 +204,7 @@
                     @endauth
                 </div>
                 <div class="col-lg-6">
-                    <img src="https://media.istockphoto.com/id/1407194547/tr/foto%C4%9Fraf/modern-classroom-with-connections.jpg?s=612x612&w=0&k=20&c=ZYdjVS7gUfTyPSt1MP6mDxEmLbyHhxX-s9zaYvMJlKU=" alt="School Management System" 
+                    <img src="https://media.istockphoto.com/id/1407194547/tr/foto%C4%9Fraf/modern-classroom-with-connections.jpg?s=612x612&w=0&k=20&c=ZYdjVS7gUfTyPSt1MP6mDxEmLbyHhxX-s9zaYvMJlKU=" alt="School Management System"
                          class="img-fluid rounded-4 shadow-lg">
                 </div>
             </div>
@@ -304,8 +304,8 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8 text-center mb-5">
                     <p class="lead">
-                        Our School Management System is designed to simplify administrative tasks, enhance communication, and improve 
-                        educational outcomes. With a user-friendly interface and comprehensive features, we help educational institutions 
+                        Our School Management System is designed to simplify administrative tasks, enhance communication, and improve
+                        educational outcomes. With a user-friendly interface and comprehensive features, we help educational institutions
                         of all sizes operate more efficiently.
                     </p>
                 </div>
@@ -396,18 +396,19 @@
                             <p class="text-center mb-4">
                                 Have questions about our School Management System? Get in touch with our team for more information or to schedule a demo.
                             </p>
-                            <form>
+                            <form method="POST" action="{{route('reports.store')}}">
+                                @csrf
                                 <div class="mb-3">
                                     <label for="name" class="form-label fw-medium">Name</label>
-                                    <input type="text" class="form-control form-control-lg rounded-3" id="name" placeholder="Your name">
+                                    <input name="name" type="text" class="form-control form-control-lg rounded-3" id="name" placeholder="Your name">
                                 </div>
                                 <div class="mb-3">
                                     <label for="email" class="form-label fw-medium">Email</label>
-                                    <input type="email" class="form-control form-control-lg rounded-3" id="email" placeholder="Your email">
+                                    <input name="email" type="email" class="form-control form-control-lg rounded-3" id="email" placeholder="Your email">
                                 </div>
                                 <div class="mb-4">
                                     <label for="message" class="form-label fw-medium">Message</label>
-                                    <textarea class="form-control form-control-lg rounded-3" id="message" rows="5" placeholder="Your message"></textarea>
+                                    <textarea name="message" class="form-control form-control-lg rounded-3" id="message" rows="5" placeholder="Your message"></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary-custom btn-lg rounded-pill px-5">Send Message</button>
                             </form>
@@ -468,7 +469,7 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- Custom JS -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -476,10 +477,10 @@
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     e.preventDefault();
-                    
+
                     const targetId = this.getAttribute('href');
                     const targetElement = document.querySelector(targetId);
-                    
+
                     if (targetElement) {
                         window.scrollTo({
                             top: targetElement.offsetTop - 80,
@@ -493,4 +494,3 @@
 </body>
 
 </html>
-                    

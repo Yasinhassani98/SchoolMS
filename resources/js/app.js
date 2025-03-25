@@ -1,8 +1,8 @@
 import './bootstrap';
 import Echo from 'laravel-echo';
-import Reverb from 'laravel-reverb';
+// import Reverb from 'laravel-reverb';
 
-window.Reverb = Reverb;
+// window.Reverb = Reverb;
 
 window.Echo = new Echo({
     broadcaster: 'reverb',
@@ -34,7 +34,7 @@ if (window.userId) {
             if (notificationList) {
                 let notificationItem = document.createElement('li');
                 notificationItem.className = `${notification.read_at ? 'notification-read' : 'notification-unread'}`;
-                
+
                 // Create notification content with proper styling
                 notificationItem.innerHTML = `
                     <a href="javascript:void(0)" class="d-flex align-items-center">
@@ -62,17 +62,17 @@ if (window.userId) {
                         </div>
                     </a>
                 `;
-                
+
                 // Add notification at the beginning of the list
                 if (notificationList.firstChild) {
                     notificationList.insertBefore(notificationItem, notificationList.firstChild);
                 } else {
                     notificationList.appendChild(notificationItem);
                 }
-                
+
                 // Update unread notification count badge
                 updateNotificationBadge();
-                
+
                 // Show toast notification
                 showToast(notification.title || 'Notification', notification.message || '', notification.type || 'info');
             }
@@ -99,7 +99,7 @@ function getIconForNotificationType(type) {
  */
 function updateNotificationBadge() {
     let notificationBadge = document.querySelector('.badge.badge-pill.gradient-2');
-    
+
     if (notificationBadge) {
         let count = parseInt(notificationBadge.textContent) + 1;
         notificationBadge.textContent = count;
@@ -113,7 +113,7 @@ function updateNotificationBadge() {
             badge.textContent = '1';
             badge.style.top = '-5px';
             badge.style.right = '-5px';
-            
+
             // Make sure parent has position relative
             bellIcon.parentElement.style.position = 'relative';
             bellIcon.parentElement.appendChild(badge);
@@ -145,7 +145,7 @@ function showToast(title, message, type = 'info') {
             bgColor = '#cff4fc';
             break;
     }
-    
+
     // Create toast container if it doesn't exist
     let toastContainer = document.getElementById('toast-container');
     if (!toastContainer) {
@@ -157,7 +157,7 @@ function showToast(title, message, type = 'info') {
         toastContainer.style.zIndex = '9999';
         document.body.appendChild(toastContainer);
     }
-    
+
     // Create toast element
     const toast = document.createElement('div');
     toast.className = 'toast show';
@@ -171,7 +171,7 @@ function showToast(title, message, type = 'info') {
     toast.style.boxShadow = '0 0.5rem 1rem rgba(0, 0, 0, 0.15)';
     toast.style.borderRadius = '0.25rem';
     toast.style.border = 'none';
-    
+
     toast.innerHTML = `
         <div class="toast-header" style="background-color: ${bgColor}; border-bottom: 1px solid rgba(0,0,0,.05);">
             <strong class="me-auto">${title}</strong>
@@ -182,34 +182,34 @@ function showToast(title, message, type = 'info') {
             ${message}
         </div>
     `;
-    
+
     // Add toast to container
     toastContainer.appendChild(toast);
-    
+
     // Auto-close toast after 5 seconds
     setTimeout(() => {
         toast.style.opacity = '0';
         toast.style.transition = 'opacity 0.5s ease';
-        
+
         // Remove toast after fade out
         setTimeout(() => {
             toast.remove();
-            
+
             // Remove container if empty
             if (toastContainer.children.length === 0) {
                 toastContainer.remove();
             }
         }, 500);
     }, 5000);
-    
+
     // Add close button functionality
     toast.querySelector('.btn-close').addEventListener('click', () => {
         toast.style.opacity = '0';
         toast.style.transition = 'opacity 0.5s ease';
-        
+
         setTimeout(() => {
             toast.remove();
-            
+
             // Remove container if empty
             if (toastContainer.children.length === 0) {
                 toastContainer.remove();

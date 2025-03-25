@@ -15,7 +15,7 @@ use App\Http\Controllers\AcademicYearController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\parent\dashboardController as ParentDashboardController;
 use App\Http\Controllers\ParintController;
-
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\student\AttendanceController as StudentAttendanceController;
 use App\Http\Controllers\student\dashboardController;
 use App\Http\Controllers\student\MarkController as StudentMarkController;
@@ -33,6 +33,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
+
 use Spatie\Permission\Models\Role;
 
 Route::get('/test-roles', function () {
@@ -48,7 +49,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'role:admin|superadmin'])->prefix('admin/')->as('admin.')->group(function () {
     // Dashboard Route
-    Route::get('dashboard',[WlcomeController::class,'adminWelcome'])->name('dashboard');
+    Route::get('dashboard', [WlcomeController::class, 'adminWelcome'])->name('dashboard');
 
     // Role and Permission Routes
     Route::resource('roles', RoleController::class)->except(['show']);
@@ -84,18 +85,23 @@ Route::middleware(['auth', 'role:admin|superadmin'])->prefix('admin/')->as('admi
 
     // Attendance Routes
     Route::resource('attendances', AttendanceController::class)->except(['show']);
+
+    // Reports Routes
+    Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('reports/{report}', [ReportController::class, 'show'])->name('reports.show');
 });
 
+Route::post('reports', [ReportController::class, 'store'])->name('reports.store');
 
 Route::middleware(['auth', 'role:student'])->prefix('student/')->as('student.')->group(function () {
     // Dashboard Route
-    Route::get('dashboard',[WlcomeController::class,'studentWelcome'])->name('dashboard');
+    Route::get('dashboard', [WlcomeController::class, 'studentWelcome'])->name('dashboard');
 
     // Attendance Routes
     Route::resource('attendances', StudentAttendanceController::class)->only(['index']);
 
     // Subject Routes
-    Route::resource('subjects', StudentSubjectController::class)->only(['index','show']);
+    Route::resource('subjects', StudentSubjectController::class)->only(['index', 'show']);
 
     // Marks Routes
     Route::resource('marks', StudentMarkController::class)->only(['index']);
@@ -103,28 +109,27 @@ Route::middleware(['auth', 'role:student'])->prefix('student/')->as('student.')-
 
 Route::middleware(['auth', 'role:parent'])->prefix('parent/')->as('parent.')->group(function () {
     // Dashboard Route
-    Route::get('dashboard',[ParentDashboardController::class,'dashboard'])->name('dashboard');
+    Route::get('dashboard', [ParentDashboardController::class, 'dashboard'])->name('dashboard');
     // Children Routes
-    Route::get('children',[ParentDashboardController::class,'children'])->name('children');
+    Route::get('children', [ParentDashboardController::class, 'children'])->name('children');
     // Students Routes
-    Route::get('children/{student}',[ParentDashboardController::class,'show'])->name('children.show');
+    Route::get('children/{student}', [ParentDashboardController::class, 'show'])->name('children.show');
 });
 
 
 Route::middleware(['auth', 'role:teacher'])->prefix('teacher/')->as('teacher.')->group(function () {
     // Dashboard Route
-    Route::get('dashboard',[WlcomeController::class,'teacherWelcome'])->name('dashboard');
+    Route::get('dashboard', [WlcomeController::class, 'teacherWelcome'])->name('dashboard');
     // Attendance Routes
     Route::resource('attendances', TeacherAttendanceController::class)->except(['show']);
     // Marks Routes
     Route::resource('marks', TeacherMarkController::class)->except(['show']);
     // Students Routes
-    Route::get('students',[TeacherStudentController::class,'index'])->name('students.index');
-    Route::get('students/{student}',[TeacherStudentController::class,'show'])->name('students.show');
+    Route::get('students', [TeacherStudentController::class, 'index'])->name('students.index');
+    Route::get('students/{student}', [TeacherStudentController::class, 'show'])->name('students.show');
     // Classrooms Routes
-    Route::get('classrooms',[TeacherClassroomController::class,'index'])->name('classrooms.index');
+    Route::get('classrooms', [TeacherClassroomController::class, 'index'])->name('classrooms.index');
     // Subjects Routes
-    Route::get('subjects',[TeacherSubjectController::class,'index'])->name('subjects.index');
-
+    Route::get('subjects', [TeacherSubjectController::class, 'index'])->name('subjects.index');
 });
 require __DIR__ . '/auth.php';

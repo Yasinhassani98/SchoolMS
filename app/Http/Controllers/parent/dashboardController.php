@@ -38,9 +38,17 @@ class dashboardController extends Controller
                 $nextBirthday->addYear();
             }
 
+            // Calculate days until birthday
+            $daysUntil = $today->diffInDays($nextBirthday);
+
+            // Store days until birthday as a property on the child object
+            $child->days_until_birthday = $daysUntil;
+
             // Check if birthday is within the next 30 days
-            return $nextBirthday->diffInDays($today) <= 30;
-        });
+            return $daysUntil <= 30;
+        })
+        ->sortBy('days_until_birthday') // Sort by days until birthday (ascending)
+        ->take(5); // Take only the closest 5 birthdays
 
         // Get average marks for all children
         $childrenWithAverages = [];
