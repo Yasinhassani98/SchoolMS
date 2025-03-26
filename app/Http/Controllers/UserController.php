@@ -26,7 +26,6 @@ class UserController extends Controller
      */
     public function create()
     {
-        Auth::user()->notify(new ResponseNotification('success', 'Subject created successfully'));
         if(Auth::user()->hasRole('admin')){
             $roles = Role::whereNotIn('name', ['superadmin','admin'])->get();
         }elseif(Auth::user()->hasRole('superadmin')){
