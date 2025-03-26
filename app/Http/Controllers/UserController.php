@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Notifications\ResponseNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -15,15 +16,17 @@ class UserController extends Controller
      */
     public function index()
     {
+        
         $users = User::with('roles')->paginate(10);
         return view('admin.users.index', compact('users'));
     }
-
+    
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
+        Auth::user()->notify(new ResponseNotification('success', 'Subject created successfully'));
         if(Auth::user()->hasRole('admin')){
             $roles = Role::whereNotIn('name', ['superadmin','admin'])->get();
         }elseif(Auth::user()->hasRole('superadmin')){
@@ -49,7 +52,8 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ])->assignRole($roles);
-        return redirect()->route('admin.users.index')->with('success', 'User created successfully');
+        Auth::user()->notify(new ResponseNotification('success', 'User created successfully'));
+        return redirect()->route('admin.users.index');
     }
 
     /**
@@ -81,7 +85,8 @@ class UserController extends Controller
             'password' => $request->password ? Hash::make($request->password) : $user->password,
         ]);
         $user->syncRoles($roles);
-        return redirect()->route('admin.users.index')->with('success', 'User updated successfully');
+        Auth::user()->notify(new ResponseNotification('success', 'User updated successfully'));
+        return redirect()->route('admin.users.index');
         
         
     }
@@ -92,6 +97,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('admin.users.index')->with('success', 'User deleted successfully');
+        Auth::user()->notify(new ResponseNotification('success', 'User deleted successfully'));
+        return redirect()->route('admin.users.index');
     }
 }

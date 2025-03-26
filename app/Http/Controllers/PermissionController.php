@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Auth;
+use App\Notifications\ResponseNotification;
 
 class PermissionController extends Controller
 {
@@ -25,9 +27,8 @@ class PermissionController extends Controller
         ]);
 
         Permission::create(['name' => $request->name]);
-
-        return redirect()->route('admin.permissions.index')
-            ->with('success', 'Permission created successfully');
+        Auth::user()->notify(new ResponseNotification('success', 'Permission created successfully'));
+        return redirect()->route('admin.permissions.index');
     }
 
     public function edit(Permission $permission)
@@ -42,16 +43,14 @@ class PermissionController extends Controller
         ]);
 
         $permission->update(['name' => $request->name]);
-
-        return redirect()->route('admin.permissions.index')
-            ->with('success', 'Permission updated successfully');
+        Auth::user()->notify(new ResponseNotification('success', 'Permission updated successfully'));
+        return redirect()->route('admin.permissions.index');
     }
 
     public function destroy(Permission $permission)
     {
         $permission->delete();
-
-        return redirect()->route('admin.permissions.index')
-            ->with('success', 'Permission deleted successfully');
+        Auth::user()->notify(new ResponseNotification('success', 'Permission deleted successfully'));
+        return redirect()->route('admin.permissions.index');
     }
 }

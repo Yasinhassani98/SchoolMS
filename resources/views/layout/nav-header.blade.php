@@ -125,37 +125,7 @@
                 </li>
 
                 <li class="icons dropdown d-none d-md-flex">
-                    <p class="text-primary font-weight-bold m-2 d-flex align-items-center" style="font-size: 1.2rem;">
-                        <i class="mdi mdi-account-circle m-2"></i>
-                        {{ Auth::user()->name }}
-                    </p>
-                    @role('admin|superadmin')
-                    <p class="text-secondary font-weight-bold m-2 d-flex align-items-center" style="font-size: 1rem;">
-                        <i class="mdi mdi-shield-account m-2"></i>
-                        {{ Auth::user()->roles->first()->name }}
-                    </p>
-                    @endrole
-                    <div class="drop-down dropdown-language animated fadeIn  dropdown-menu">
-                        <div class="dropdown-content-body">
-                            <ul>
-                                @auth
-                                    <li><a href="{{ route('profile.edit') }}">My Profile</a></li>
-                                    <li>
-                                        <form action="{{ route('logout') }}" method="post">
-                                            @csrf
-                                            <button type="submit" class="btn p-0 border-0 text-danger">Logout</button>
-                                        </form>
-                                    </li>
-                                @else
-                                    <li><a href="{{ route('login') }}">Login</a></li>
-                                @endauth
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-                <li class="icons dropdown">
-                    <div class="user-img c-pointer position-relative" data-toggle="dropdown">
-                        <span class="activity active"></span>
+                    <div class="d-flex align-items-center mx-3 c-pointer" data-toggle="dropdown">
                         @php
                             $profileImage = 'images/user.png';
 
@@ -170,18 +140,53 @@
                                     $profileImage = $user->student->image
                                         ? 'storage/' . $user->student->image
                                         : 'images/user.png';
-                                } elseif ($user->hasRole('parint') && $user->parint) {
-                                    $profileImage = $user->parint->image
-                                        ? 'storage/' . $user->parint->image
+                                } elseif ($user->hasRole('parent') && $user->parent) {
+                                    $profileImage = $user->parent->image
+                                        ? 'storage/' . $user->parent->image
                                         : 'images/user.png';
                                 }
                             }
                         @endphp
                         <img src="{{ asset($profileImage) }}" height="40" width="40" alt="Profile"
-                            class="rounded-circle">
-
+                            class="rounded-circle mr-2">
+                            
+                        <div class="user-info d-flex flex-column align-items-start justify-content-center">
+                            <p class="text-primary font-weight-bold mb-0" style="font-size: 0.9rem; line-height: 1.2;">
+                                {{ Auth::user()->name }}
+                            </p>
+                            <p class="text-secondary mb-0" style="font-size: 0.75rem; line-height: 1.2;">
+                                <i class="mdi mdi-shield-account mr-1"></i>{{ Auth::user()->roles->first()->name }}
+                            </p>
+                        </div>
                     </div>
-
+                    
+                    <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
+                        <div class="dropdown-content-body">
+                            <ul>
+                                <li>
+                                    <a href="{{ route('profile.edit') }}"><i class="icon-user"></i>
+                                        <span>Profile</span></a>
+                                </li>
+                                <hr class="my-2">
+                                <li>
+                                    <form action="{{ route('logout') }}" method="post" class="d-inline">
+                                        @csrf
+                                        <button type="submit" class="btn p-0 border-0 shadow-none bg-transparent">
+                                            <i class="icon-power text-danger"></i> <span
+                                                class="text-danger mx-1">Logout</span>
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li class="icons dropdown d-md-none">
+                    <div class="user-img c-pointer position-relative" data-toggle="dropdown">
+                        <span class="activity active"></span>
+                        <img src="{{ asset($profileImage) }}" height="40" width="40" alt="Profile"
+                            class="rounded-circle">
+                    </div>
                     <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
                         <div class="dropdown-content-body">
                             <ul>

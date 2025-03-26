@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Level;
 use App\Models\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Notifications\ResponseNotification;
 
 class SubjectController extends Controller
 {
@@ -42,12 +44,11 @@ $subject = new Subject(
         }
         $subject->save();
 
-        // Create the subject with all validated data
-        // Subject::create($validatedData);
+        Auth::user()->notify(new ResponseNotification('success', 'Subject created successfully'));
+
 
         return redirect()
-            ->route('admin.subjects.index')
-            ->with('success', 'Subject created successfully');
+            ->route('admin.subjects.index');
     }
 
     public function show(Subject $subject)
@@ -68,14 +69,15 @@ $subject = new Subject(
         ]);
         $subject->update($request->all());
 
+        Auth::user()->notify(new ResponseNotification('success', 'Subject updated successfully'));
+
         return redirect()
-            ->route('admin.subjects.index')
-            ->with('success', 'Subject updated successfully');
+            ->route('admin.subjects.index');
     }
     public function destroy(Subject $subject)
     {
         $subject->delete();
-        return redirect()->route('admin.subjects.index')
-            ->with('success', 'Subject deleted successfully');
+        Auth::user()->notify(new ResponseNotification('success', 'Subject deleted successfully'));
+        return redirect()->route('admin.subjects.index');
     }
 }

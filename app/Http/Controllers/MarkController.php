@@ -12,8 +12,10 @@ use App\Http\Requests\UpdateMarkRequest;
 use App\Models\Level;
 use App\Models\Teacher;
 use App\Notifications\GeneralNotification;
+use App\Notifications\ResponseNotification;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class MarkController extends Controller
 {
@@ -62,7 +64,7 @@ class MarkController extends Controller
                 continue;
             }
             Mark::create([
-                'teacher_id' => $teacherId, // Ensure this is included
+                'teacher_id' => $teacherId, 
                 'student_id' => $studentId,
                 'subject_id' => $subjectId,
                 'classroom_id' => $classroomId,
@@ -77,20 +79,14 @@ class MarkController extends Controller
             $notification = new GeneralNotification(
                 'New Mark Added',
                 "A new mark has been added for {$subject->name}.",
-                [
-                    'mark' => $marks[$index],
-                    'subject' => $subject->name,
-                    'classroom' => Classroom::find($classroomId)->name,
-                ],
                 'info'
             );
             $student->user->notify($notification);
             $parent->user->notify($notification);
         }
-
+        Auth::user()->notify(new ResponseNotification('success', 'Marks added successfully for classroom ' . Classroom::find($classroomId)->name . ' and subject ' . Subject::find($subjectId)->name));
         return redirect()
-            ->route('admin.marks.index')
-            ->with('success', 'Marks added successfully for classroom ' . Classroom::find($classroomId)->name . ' and subject ' . Subject::find($subjectId)->name);
+            ->route('admin.marks.index');
     }
 
 
@@ -127,26 +123,21 @@ class MarkController extends Controller
         $notification = new GeneralNotification(
             'Mark Updated',
             "The mark has been updated for {$subject->name}.",
-            [
-                'mark' => $mark->mark,
-                'subject' => $subject->name,
-            ],
             'info'
         );
         $student->user->notify($notification);
         $parent->user->notify($notification);
+        Auth::user()->notify(new ResponseNotification('success', 'Mark updated successfully'));
 
         return redirect()
-            ->route('admin.marks.index')
-            ->with('success', 'Mark updated successfully');
+            ->route('admin.marks.index');
     }
 
     public function destroy(Mark $mark): RedirectResponse
     {
         $mark->delete();
-
+        Auth::user()->notify(new ResponseNotification('success', 'Mark deleted successfully'));
         return redirect()
-            ->route('admin.marks.index')
-            ->with('success', 'Mark deleted successfully');
+            ->route('admin.marks.index');
     }
 }

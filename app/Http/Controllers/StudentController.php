@@ -8,6 +8,8 @@ use App\Models\Parint;
 use App\Models\Student;
 use App\Models\User;
 use App\Notifications\GeneralNotification;
+use App\Notifications\ResponseNotification;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -51,18 +53,8 @@ class StudentController extends Controller
             $student->image = $path;
         }
         $student->save();
-        $admins = User::role('admin')->get();
-        foreach ($admins as $admin) {
-
-            $admin->notify(new GeneralNotification(
-                'New Student',
-                'New student registered ' . $student->name,
-                ['student_id' => $student->id],
-                'success'
-            ));
-        }
-
-        return redirect()->route('admin.students.index')->with('success', 'Student created successfully');
+        Auth::user()->notify(new ResponseNotification('success', 'Student created successfully'));
+        return redirect()->route('admin.students.index');
     }
     public function edit(Student $student)
     {
@@ -116,10 +108,9 @@ class StudentController extends Controller
         }
 
         $student->update($studentData);
-
+        Auth::user()->notify(new ResponseNotification('success', 'Student updated successfully'));
         return redirect()
-            ->route('admin.students.index')
-            ->with('success', 'Student updated successfully');
+            ->route('admin.students.index');
     }
     public function destroy(Student $student)
     {
@@ -129,7 +120,8 @@ class StudentController extends Controller
 
         $user = User::findorfail($student->user_id);
         $user->delete();
+        Auth::user()->notify(new ResponseNotification('success', 'Student deleted successfully'));
 
-        return redirect()->route('admin.students.index')->with('success', 'Student deleted successfully');
+        return redirect()->route('admin.students.index');
     }
 }

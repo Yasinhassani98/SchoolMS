@@ -10,6 +10,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use App\Notifications\ResponseNotification;
 
 class TeacherController extends Controller
 {
@@ -61,8 +63,8 @@ class TeacherController extends Controller
             $subject_ids = array_filter(explode(',', $request->subject_ids));
             $teacher->subjects()->attach($subject_ids);
         }
-        
-        return redirect()->route('admin.teachers.index')->with('success', 'Teacher created successfully');
+        Auth::user()->notify(new ResponseNotification('success', 'Teacher created successfully'));
+        return redirect()->route('admin.teachers.index');
     }
     
     public function edit(Teacher $teacher)
@@ -132,8 +134,9 @@ class TeacherController extends Controller
         } else {
             $teacher->subjects()->detach();
         }
+        Auth::user()->notify(new ResponseNotification('success', 'Teacher updated successfully'));
 
-        return redirect()->route('admin.teachers.index')->with('success', 'Teacher updated successfully');
+        return redirect()->route('admin.teachers.index');
     }
     
     public function destroy(Teacher $teacher)
@@ -145,7 +148,8 @@ class TeacherController extends Controller
         $user = User::findorfail($teacher->user_id);
         $user->delete();
         
-        
-        return redirect()->route('admin.teachers.index')->with('success', 'Teacher deleted successfully');
+        Auth::user()->notify(new ResponseNotification('success', 'Teacher deleted successfully'));
+
+        return redirect()->route('admin.teachers.index');
     }
 }

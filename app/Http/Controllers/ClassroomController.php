@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Classroom;
 use App\Models\Level;
+use App\Notifications\ResponseNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ClassroomController extends Controller
 {
@@ -25,7 +27,8 @@ class ClassroomController extends Controller
             'name' => 'required|max:255'
         ]);
         Classroom::create($valedated);
-        return redirect()->route('admin.classrooms.index')->with('success', 'Classroom created successfully');
+        Auth::user()->notify(new ResponseNotification('success', 'Classroom created successfully'));
+        return redirect()->route('admin.classrooms.index');
     }
     public function edit(Classroom $classroom)
     {
@@ -40,12 +43,14 @@ class ClassroomController extends Controller
             'name' => 'required|max:255'
         ]);
         $classroom->update($validated);
-        return redirect()->route('admin.classrooms.index')->with('success', 'Classroom updated successfully');
+        Auth::user()->notify(new ResponseNotification('success', 'Classroom updated successfully'));
+        return redirect()->route('admin.classrooms.index');
     }
 
     public function destroy(Classroom $classroom)
     {
         $classroom->delete();
-        return redirect()->route('admin.classrooms.index')->with('success', 'Classroom deleted successfully');
+        Auth::user()->notify(new ResponseNotification('success', 'Classroom deleted successfully'));
+        return redirect()->route('admin.classrooms.index');
     }
 }

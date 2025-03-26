@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\AcademicYear;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Notifications\ResponseNotification;
 
 class AcademicYearController extends Controller
 {
@@ -44,18 +46,10 @@ class AcademicYearController extends Controller
         }
 
         AcademicYear::create($validated);
-
-        return redirect()->route('admin.academic-years.index')
-            ->with('success', 'Academic year created successfully.');
+        Auth::user()->notify(new ResponseNotification('success', 'Academic Year Created Successfully'));
+        return redirect()->route('admin.academic-years.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(AcademicYear $academicYear)
-    {
-        return view('admin.academic-years.show', compact('academicYear'));
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -84,9 +78,8 @@ class AcademicYearController extends Controller
         }
 
         $academicYear->update($validated);
-
-        return redirect()->route('admin.academic-years.index')
-            ->with('success', 'Academic year updated successfully.');
+        Auth::user()->notify(new ResponseNotification('success', 'Academic Year Updated Successfully'));
+        return redirect()->route('admin.academic-years.index');
     }
 
     /**
@@ -96,21 +89,17 @@ class AcademicYearController extends Controller
     {
         // Check if this is the current academic year
         if ($academicYear->is_current) {
-            return redirect()->route('admin.academic-years.index')
-                ->with('error', 'Cannot delete the current academic year.');
+            Auth::user()->notify(new ResponseNotification('danger', 'Cannot delete the current academic year.'));
+            return redirect()->route('admin.academic-years.index');
         }
-
-        // Check if academic year has related records
-        // This would need to be expanded based on your actual relationships
-        // For example: if ($academicYear->classes->count() > 0)
         
         try {
             $academicYear->delete();
-            return redirect()->route('admin.academic-years.index')
-                ->with('success', 'Academic year deleted successfully.');
+            Auth::user()->notify(new ResponseNotification('success', 'Academic Year Deleted Successfully'));
+            return redirect()->route('admin.academic-years.index');
         } catch (\Exception $e) {
-            return redirect()->route('admin.academic-years.index')
-                ->with('error', 'Cannot delete academic year. It has related records.');
+            Auth::user()->notify(new ResponseNotification('danger', 'Cannot delete the academic year. It has related records.'));
+            return redirect()->route('admin.academic-years.index');
         }
     }
     
@@ -121,8 +110,7 @@ class AcademicYearController extends Controller
     {
         DB::table('academic_years')->update(['is_current' => false]);
         $academicYear->update(['is_current' => true]);
-        
-        return redirect()->route('admin.academic-years.index')
-            ->with('success', 'Current academic year updated successfully.');
+        Auth::user()->notify(new ResponseNotification('success', 'Academic Year Set as Current Successfully'));
+        return redirect()->route('admin.academic-years.index');
     }
 }

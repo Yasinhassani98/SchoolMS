@@ -123,11 +123,6 @@ class MarkController extends Controller
                 $notification = new GeneralNotification(
                     'New Mark Added',
                     "A new mark has been added for {$subject->name}.",
-                    [
-                        'mark' => $markValues[$i],
-                        'subject' => $subject->name,
-                        'classroom' => Classroom::find($request->classroom_id)->name,
-                    ],
                     'info'
                 );
                 $student->user->notify($notification);
@@ -223,10 +218,6 @@ class MarkController extends Controller
             $notification = new GeneralNotification(
                 'Mark Updated',
                 "Your mark has been updated for {$subject->name}.",
-                [
-                    'mark' => $request->mark,
-                    'subject' => $subject->name,
-                ],
                 'info'
             );
             $student->user->notify($notification);
@@ -242,6 +233,7 @@ class MarkController extends Controller
             return redirect()->back()
                 ->with('error', 'Failed to update mark: ' . $e->getMessage())
                 ->withInput();
+                
         }
     }
 

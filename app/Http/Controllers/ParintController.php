@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Http\Requests\ParintRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use App\Notifications\ResponseNotification;
 
 class ParintController extends Controller
 {
@@ -41,8 +43,8 @@ class ParintController extends Controller
         }
 
         $parent->save();
-
-        return redirect()->route('admin.parents.index')->with('success', 'Parent created successfully');
+        Auth::user()->notify(new ResponseNotification('success', 'Parent created successfully'));
+        return redirect()->route('admin.parents.index');
     }
     public function edit(Parint $parent)
     {
@@ -60,7 +62,6 @@ class ParintController extends Controller
             'image' => 'nullable|image',
         ]);
     
-        // Update user information
         $user = User::findOrFail($parent->user_id);
         
         $user->update([
@@ -87,10 +88,9 @@ class ParintController extends Controller
         }
     
         $parent->update($parentData);
-    
+        Auth::user()->notify(new ResponseNotification('success', 'Parent updated successfully'));
         return redirect()
-            ->route('admin.parents.index')
-            ->with('success', 'Parent updated successfully');
+            ->route('admin.parents.index');
     }
     public function show(Parint $parent)
     {
@@ -105,6 +105,7 @@ class ParintController extends Controller
 
         $user = User::findorfail($parent->user_id);
         $user->delete();
-        return redirect()->route('admin.parents.index')->with('success', 'Parent deleted successfully');
+        Auth::user()->notify(new ResponseNotification('success', 'Parent deleted successfully'));
+        return redirect()->route('admin.parents.index');
     }
 }

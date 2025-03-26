@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Auth;
+use App\Notifications\ResponseNotification;
 
 class RoleController extends Controller
 {
@@ -32,9 +34,8 @@ class RoleController extends Controller
         if ($permissions) {
             $role->syncPermissions($permissions);
         }
-
-        return redirect()->route('admin.roles.index')
-            ->with('success', 'Role created successfully');
+        Auth::user()->notify(new ResponseNotification('success', 'Role created successfully'));
+        return redirect()->route('admin.roles.index');
     }
 
     public function edit(Role $role)
@@ -55,21 +56,20 @@ class RoleController extends Controller
         $role->update(['name' => $request->name]);
         $permissions = explode(',', $request->permissions);
         $role->syncPermissions($permissions ?? []);
+        Auth::user()->notify(new ResponseNotification('success', 'Role updated successfully'));
 
-        return redirect()->route('admin.roles.index')
-            ->with('success', 'Role updated successfully');
+        return redirect()->route('admin.roles.index');
     }
 
     public function destroy(Role $role)
     {
-        if ($role->name === 'admin') {
-            return redirect()->route('admin.roles.index')
-                ->with('error', 'Cannot delete admin role');
+        if ($role->name === 'admin' || $role->name === 'superadmin' ) {
+            Auth::user()->notify(new ResponseNotification('danger', 'Cannot delete this role'));
+            return redirect()->route('admin.roles.index');
         }
         
         $role->delete();
-
-        return redirect()->route('admin.roles.index')
-            ->with('success', 'Role deleted successfully');
+        Auth::user()->notify(new ResponseNotification('success', 'Role deleted successfully'));
+        return redirect()->route('admin.roles.index');
     }
 }

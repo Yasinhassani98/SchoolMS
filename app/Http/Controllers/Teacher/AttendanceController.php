@@ -106,10 +106,6 @@ class AttendanceController extends Controller
                 $notification = new GeneralNotification(
                     'New Mark Added',
                     "A new mark has been added for {$subject->name}.",
-                    [
-                        'attendence' => $request->attendance_status[$index],
-                        'subject' => $subject->name,
-                    ],
                     'info'
                 );
                 $student->user->notify($notification);
@@ -190,10 +186,6 @@ class AttendanceController extends Controller
         $notification = new GeneralNotification(
             'Attendance Updated',
             "Attendance has been updated for {$subject->name}.",
-            [
-                'attendance' => $request->status,
-                'subject' => $subject->name,
-            ],
             'info'
         );
         $student->user->notify($notification);

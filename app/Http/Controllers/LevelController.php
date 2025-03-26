@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Level;
+use App\Notifications\ResponseNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LevelController extends Controller
 {
     public function index()
     {
+        Auth::user()->notify(new ResponseNotification('success', 'Level created successfully'));
         $levels = Level::paginate();
         return view('admin.levels.index', ['levels' => $levels]);
     }
@@ -26,7 +29,8 @@ class LevelController extends Controller
         ]);
 
         Level::create($request->all());
-        return redirect()->route('admin.levels.index')->with('success', 'Level created successfully');
+        Auth::user()->notify(new ResponseNotification('success', 'Level created successfully'));
+        return redirect()->route('admin.levels.index');
     }
     public function edit(Level $level)
     {
@@ -39,11 +43,13 @@ class LevelController extends Controller
             'level' => 'required|numeric|min:0|max:12|unique:levels,level,' . $level->id,
         ]);
         $level->update($request->all());
-        return redirect()->route('admin.levels.index')->with('success', 'Level updated successfully');
+        Auth::user()->notify(new ResponseNotification('success', 'Level updated successfully'));
+        return redirect()->route('admin.levels.index');
     }
     public function destroy(Level $level)
     {
         $level->delete();
-        return redirect()->route('admin.levels.index')->with('success', 'Level deleted successfully');
+        Auth::user()->notify(new ResponseNotification('success', 'Level deleted successfully'));
+        return redirect()->route('admin.levels.index');
     }
 }

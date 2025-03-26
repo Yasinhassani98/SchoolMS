@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Notifications\GeneralNotification;
+use App\Notifications\ResponseNotification;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
@@ -45,6 +46,7 @@ class NotificationController extends Controller
     {
         $notification = Auth::user()->notifications()->findOrFail($notificationId);
         $notification->delete();
+        Auth::user()->notify(new ResponseNotification('success', 'Notification deleted successfully'));
         return back()->with('success', 'Notification deleted successfully.');
     }
 
@@ -90,13 +92,12 @@ class NotificationController extends Controller
         $notification = new GeneralNotification(
             $request->title,
             $request->message,
-            $request->data ?? [],
             $request->type
         );
         
         $user->notify($notification);
-
-        return redirect()->back()->with('success', 'Notification sent successfully.');
+        Auth::user()->notify(new ResponseNotification('success', 'Notification sent successfully'));
+        return redirect()->back();
     }
     
     /**
@@ -118,12 +119,11 @@ class NotificationController extends Controller
             $user->notify(new GeneralNotification(
                 $request->title,
                 $request->message,
-                $request->data ?? [],
                 $request->type
             ));
         }
-        
-        return back()->with('success', 'Notification sent successfully to all users.');
+        Auth::user()->notify(new ResponseNotification('success', 'Notification sent successfully to all users'));
+        return back();
     }
     
     /**
@@ -146,11 +146,10 @@ class NotificationController extends Controller
             $user->notify(new GeneralNotification(
                 $request->title,
                 $request->message,
-                $request->data ?? [],
                 $request->type
             ));
         }
-        
-        return back()->with('success', "Notification sent successfully to all users with role '{$request->role}'.");
+        Auth::user()->notify(new ResponseNotification('success', 'Notification sent successfully to all users with role '. $request->role));
+        return back();
     }
 }

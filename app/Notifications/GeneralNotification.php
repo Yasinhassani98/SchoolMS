@@ -12,16 +12,14 @@ class GeneralNotification extends Notification implements ShouldBroadcastNow
 {
     use Queueable;
 
-    public $title;
-    public $message;
-    public $data;
-    public $type;
+    protected $title;
+    protected $message;
+    protected $type;
 
-    public function __construct($title, $message, $data = [], $type )
+    public function __construct($title, $message, $type )
     {
         $this->title = $title;
         $this->message = $message;
-        $this->data = $data;
         $this->type = $type;
     }
 
@@ -35,7 +33,6 @@ class GeneralNotification extends Notification implements ShouldBroadcastNow
         return [
             'title' => $this->title,
             'message' => $this->message,
-            'data' => $this->data,
             'type' => $this->type,
         ];
     }
@@ -45,7 +42,6 @@ class GeneralNotification extends Notification implements ShouldBroadcastNow
         return new BroadcastMessage([
             'title' => $this->title,
             'message' => $this->message,
-            'data' => $this->data,
             'notification_type' => $this->type, 
         ]);
     }
