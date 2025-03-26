@@ -9,6 +9,7 @@ use App\Models\Classroom;
 use App\Models\Mark;
 use App\Models\Student;
 use App\Models\Subject;
+use App\Notifications\GeneralNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -116,6 +117,23 @@ class MarkController extends Controller
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
+                $student = Student::findOrFail($studentIds[$i]);
+                $parent = $student->parent;
+                $subject = Subject::find($request->subject_id);
+                $notification = new GeneralNotification(
+                    'New Mark Added',
+                    "A new mark has been added for {$subject->name}.",
+                    [
+                        'mark' => $markValues[$i],
+                        'subject' => $subject->name,
+                        'classroom' => Classroom::find($request->classroom_id)->name,
+                    ],
+                    'info'
+                );
+                $student->user->notify($notification);
+                if ($parent) {
+                    $parent->user->notify($notification);
+                }
             }
 
             if (empty($records)) {
@@ -126,7 +144,7 @@ class MarkController extends Controller
 
             // Use bulk insert for better performance
             Mark::insert($records);
-            
+
             DB::commit();
 
             return redirect()->route('teacher.marks.index')
@@ -173,7 +191,6 @@ class MarkController extends Controller
     {
         Gate::authorize('update', $mark);
 
-
         try {
             DB::beginTransaction();
 
@@ -199,6 +216,22 @@ class MarkController extends Controller
                 'mark' => $request->mark,
                 'note' => $request->note,
             ]);
+            // Notification
+            $student = Student::findOrFail($request->student_id);
+            $parent = $student->parent;
+            $subject = Subject::find($request->subject_id);
+            $notification = new GeneralNotification(
+                'Mark Updated',
+                "Your mark has been updated for {$subject->name}.",
+                [
+                    'mark' => $request->mark,
+                    'subject' => $subject->name,
+                ],
+                'info'
+            );
+            $student->user->notify($notification);
+            $parent->user->notify($notification);
+
 
             DB::commit();
 

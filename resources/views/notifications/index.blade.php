@@ -24,14 +24,14 @@
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h4 class="card-title">All Notifications</h4>
                         <div>
-                            @can('manage-notifications')
+                            @role('admin|superadmin')
                                 <form class="d-inline" action="{{ route('notifications.create') }}" method="GET">
                                     @csrf
                                     <button type="submit" class="btn btn-sm btn-primary">
                                         <i class="fas fa-plus"></i> Add New Notification
                                     </button>
                                 </form>
-                            @endcan
+                            @endrole
 
                             @if (auth()->user()->unreadNotifications->count() > 0)
                                 <form action="{{ route('notifications.markAllAsRead') }}" method="POST" class="d-inline">
@@ -79,10 +79,10 @@
                                             @endif
                                         </a>
                                     </li>
-                                    
+
                                     <li><hr class="dropdown-divider"></li>
                                     <li><h6 class="dropdown-header">Type</h6></li>
-                                    
+
                                     <li>
                                         <a class="dropdown-item d-flex justify-content-between align-items-center {{ !request('type') ? 'active' : '' }}"
                                             href="{{ route('notifications.index', request('filter') ? ['filter' => request('filter')] : []) }}">
@@ -158,17 +158,17 @@
                                                     @php
                                                         $notificationType = $notification->data['type'] ?? 'info';
                                                         $iconClass = 'fas fa-exclamation-circle text-danger me-2';
-                                                        
+
 
                                                         if ($notificationType == 'success') {
                                                             $iconClass = 'fas fa-check-circle text-success me-2';
-                                                            
+
                                                         } elseif ($notificationType == 'warning') {
                                                             $iconClass = 'fas fa-exclamation-triangle text-warning me-2';
-                                                            
+
                                                         } elseif ($notificationType == 'danger') {
                                                             $iconClass = 'fas fa-exclamation-circle text-danger me-2';
-                                                            
+
                                                         }
                                                     @endphp
                                                     <span>

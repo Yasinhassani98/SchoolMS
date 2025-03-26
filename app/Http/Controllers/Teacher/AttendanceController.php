@@ -9,6 +9,7 @@ use App\Models\Attendance;
 use App\Models\Classroom;
 use App\Models\Student;
 use App\Models\Subject;
+use App\Notifications\GeneralNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -33,23 +34,23 @@ class AttendanceController extends Controller
     {
         Gate::authorize('create', Attendance::class);
         $teacherId = Auth::user()->teacher()->first()->id;
-        
+
         $classrooms = Classroom::whereHas('teachers', function($query) use ($teacherId) {
             $query->where('teachers.id', $teacherId);
         })->get();
-        
+
         $subjects = Subject::whereHas('teachers', function ($query) use ($teacherId) {
             $query->where('teacher_id', $teacherId);
         })->get();
 
         // If teacher has no assigned classrooms, provide empty collection for students
-        $students = $classrooms->isEmpty() 
-            ? collect() 
+        $students = $classrooms->isEmpty()
+            ? collect()
             : Student::whereIn('classroom_id', $classrooms->pluck('id'))
                 ->select('id', 'name', 'classroom_id')
                 ->orderBy('name')
                 ->get();
-        
+
         return view('teacher.attendances.create', compact('students', 'subjects', 'classrooms'));
     }
 
@@ -73,17 +74,17 @@ class AttendanceController extends Controller
         if ($request->has('student_ids') && $request->has('attendance_status')) {
             $studentIds = $request->student_ids;
             $statuses = $request->attendance_status;
-            
+
             // Check for existing records for these students on this date
             $duplicateStudents = $existingAttendance->whereIn('student_id', $studentIds)->pluck('student_id')->toArray();
-            
+
             if (!empty($duplicateStudents)) {
                 $duplicateNames = Student::whereIn('id', $duplicateStudents)->pluck('name')->implode(', ');
                 return back()->withInput()->withErrors([
                     'general' => "Attendance already exists for: {$duplicateNames} on this date for this subject."
                 ]);
             }
-            
+
             // Create attendance records for each student
             $records = [];
             for ($i = 0; $i < count($studentIds); $i++) {
@@ -99,36 +100,50 @@ class AttendanceController extends Controller
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
+                $student = Student::findOrFail($studentIds[$i]);
+                $parent = $student->parent;
+                $subject = Subject::find($request->subject_id);
+                $notification = new GeneralNotification(
+                    'New Mark Added',
+                    "A new mark has been added for {$subject->name}.",
+                    [
+                        'attendence' => $request->attendance_status[$index],
+                        'subject' => $subject->name,
+                    ],
+                    'info'
+                );
+                $student->user->notify($notification);
+                $parent->user->notify($notification);
             }
-            
+
             // Use bulk insert for better performance
             Attendance::insert($records);
-            
+
             return redirect()->route('teacher.attendances.index')
                 ->with('success', 'Attendance records created successfully for ' . count($studentIds) . ' students.');
         } else {
             // Single student attendance (fallback)
             // Check for duplicate
             $duplicate = $existingAttendance->where('student_id', $request->student_id)->first();
-            
+
             if ($duplicate) {
                 $student = Student::find($request->student_id);
                 return back()->withInput()->withErrors([
                     'student_id' => "Attendance already exists for {$student->name} on this date for this subject."
                 ]);
             }
-            
+
             Attendance::create([
                 'teacher_id' => $teacherId,
                 'student_id' => $request->student_id,
                 'classroom_id' => $request->classroom_id,
                 'subject_id' => $request->subject_id,
-                'academic_year_id' => $academicYear->id, 
+                'academic_year_id' => $academicYear->id,
                 'date' => $request->date,
                 'status' => $request->status,
                 'note' => $request->note,
             ]);
-            
+
             return redirect()->route('teacher.attendances.index')
                 ->with('success', 'Attendance record created successfully.');
         }
@@ -161,7 +176,7 @@ class AttendanceController extends Controller
     {
         Gate::authorize('update', $attendance);
         $attendance->update([
-            'teacher_id' => Auth::user()->teacher()->first()->id, 
+            'teacher_id' => Auth::user()->teacher()->first()->id,
             'student_id' => $request->student_id,
             'classroom_id' => $request->classroom_id,
             'subject_id' => $request->subject_id,
@@ -169,7 +184,22 @@ class AttendanceController extends Controller
             'status' => $request->status,
             'note' => $request->note,
         ]);
-
+        $student = Student::findOrFail($request->student_id);
+        $parent = $student->parent;
+        $subject = Subject::find($request->subject_id);
+        $notification = new GeneralNotification(
+            'Attendance Updated',
+            "Attendance has been updated for {$subject->name}.",
+            [
+                'attendance' => $request->status,
+                'subject' => $subject->name,
+            ],
+            'info'
+        );
+        $student->user->notify($notification);
+        if ($parent) {
+            $parent->user->notify($notification);
+        }
         return redirect()->route('teacher.attendances.index')
             ->with('success', 'Attendance record updated successfully.');
     }

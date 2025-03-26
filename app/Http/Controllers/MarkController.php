@@ -11,6 +11,7 @@ use App\Http\Requests\StoreMarkRequest;
 use App\Http\Requests\UpdateMarkRequest;
 use App\Models\Level;
 use App\Models\Teacher;
+use App\Notifications\GeneralNotification;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 
@@ -18,7 +19,7 @@ class MarkController extends Controller
 {
     public function index()
     {
-        $marks = Mark::with(['teacher','student', 'subject', 'classroom', 'academicYear'])
+        $marks = Mark::with(['teacher', 'student', 'subject', 'classroom', 'academicYear'])
             ->latest()
             ->paginate(10);
 
@@ -42,13 +43,13 @@ class MarkController extends Controller
 
         $academicYears = AcademicYear::all();
 
-        return view('admin.marks.create', compact('teachers', 'students', 'subjects', 'classrooms', 'academicYears','levels'));
+        return view('admin.marks.create', compact('teachers', 'students', 'subjects', 'classrooms', 'academicYears', 'levels'));
     }
 
     public function store(StoreMarkRequest $request)
     {
         $academicYear = AcademicYear::where('is_current', true)->firstOrFail();
-        
+
         // Make sure teacher_id is set
         $teacherId = $request->input('teacher_id');
         $studentIds = $request->input('student_ids', []);
@@ -69,8 +70,24 @@ class MarkController extends Controller
                 'mark' => $marks[$index],
                 'note' => $note,
             ]);
+            // Notification
+            $student = Student::findOrFail($studentId);
+            $parent = $student->parent;
+            $subject = Subject::find($subjectId);
+            $notification = new GeneralNotification(
+                'New Mark Added',
+                "A new mark has been added for {$subject->name}.",
+                [
+                    'mark' => $marks[$index],
+                    'subject' => $subject->name,
+                    'classroom' => Classroom::find($classroomId)->name,
+                ],
+                'info'
+            );
+            $student->user->notify($notification);
+            $parent->user->notify($notification);
         }
-        
+
         return redirect()
             ->route('admin.marks.index')
             ->with('success', 'Marks added successfully for classroom ' . Classroom::find($classroomId)->name . ' and subject ' . Subject::find($subjectId)->name);
@@ -94,16 +111,31 @@ class MarkController extends Controller
 
         $academicYears = AcademicYear::all();
 
-        return view('admin.marks.edit', compact('teachers','mark', 'students', 'subjects', 'classrooms', 'academicYears'));
+        return view('admin.marks.edit', compact('teachers', 'mark', 'students', 'subjects', 'classrooms', 'academicYears'));
     }
 
     public function update(UpdateMarkRequest $request, Mark $mark): RedirectResponse
     {
         $academicYear = AcademicYear::where('is_current', true)->first();
-
-        $data = array_merge($request->validated(),['academic_year_id' => $academicYear->id]);
+        $data = array_merge($request->validated(), ['academic_year_id' => $academicYear->id]);
         $mark->update($data);
-        
+
+        // Notification
+        $student = Student::findOrFail($mark->student_id);
+        $parent = $student->parent;
+        $subject = Subject::find($mark->subject_id);
+        $notification = new GeneralNotification(
+            'Mark Updated',
+            "The mark has been updated for {$subject->name}.",
+            [
+                'mark' => $mark->mark,
+                'subject' => $subject->name,
+            ],
+            'info'
+        );
+        $student->user->notify($notification);
+        $parent->user->notify($notification);
+
         return redirect()
             ->route('admin.marks.index')
             ->with('success', 'Mark updated successfully');
@@ -112,7 +144,7 @@ class MarkController extends Controller
     public function destroy(Mark $mark): RedirectResponse
     {
         $mark->delete();
-        
+
         return redirect()
             ->route('admin.marks.index')
             ->with('success', 'Mark deleted successfully');
