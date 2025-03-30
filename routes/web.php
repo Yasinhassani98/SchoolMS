@@ -151,5 +151,5 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/notifications/send-to-group', [NotificationController::class, 'sendNotificationToGroup'])->name('notifications.sendToGroup');
     });
 });
-
+Route::get('show/{id}',[UserController::class,"show"] )->middleware('auth')->name('profile.show');
 require __DIR__ . '/auth.php';

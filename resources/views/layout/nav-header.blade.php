@@ -149,7 +149,7 @@
                         @endphp
                         <img src="{{ asset($profileImage) }}" height="40" width="40" alt="Profile"
                             class="rounded-circle mr-2">
-                            
+
                         <div class="user-info d-flex flex-column align-items-start justify-content-center">
                             <p class="text-primary font-weight-bold mb-0" style="font-size: 0.9rem; line-height: 1.2;">
                                 {{ Auth::user()->name }}
@@ -159,12 +159,12 @@
                             </p>
                         </div>
                     </div>
-                    
+
                     <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
                         <div class="dropdown-content-body">
                             <ul>
                                 <li>
-                                    <a href="{{ route('profile.edit') }}"><i class="icon-user"></i>
+                                    <a href="{{ route('profile.show',Auth::user()->id) }}"><i class="icon-user"></i>
                                         <span>Profile</span></a>
                                 </li>
                                 <hr class="my-2">

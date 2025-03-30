@@ -16,22 +16,22 @@ class UserController extends Controller
      */
     public function index()
     {
-        
+
         $users = User::with('roles')->paginate(10);
         return view('admin.users.index', compact('users'));
     }
-    
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        if(Auth::user()->hasRole('admin')){
-            $roles = Role::whereNotIn('name', ['superadmin','admin'])->get();
-        }elseif(Auth::user()->hasRole('superadmin')){
+        if (Auth::user()->hasRole('admin')) {
+            $roles = Role::whereNotIn('name', ['superadmin', 'admin'])->get();
+        } elseif (Auth::user()->hasRole('superadmin')) {
             $roles  = Role::all();
         }
-        return view('admin.users.create',compact('roles'));
+        return view('admin.users.create', compact('roles'));
     }
 
     /**
@@ -60,7 +60,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('admin.users.edit',[
+        return view('admin.users.edit', [
             'user' => $user,
             'roles' => Role::all(),
         ]);
@@ -72,10 +72,10 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $request->validate([
-            'name' =>'required|string|max:255',
-            'email' =>'required|string|email|max:255|unique:users,email,'.$user->id,
-            'password' =>'nullable|string|min:8|confirmed',
-            'roles' =>'required|string',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:8|confirmed',
+            'roles' => 'required|string',
         ]);
         $roles = explode(',', $request->roles);
         $user->update([
@@ -86,8 +86,6 @@ class UserController extends Controller
         $user->syncRoles($roles);
         Auth::user()->notify(new ResponseNotification('success', 'User updated successfully'));
         return redirect()->route('admin.users.index');
-        
-        
     }
 
     /**
@@ -98,5 +96,10 @@ class UserController extends Controller
         $user->delete();
         Auth::user()->notify(new ResponseNotification('success', 'User deleted successfully'));
         return redirect()->route('admin.users.index');
+    }
+    public function show($id)
+    {
+        $user = User::find($id);
+        return view('profile.show', compact('user'));
     }
 }
