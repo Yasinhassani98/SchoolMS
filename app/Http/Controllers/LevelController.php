@@ -11,7 +11,6 @@ class LevelController extends Controller
 {
     public function index()
     {
-        Auth::user()->notify(new ResponseNotification('success', 'Level created successfully'));
         $levels = Level::paginate();
         return view('admin.levels.index', ['levels' => $levels]);
     }

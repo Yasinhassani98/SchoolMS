@@ -236,61 +236,61 @@
                 });
                 
             // Response notification handler - properly configured for ResponseNotification
-            window.Echo.private(`response.${userId}`)
-                .notification((notification) => {
-                    // Determine alert type based on notification type
-                    let alertType = 'success';
-                    let iconClass = 'fa-check-circle';
+            // window.Echo.private(`response.${userId}`)
+            //     .notification((notification) => {
+            //         // Determine alert type based on notification type
+            //         let alertType = 'success';
+            //         let iconClass = 'fa-check-circle';
                     
-                    if (notification.notification_type) {
-                        switch(notification.notification_type) {
-                            case 'success':
-                                alertType = 'success';
-                                iconClass = 'fa-check-circle';
-                                break;
-                            case 'warning':
-                                alertType = 'warning';
-                                iconClass = 'fa-exclamation-triangle';
-                                break;
-                            case 'danger':
-                            case 'error':
-                                alertType = 'danger';
-                                iconClass = 'fa-exclamation-circle';
-                                break;
-                            case 'info':
-                                alertType = 'info';
-                                iconClass = 'fa-info-circle';
-                                break;
-                            default:
-                                alertType = 'primary';
-                                iconClass = 'fa-comment';
-                        }
-                    }
+            //         if (notification.notification_type) {
+            //             switch(notification.notification_type) {
+            //                 case 'success':
+            //                     alertType = 'success';
+            //                     iconClass = 'fa-check-circle';
+            //                     break;
+            //                 case 'warning':
+            //                     alertType = 'warning';
+            //                     iconClass = 'fa-exclamation-triangle';
+            //                     break;
+            //                 case 'danger':
+            //                 case 'error':
+            //                     alertType = 'danger';
+            //                     iconClass = 'fa-exclamation-circle';
+            //                     break;
+            //                 case 'info':
+            //                     alertType = 'info';
+            //                     iconClass = 'fa-info-circle';
+            //                     break;
+            //                 default:
+            //                     alertType = 'primary';
+            //                     iconClass = 'fa-comment';
+            //             }
+            //         }
                     
-                    const container = document.getElementById('notification-container');
-                    const alertDiv = document.createElement('div');
-                    alertDiv.classList.add('alert', `alert-${alertType}`, 'alert-dismissible', 'fade', 'show');
+            //         const container = document.getElementById('notification-container');
+            //         const alertDiv = document.createElement('div');
+            //         alertDiv.classList.add('alert', `alert-${alertType}`, 'alert-dismissible', 'fade', 'show');
                     
-                    // Modified HTML structure to remove title area completely
-                    alertDiv.innerHTML = `
-                        <div class="d-flex align-items-center p-3">
-                            <div class="notification-icon me-3">
-                                <i class="fas ${iconClass} fa-lg" style="color: var(--bs-alert-color)"></i>
-                            </div>
-                            <div class="notification-content flex-grow-1 d-flex align-items-center">
-                                <p class="notification-message mb-0 py-1">${notification.message || ''}</p>
-                            </div>
-                            <button type="button" class="btn-close ms-2" 
-                                    data-bs-dismiss="alert" 
-                                    aria-label="Close"
-                                    style="position: absolute; top: 10px; right: 10px;">
-                            </button>
-                        </div>
-                    `;
+            //         // Modified HTML structure to remove title area completely
+            //         alertDiv.innerHTML = `
+            //             <div class="d-flex align-items-center p-3">
+            //                 <div class="notification-icon me-3">
+            //                     <i class="fas ${iconClass} fa-lg" style="color: var(--bs-alert-color)"></i>
+            //                 </div>
+            //                 <div class="notification-content flex-grow-1 d-flex align-items-center">
+            //                     <p class="notification-message mb-0 py-1">${notification.message || ''}</p>
+            //                 </div>
+            //                 <button type="button" class="btn-close ms-2" 
+            //                         data-bs-dismiss="alert" 
+            //                         aria-label="Close"
+            //                         style="position: absolute; top: 10px; right: 10px;">
+            //                 </button>
+            //             </div>
+            //         `;
                     
-                    container.appendChild(alertDiv);
-                    setTimeout(() => alertDiv.remove(), 5000);
-                });
+            //         container.appendChild(alertDiv);
+            //         setTimeout(() => alertDiv.remove(), 5000);
+            //     });
         });
     </script>
 
