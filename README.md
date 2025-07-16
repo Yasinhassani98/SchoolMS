@@ -1,7 +1,7 @@
 
 # SchoolMS
 
-The School Management System is a comprehensive web application designed to streamline and automate the administrative and academic operations of educational institutions. Built with Laravel, it provides an intuitive dashboard for administrators, teachers, and students, offering features such as:
+The School Management System is a comprehensive web application built with Laravel, designed to streamline and automate the administrative and academic operations of educational institutions. It features an intuitive dashboard tailored for different user roles, including superadmin, admin, teacher, student, and parent. Each role has access to relevant tools and information, enabling efficient management of daily activities, communication, and performance tracking. The system offers:
 
 - Student, teacher, and classroom management
 - Attendance tracking and reporting
